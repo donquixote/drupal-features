@@ -176,6 +176,7 @@ function features_export_form($form, $form_state, $feature = NULL) {
       '#type' => 'textfield',
       '#required' => FALSE,
       '#default_value' => !empty($feature->info['project path']) ? $feature->info['project path'] : '',
+      '#element_validate' => array('features_export_form_validate_writable_directory'),
     );
     $form['advanced']['generate'] = array(
       '#type' => 'submit',
@@ -798,6 +799,30 @@ function features_export_form_validate_field($element, &$form_state) {
         form_error($element, t('Please enter a valid version with core and major version number. Example: @example', array('@example' => '7.x-1.0')));
       };
       break;
+  }
+}
+
+/**
+ * Validates that the destination directory is writable.
+ *
+ * @param array $element
+ * @param array $form_state
+ */
+function features_export_form_validate_writable_directory($element, &$form_state) {
+  if (!isset($element['#value']) || '' === $element['#value']) {
+    return;
+  }
+  $dir = $element['#value'];
+  if (!is_dir($dir)) {
+    form_error($element, t(
+      'The destination directory %dir does not exist, or is not a directory.',
+      array('%dir' => $dir)));
+    return;
+  }
+  if (!is_writable($dir)) {
+    form_error($element, t(
+      'The destination directory %dir is not writable.',
+      array('%dir' => $dir)));
   }
 }
 
