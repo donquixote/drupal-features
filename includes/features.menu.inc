@@ -236,12 +236,14 @@ function menu_links_features_export_render($module, $data, $export = NULL) {
         }
       }
 
-      if (isset($export)) {
-        // Don't show new identifier unless we are actually exporting.
+      if (!isset($link['options']['identifier'])) {
+        // Create the identifier only if it doesn't exists.
         $link['options']['identifier'] = $new_identifier;
-        // identifiers are renewed, => that means we need to update them in the db
-        $temp = $link;
-        menu_link_save($temp);
+        if (!empty($export)) {
+          // Identifiers are renewed. We need to update them in the DB.
+          $temp = $link;
+          menu_link_save($temp);
+        }
       }
 
        unset($link['plid']);
