@@ -1,9 +1,22 @@
 <?php
 
 /**
- * @param $info - feature info array
- * @param $module_name
- * @return fully populated export array
+ * @param array $info
+ *   Feature info array
+ *   Format:
+ *     $['features'][$component][$name] = $name
+ *     $['dependencies'][$dependency] = $dependency.
+ * @param string $module_name
+ *   Module name of the feature being generated.
+ *
+ * @return array
+ *   Fully populated export array.
+ *   Format:
+ *     $['features']['features_api']['api:' . FEATURES_API] = TRUE
+ *     $['features'][$component][$name] = $name
+ *     $['dependencies'][$dependency] = $dependency
+ *     $['conflicts'] = [..]
+ *     $['features_exclude'][$component][$name] = $name
  */
 function features_populate($info, $module_name) {
   // Sanitize items.
