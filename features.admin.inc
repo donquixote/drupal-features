@@ -886,12 +886,15 @@ function features_export_build_form_submit($form, &$form_state) {
     if ($generate) {
       $success = TRUE;
       if (!empty($export['project path'])) {
+        // Use the export directory specified by the user.
         $directory = $export['project path'] . '/' . $module_name;
       }
       elseif (isset($feature->filename)) {
+        // The feature already exists, use its current directory.
         $directory = dirname($feature->filename);
       }
       else {
+        // Follow the default pattern for features export directories.
         $destination = variable_get('features_default_export_path', FEATURES_DEFAULT_EXPORT_PATH);
         $directory = $destination . '/' . $module_name;
       }
