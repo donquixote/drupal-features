@@ -675,10 +675,12 @@ function _drush_features_export($info, $module_name = NULL, $directory = NULL) {
 /**
  * Helper function for _drush_feature_export.
  *
- * @param $info
+ * @param array $info
  *   The feature info associative array.
- * @param $module_name
+ * @param string $module_name
  *  Optional. The name for the exported module.
+ *
+ * @return array
  */
 function _drush_features_generate_export(&$info, &$module_name) {
   module_load_include('inc', 'features', 'features.export');
