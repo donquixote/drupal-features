@@ -903,6 +903,9 @@ function features_export_build_form_submit($form, &$form_state) {
       drupal_add_http_header('Content-type', 'application/x-tar');
       drupal_add_http_header('Content-Disposition', 'attachment; filename="'. $filename .'"');
       drupal_send_headers();
+      // When delivering a tar file as the response, the $directory variable
+      // represents the base path for all files within the *.tar archive.
+      $directory = $module_name;
     }
 
     $tar = array();
@@ -927,10 +930,10 @@ function features_export_build_form_submit($form, &$form_state) {
         }
         else {
           if (!empty($file_info['file_path'])) {
-            print features_tar_create("{$module_name}/{$file_name}", file_get_contents($file_info['file_path']));
+            print features_tar_create("{$directory}/{$file_name}", file_get_contents($file_info['file_path']));
           }
           elseif ($file_info['file_content']) {
-            print features_tar_create("{$module_name}/{$file_name}", $file_info['file_content']);
+            print features_tar_create("{$directory}/{$file_name}", $file_info['file_content']);
           }
         }
       }
@@ -947,7 +950,7 @@ function features_export_build_form_submit($form, &$form_state) {
         }
       }
       else {
-        print features_tar_create("{$module_name}/{$module_name}.$extension", $file_contents);
+        print features_tar_create("{$directory}/{$module_name}.$extension", $file_contents);
       }
     }
     if (features_get_modules($module_name, TRUE)) {
@@ -974,7 +977,7 @@ function features_export_build_form_submit($form, &$form_state) {
             }
           }
           else {
-            print features_tar_create("{$module_name}/{$filename}", $contents);
+            print features_tar_create("{$directory}/{$filename}", $contents);
           }
           unset($contents);
         }
