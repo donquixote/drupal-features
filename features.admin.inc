@@ -930,7 +930,7 @@ function features_export_build_form_submit($form, &$form_state) {
             print features_tar_create("{$module_name}/{$file_name}", file_get_contents($file_info['file_path']));
           }
           elseif ($file_info['file_content']) {
-            features_tar_create("{$directory}/{$file_name}", $file_info['file_content']);
+            features_tar_create("{$module_name}/{$file_name}", $file_info['file_content']);
           }
         }
       }
