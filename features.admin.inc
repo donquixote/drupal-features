@@ -888,10 +888,15 @@ function features_export_build_form_submit($form, &$form_state) {
       $destination = variable_get('features_default_export_path', FEATURES_DEFAULT_EXPORT_PATH);
       $directory = (!empty($export['project path'])) ? $export['project path'] . '/' . $module_name :
         (isset($feature->filename) ? dirname($feature->filename) : $destination . '/' . $module_name);
-      if (!is_dir($directory)) {
-        if (!mkdir($directory, 0777, TRUE)) {
-          $success = FALSE;
-        }
+      if (!is_dir($directory)
+        && !mkdir($directory, 0777, TRUE)
+        // Cover a rare race condition, where another process might have created
+        // the directory in the meantime.
+        // See https://github.com/kalessil/phpinspectionsea/blob/master/docs/probable-bugs.md#mkdir-race-condition
+        && !is_dir($directory)
+      ) {
+        // The directory does not exist, and was not created.
+        $success = FALSE;
       }
     }
     else {
