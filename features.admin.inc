@@ -881,7 +881,6 @@ function features_export_build_form_submit($form, &$form_state) {
 
   // Generate download
   if ($files = features_export_render($export, $module_name, TRUE)) {
-    $tar_filename = (!empty($export['version']) ? "{$module_name}-{$export['version']}" : $module_name) . '.tar';
 
     if ($generate) {
       $success = TRUE;
@@ -901,6 +900,7 @@ function features_export_build_form_submit($form, &$form_state) {
       }
 
       drupal_add_http_header('Content-type', 'application/x-tar');
+      $tar_filename = (!empty($export['version']) ? "{$module_name}-{$export['version']}" : $module_name) . '.tar';
       drupal_add_http_header('Content-Disposition', 'attachment; filename="'. $tar_filename .'"');
       drupal_send_headers();
     }
