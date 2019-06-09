@@ -258,15 +258,16 @@ function features_export_render_hooks($export, $module_name, $reset = FALSE) {
 /**
  * Render feature export into an array representing its files.
  *
- * @param $export
- *  An exported feature definition.
- * @param $module_name
- *  The name of the module to be exported.
- * @param $reset
- *  Boolean flag for resetting the module cache. Only set to true when
- *  doing a final export for delivery.
+ * @param array $export
+ *   An exported feature definition.
+ * @param string $module_name
+ *   The name of the module to be exported.
+ * @param bool $reset
+ *   Boolean flag for resetting the module cache. Only set to true when
+ *   doing a final export for delivery.
  *
- * @return array of info file and module file contents.
+ * @return array
+ *   Array of info file and module file contents.
  */
 function features_export_render($export, $module_name, $reset = FALSE) {
   $code = array();
