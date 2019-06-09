@@ -889,7 +889,7 @@ function features_export_build_form_submit($form, &$form_state) {
       $directory = (!empty($export['project path'])) ? $export['project path'] . '/' . $module_name :
         (isset($feature->filename) ? dirname($feature->filename) : $destination . '/' . $module_name);
       if (!is_dir($directory)) {
-        if (mkdir($directory, 0777, TRUE) === FALSE) {
+        if (!mkdir($directory, 0777, TRUE)) {
           $success = FALSE;
         }
       }
