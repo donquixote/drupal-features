@@ -1,9 +1,13 @@
 <?php
 
 /**
- * @param $info - feature info array
- * @param $module_name
- * @return fully populated export array
+ * @param array $info
+ *   Feature info array
+ * @param string $module_name
+ *   Module name of the feature being generated.
+ *
+ * @return array
+ *   Fully populated export array
  */
 function features_populate($info, $module_name) {
   // Sanitize items.
