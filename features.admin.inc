@@ -915,7 +915,7 @@ function features_export_build_form_submit($form, &$form_state) {
           if (strpos($file_name, '/')) {
             $file_directory = $directory . '/' . substr($file_name, 0, strrpos($file_name, '/'));
             if (!is_dir($file_directory)) {
-              mkdir($file_directory);
+              mkdir($file_directory, 0777, TRUE);
             }
           }
           if (!empty($file_info['file_path'])) {
