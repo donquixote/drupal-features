@@ -49,13 +49,28 @@ function features_populate($info, $module_name) {
  * dependencies and feature definition. Calls hook_features_export for modules
  * that implement it.
  *
- * @param $pipe
- *  Associative of array of module => info-for-module
- * @param $export
- *  Associative array of items, and module dependencies which define a feature.
- *  Passed by reference.
+ * @param array $pipe
+ *   Associative of array of module => info-for-module.
+ * @param array $export
+ *   Associative array of items, and module dependencies which define a feature.
+ *   Passed by reference.
+ *   Format:
+ *     $['features'][$component][$name] = $name
+ *     $['dependencies'][$dependency] = $dependency
+ *     $['conflicts'] = [..]
+ *     $['features_exclude'][$component][$name] = $name.
+ * @param string $module_name
+ *   Module name of the feature being generated.
+ * @param bool $reset
+ *   TRUE, to reset the static cache for this function.
  *
- * @return fully populated $export array.
+ * @return array
+ *   Fully populated $export array.
+ *   Format:
+ *     $['features'][$component][$name] = $name
+ *     $['dependencies'][$dependency] = $dependency
+ *     $['conflicts'] = [..]
+ *     $['features_exclude'][$component][$name] = $name
  */
 function _features_populate($pipe, &$export, $module_name = '', $reset = FALSE) {
   // Ensure that the export will be created in the english language.
