@@ -880,142 +880,143 @@ function features_export_build_form_submit($form, &$form_state) {
   }
 
   // Generate download
-  if ($files = features_export_render($export, $module_name, TRUE)) {
+  if (!$files = features_export_render($export, $module_name, TRUE)) {
+    return;
+  }
 
-    if ($generate) {
-      $success = TRUE;
-      if (!empty($export['project path'])) {
-        // Use the export directory specified by the user.
-        $directory = $export['project path'] . '/' . $module_name;
-      }
-      elseif (isset($feature->filename)) {
-        // The feature already exists, use its current directory.
-        $directory = dirname($feature->filename);
+  if ($generate) {
+    $success = TRUE;
+    if (!empty($export['project path'])) {
+      // Use the export directory specified by the user.
+      $directory = $export['project path'] . '/' . $module_name;
+    }
+    elseif (isset($feature->filename)) {
+      // The feature already exists, use its current directory.
+      $directory = dirname($feature->filename);
+    }
+    else {
+      // Follow the default pattern for features export directories.
+      $destination = variable_get('features_default_export_path', FEATURES_DEFAULT_EXPORT_PATH);
+      $directory = $destination . '/' . $module_name;
+    }
+    if (!is_dir($directory)
+      && !mkdir($directory, 0777, TRUE)
+      // Cover a rare race condition, where another process might have created
+      // the directory in the meantime.
+      // See https://github.com/kalessil/phpinspectionsea/blob/master/docs/probable-bugs.md#mkdir-race-condition
+      && !is_dir($directory)
+    ) {
+      // The directory does not exist, and was not created.
+      $success = FALSE;
+    }
+  }
+  else {
+    // Clear out output buffer to remove any garbage from tar output.
+    if (ob_get_level()) {
+      ob_end_clean();
+    }
+
+    drupal_add_http_header('Content-type', 'application/x-tar');
+    $tar_filename = (!empty($export['version']) ? "{$module_name}-{$export['version']}" : $module_name) . '.tar';
+    drupal_add_http_header('Content-Disposition', 'attachment; filename="' . $tar_filename . '"');
+    drupal_send_headers();
+    // When delivering a tar file as the response, the $directory variable
+    // represents the base path for all files within the *.tar archive.
+    $directory = $module_name;
+  }
+
+  $tar = array();
+  $filenames = array();
+  // Copy any files if _files key is there.
+  if (!empty($files['_files'])) {
+    foreach ($files['_files'] as $file_name => $file_info) {
+      $file_path = $directory . '/' . $file_name;
+      if ($generate) {
+        // See if files are in a sub directory.
+        if (strpos($file_name, '/')) {
+          $file_directory = $directory . '/' . substr($file_name, 0, strrpos($file_name, '/'));
+          if (!is_dir($file_directory)) {
+            mkdir($file_directory, 0777, TRUE);
+          }
+        }
+        if (!empty($file_info['file_path'])) {
+          file_unmanaged_copy($file_info['file_path'], $file_path, FILE_EXISTS_REPLACE);
+        }
+        elseif ($file_info['file_content']) {
+          file_put_contents($file_path, $file_info['file_content']);
+        }
       }
       else {
-        // Follow the default pattern for features export directories.
-        $destination = variable_get('features_default_export_path', FEATURES_DEFAULT_EXPORT_PATH);
-        $directory = $destination . '/' . $module_name;
+        if (!empty($file_info['file_path'])) {
+          print features_tar_create($file_path, file_get_contents($file_info['file_path']));
+        }
+        elseif ($file_info['file_content']) {
+          print features_tar_create($file_path, $file_info['file_content']);
+        }
       }
-      if (!is_dir($directory)
-        && !mkdir($directory, 0777, TRUE)
-        // Cover a rare race condition, where another process might have created
-        // the directory in the meantime.
-        // See https://github.com/kalessil/phpinspectionsea/blob/master/docs/probable-bugs.md#mkdir-race-condition
-        && !is_dir($directory)
-      ) {
-        // The directory does not exist, and was not created.
+    }
+    unset($files['_files']);
+  }
+  foreach ($files as $extension => $file_contents) {
+    if (!in_array($extension, array('module', 'info'))) {
+      $extension .= '.inc';
+    }
+    $file_name = $module_name . '.' . $extension;
+    $filenames[] = $file_name;
+    $file_path = $directory . '/' . $file_name;
+    if ($generate) {
+      if (file_put_contents($file_path, $file_contents) === FALSE) {
         $success = FALSE;
       }
     }
     else {
-      // Clear out output buffer to remove any garbage from tar output.
-      if (ob_get_level()) {
-        ob_end_clean();
-      }
-
-      drupal_add_http_header('Content-type', 'application/x-tar');
-      $tar_filename = (!empty($export['version']) ? "{$module_name}-{$export['version']}" : $module_name) . '.tar';
-      drupal_add_http_header('Content-Disposition', 'attachment; filename="'. $tar_filename .'"');
-      drupal_send_headers();
-      // When delivering a tar file as the response, the $directory variable
-      // represents the base path for all files within the *.tar archive.
-      $directory = $module_name;
+      print features_tar_create($file_path, $file_contents);
     }
-
-    $tar = array();
-    $filenames = array();
-    // Copy any files if _files key is there.
-    if (!empty($files['_files'])) {
-      foreach ($files['_files'] as $file_name => $file_info) {
-        $file_path = $directory . '/' . $file_name;
+  }
+  if (features_get_modules($module_name, TRUE)) {
+    // prevent deprecated component files from being included in download
+    $deprecated = features_get_deprecated();
+    foreach ($deprecated as $component) {
+      $info = features_get_components($component);
+      $filename = isset($info['default_file']) && $info['default_file'] == FEATURES_DEFAULTS_CUSTOM ? $info['default_filename'] : "features.{$component}";
+      $filename .= '.inc';
+      $filenames[] = "{$module_name}.$filename";
+    }
+    $module_path = drupal_get_path('module', $module_name);
+    // file_scan_directory() can throw warnings when using PHP 5.3, messing
+    // up the output of our file stream. Suppress errors in this one case in
+    // order to produce valid output.
+    foreach (@file_scan_directory($module_path, '/.*/') as $file) {
+      $filename = substr($file->uri, strlen($module_path) + 1);
+      if (!in_array($filename, $filenames)) {
+        // Add this file.
+        $contents = file_get_contents($file->uri);
         if ($generate) {
-          // See if files are in a sub directory.
-          if (strpos($file_name, '/')) {
-            $file_directory = $directory . '/' . substr($file_name, 0, strrpos($file_name, '/'));
-            if (!is_dir($file_directory)) {
-              mkdir($file_directory, 0777, TRUE);
-            }
-          }
-          if (!empty($file_info['file_path'])) {
-            file_unmanaged_copy($file_info['file_path'], $file_path, FILE_EXISTS_REPLACE);
-          }
-          elseif ($file_info['file_content']) {
-            file_put_contents($file_path, $file_info['file_content']);
+          if (file_put_contents("{$directory}/{$filename}", $contents) === FALSE) {
+            $success = FALSE;
           }
         }
         else {
-          if (!empty($file_info['file_path'])) {
-            print features_tar_create($file_path, file_get_contents($file_info['file_path']));
-          }
-          elseif ($file_info['file_content']) {
-            print features_tar_create($file_path, $file_info['file_content']);
-          }
+          print features_tar_create("{$directory}/{$filename}", $contents);
         }
-      }
-      unset($files['_files']);
-    }
-    foreach ($files as $extension => $file_contents) {
-      if (!in_array($extension, array('module', 'info'))) {
-        $extension .= '.inc';
-      }
-      $file_name = $module_name . '.' . $extension;
-      $filenames[] = $file_name;
-      $file_path = $directory . '/' . $file_name;
-      if ($generate) {
-        if (file_put_contents($file_path, $file_contents) === FALSE) {
-          $success = FALSE;
-        }
-      }
-      else {
-        print features_tar_create($file_path, $file_contents);
+        unset($contents);
       }
     }
-    if (features_get_modules($module_name, TRUE)) {
-      // prevent deprecated component files from being included in download
-      $deprecated = features_get_deprecated();
-      foreach ($deprecated as $component) {
-        $info = features_get_components($component);
-        $filename = isset($info['default_file']) && $info['default_file'] == FEATURES_DEFAULTS_CUSTOM ? $info['default_filename'] : "features.{$component}";
-        $filename .= '.inc';
-        $filenames[] = "{$module_name}.$filename";
-      }
-      $module_path = drupal_get_path('module', $module_name);
-      // file_scan_directory() can throw warnings when using PHP 5.3, messing
-      // up the output of our file stream. Suppress errors in this one case in
-      // order to produce valid output.
-      foreach (@file_scan_directory($module_path, '/.*/') as $file) {
-        $filename = substr($file->uri, strlen($module_path) + 1);
-        if (!in_array($filename, $filenames)) {
-          // Add this file.
-          $contents = file_get_contents($file->uri);
-          if ($generate) {
-            if (file_put_contents("{$directory}/{$filename}", $contents) === FALSE) {
-              $success = FALSE;
-            }
-          }
-          else {
-            print features_tar_create("{$directory}/{$filename}", $contents);
-          }
-          unset($contents);
-        }
-      }
-    }
-    if ($generate) {
-      if ($success) {
-        drupal_set_message(t("Module @name written to @directory",
-          array('@name' => $export['name'], '@directory' => $directory)));
-        }
-      else {
-        drupal_set_message(
-          t("Could not write module to @path. ", array('@path' => $directory)) .
-          t("Ensure your file permissions allow the web server to write to that directory."), "error");
-      }
+  }
+  if ($generate) {
+    if ($success) {
+      drupal_set_message(t("Module @name written to @directory",
+        array('@name' => $export['name'], '@directory' => $directory)));
     }
     else {
-      print pack("a1024","");
-      exit;
+      drupal_set_message(
+        t("Could not write module to @path. ", array('@path' => $directory)) .
+        t("Ensure your file permissions allow the web server to write to that directory."), "error");
     }
+  }
+  else {
+    print pack("a1024", "");
+    exit;
   }
 }
 
