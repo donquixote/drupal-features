@@ -880,122 +880,92 @@ function features_export_build_form_submit($form, &$form_state) {
   }
 
   // Generate download
-  if ($files = features_export_render($export, $module_name, TRUE)) {
-    $filename = (!empty($export['version']) ? "{$module_name}-{$export['version']}" : $module_name) . '.tar';
-
-    if ($generate) {
-      $success = TRUE;
-      $destination = variable_get('features_default_export_path', FEATURES_DEFAULT_EXPORT_PATH);
-      $directory = (!empty($export['project path'])) ? $export['project path'] . '/' . $module_name :
-        (isset($feature->filename) ? dirname($feature->filename) : $destination . '/' . $module_name);
-      if (!is_dir($directory)) {
-        if (mkdir($directory, 0777, true) === FALSE) {
-          $success = FALSE;
-        }
-      }
-    }
-    else {
-      // Clear out output buffer to remove any garbage from tar output.
-      if (ob_get_level()) {
-        ob_end_clean();
-      }
-
-      drupal_add_http_header('Content-type', 'application/x-tar');
-      drupal_add_http_header('Content-Disposition', 'attachment; filename="'. $filename .'"');
-      drupal_send_headers();
-    }
-
-    $tar = array();
-    $filenames = array();
-    // Copy any files if _files key is there.
-    if (!empty($files['_files'])) {
-      foreach ($files['_files'] as $file_name => $file_info) {
-        if ($generate) {
-          // See if files are in a sub directory.
-          if (strpos($file_name, '/')) {
-            $file_directory = $directory . '/' . substr($file_name, 0, strrpos($file_name, '/'));
-            if (!is_dir($file_directory)) {
-              mkdir($file_directory);
-            }
-          }
-          if (!empty($file_info['file_path'])) {
-            file_unmanaged_copy($file_info['file_path'], "{$directory}/{$file_name}", FILE_EXISTS_REPLACE);
-          }
-          elseif ($file_info['file_content']) {
-            file_put_contents("{$directory}/{$file_name}", $file_info['file_content']);
-          }
-        }
-        else {
-          if (!empty($file_info['file_path'])) {
-            print features_tar_create("{$module_name}/{$file_name}", file_get_contents($file_info['file_path']));
-          }
-          elseif ($file_info['file_content']) {
-            features_tar_create("{$directory}/{$file_name}", $file_info['file_content']);
-          }
-        }
-      }
-      unset($files['_files']);
-    }
-    foreach ($files as $extension => $file_contents) {
-      if (!in_array($extension, array('module', 'info'))) {
-        $extension .= '.inc';
-      }
-      $filenames[] = "{$module_name}.$extension";
-      if ($generate) {
-        if (file_put_contents("{$directory}/{$module_name}.$extension", $file_contents) === FALSE) {
-          $success = FALSE;
-        }
-      }
-      else {
-        print features_tar_create("{$module_name}/{$module_name}.$extension", $file_contents);
-      }
-    }
-    if (features_get_modules($module_name, TRUE)) {
-      // prevent deprecated component files from being included in download
-      $deprecated = features_get_deprecated();
-      foreach ($deprecated as $component) {
-        $info = features_get_components($component);
-        $filename = isset($info['default_file']) && $info['default_file'] == FEATURES_DEFAULTS_CUSTOM ? $info['default_filename'] : "features.{$component}";
-        $filename .= '.inc';
-        $filenames[] = "{$module_name}.$filename";
-      }
-      $module_path = drupal_get_path('module', $module_name);
-      // file_scan_directory() can throw warnings when using PHP 5.3, messing
-      // up the output of our file stream. Suppress errors in this one case in
-      // order to produce valid output.
-      foreach (@file_scan_directory($module_path, '/.*/') as $file) {
-        $filename = substr($file->uri, strlen($module_path) + 1);
-        if (!in_array($filename, $filenames)) {
-          // Add this file.
-          $contents = file_get_contents($file->uri);
-          if ($generate) {
-            if (file_put_contents("{$directory}/{$filename}", $contents) === FALSE) {
-              $success = FALSE;
-            }
-          }
-          else {
-            print features_tar_create("{$module_name}/{$filename}", $contents);
-          }
-          unset($contents);
-        }
-      }
-    }
-    if ($generate) {
-      if ($success) {
-        drupal_set_message(t("Module @name written to @directory",
-          array('@name' => $export['name'], '@directory' => $directory)));
-        }
-      else {
-        drupal_set_message(
-          t("Could not write module to @path. ", array('@path' => $directory)) .
-          t("Ensure your file permissions allow the web server to write to that directory."), "error");
-      }
-    }
-    else {
-      print pack("a1024","");
-      exit;
-    }
+  if (!$files = features_export_render($export, $module_name, TRUE)) {
+    return;
   }
+
+  $operations_per_file = _features_export_create_operations_per_file($files, $module_name);
+
+  if (!$generate) {
+
+    $tar_filename = !empty($export['version'])
+      ? "$module_name-$export[version].tar"
+      : "$module_name.tar";
+
+    _features_deliver_tar($tar_filename, $module_name, $operations_per_file);
+    exit;
+  }
+
+  if (!empty($export['project path'])) {
+    // Use the export directory specified by the user.
+    $directory = $export['project path'] . '/' . $module_name;
+  }
+  elseif (isset($feature->filename)) {
+    // The feature already exists, use its current directory.
+    $directory = dirname($feature->filename);
+  }
+  else {
+    // Follow the default pattern for features export directories.
+    $destination = variable_get('features_default_export_path', FEATURES_DEFAULT_EXPORT_PATH);
+    $directory = $destination . '/' . $module_name;
+  }
+
+  $success = _features_write_files($directory, $operations_per_file);
+
+  if ($success) {
+    drupal_set_message(
+      t("Module @name written to @directory",
+        array('@name' => $export['name'], '@directory' => $directory)));
+  }
+  else {
+    drupal_set_message(
+      t("Could not write module to @path. ", array('@path' => $directory)) .
+      t("Ensure your file permissions allow the web server to write to that directory."), "error");
+  }
+}
+
+/**
+ * Delivers a *.tar response to the browser.
+ *
+ * @param string $tar_filename
+ *   File name for the *.tar file.
+ * @param string|null $directory
+ *   Base path for files within the tar archive, or NULL to not prepend anything.
+ *   Typically the module name.
+ * @param string[][] $files
+ *   Files to be added to the archive.
+ *   Each entry either contains the file contents or a source path for copying.
+ *   Format: $[$file_name]['file_path'|'file_content'] = $source_path|$file_contents
+ */
+function _features_deliver_tar($tar_filename, $directory = NULL, array $files) {
+  // Clear out output buffer to remove any garbage from tar output.
+  if (ob_get_level()) {
+    ob_end_clean();
+  }
+
+  drupal_add_http_header('Content-type', 'application/x-tar');
+  drupal_add_http_header('Content-Disposition', 'attachment; filename="'. $tar_filename . '"');
+  drupal_send_headers();
+
+  // Base path with trailing slash.
+  $base_path = (NULL !== $directory) ? $directory . '/' : '';
+
+  foreach ($files as $file_name => $file_info) {
+    $file_path = $base_path . $file_name;
+    if (!empty($file_info['file_path'])) {
+      $file_contents = file_get_contents($file_info['file_path']);
+    }
+    elseif ($file_info['file_content']) {
+      $file_contents = $file_info['file_content'];
+    }
+    else {
+      continue;
+    }
+    print features_tar_create($file_path, $file_contents);
+  }
+
+  print pack("a1024","");
+  exit;
 }
 
 /**

@@ -256,6 +256,74 @@ function features_export_render_hooks($export, $module_name, $reset = FALSE) {
 }
 
 /**
+ * @param array $files
+ *   Return value from features_export_render().
+ * @param string $module_name
+ *   Module name for the feature to be created.
+ *
+ * @return string[][]
+ *   Format: $[$file]['file_content'|'file_path'] = $file_content|$source_path
+ */
+function _features_export_create_operations_per_file(array $files, $module_name) {
+  $operations_per_file = array();
+
+  // Copy any files if _files key is there.
+  if (!empty($files['_files'])) {
+    $operations_per_file = $files['_files'];
+    unset($files['_file']);
+  }
+
+  foreach ($files as $extension => $file_contents) {
+    if (!in_array($extension, array('module', 'info'))) {
+      $extension .= '.inc';
+    }
+    $file_name = $module_name . '.' . $extension;
+    $operations_per_file[$file_name] = ['file_content' => $file_contents];
+  }
+
+  if (!features_get_modules($module_name, TRUE)) {
+    // This is a new feature. No existing files need to be included.
+    return $operations_per_file;
+  }
+
+  $filenames = array_keys($operations_per_file);
+
+  // prevent deprecated component files from being included in download
+  $deprecated = features_get_deprecated();
+  foreach ($deprecated as $component) {
+    $info = features_get_components($component);
+    if (isset($info['default_file']) && $info['default_file'] == FEATURES_DEFAULTS_CUSTOM) {
+      $filename = "$module_name.$info[default_filename].inc";
+    }
+    else {
+      $filename = "$module_name.features.$component.inc";
+    }
+    $filenames[] = $filename;
+  }
+
+  $filenames = array_combine($filenames, $filenames);
+
+  $module_path = drupal_get_path('module', $module_name);
+  // The file_scan_directory() used to be called with '@' error suppression
+  // operator. This was necessary in PHP 5.3 when this was called in the middle
+  // of printing a *.tar response.
+  // Now this operation happens before the *.tar response is built, so some
+  // noise in stdout is no longer a problem.
+  foreach (file_scan_directory($module_path, '/.*/') as $file) {
+    $filename = substr($file->uri, strlen($module_path) + 1);
+    if (!isset($filenames[$filename])) {
+      // Add this file.
+      // @todo Consider to use 'file_path' instead of 'file_content' so this file can be copied.
+      // Or introduce a new key 'keep'?
+      $contents = file_get_contents($file->uri);
+      $operations_per_file[$filename]['file_content'] = $contents;
+    }
+  }
+
+  return $operations_per_file;
+}
+
+/**
  * Render feature export into an array representing its files.
  *
  * @param $export
@@ -1171,4 +1239,71 @@ function _features_get_ignore_keys($component) {
     $cache[$component] = module_invoke_all('features_ignore', $component);
   }
   return $cache[$component];
+}
+
+/**
+ * Writes files into a feature module.
+ *
+ * @param string $directory
+ *   Module directory for the generated feature.
+ * @param string[][] $files
+ *   Files to be added to the archive.
+ *   Each entry either contains the file contents or a source path for copying.
+ *   Format: $[$file_name]['file_path'|'file_content'] =
+ *   $source_path|$file_contents
+ *
+ * @return bool
+ *   TRUE on success, FALSE on failure.
+ */
+function _features_write_files($directory, array $files) {
+
+  $success = TRUE;
+  if (!is_dir($directory)
+    && !mkdir($directory, 0777, TRUE)
+    // Cover a rare race condition, where another process might have created
+    // the directory in the meantime.
+    // See https://github.com/kalessil/phpinspectionsea/blob/master/docs/probable-bugs.md#mkdir-race-condition
+    && !is_dir($directory)
+  ) {
+    // The directory does not exist, and was not created.
+    return FALSE;
+  }
+
+  // Collect directories that might need to be created.
+  $subdirectories = array();
+  foreach ($files as $file_name => $file_info) {
+    // See if files are in a sub directory.
+    if (FALSE !== $lastslashpos = strrpos($file_name, '/')) {
+      $file_directory = substr($file_name, 0, $lastslashpos);
+      $subdirectories[$file_directory] = $file_directory;
+    }
+  }
+
+  // Create subdirectories.
+  foreach ($subdirectories as $file_directory) {
+    if (!is_dir($directory)
+      && !mkdir($directory, 0777, TRUE)
+      // Do the same subsequent is_dir() check as above.
+      && !is_dir($directory)
+    ) {
+      // The directory does not exist, and was not created.
+      $success = FALSE;
+    }
+  }
+
+  foreach ($files as $file_name => $file_info) {
+    $file_path = $directory . '/' . $file_name;
+    if (!empty($file_info['file_path'])) {
+      if (FALSE === file_unmanaged_copy($file_info['file_path'], $file_path, FILE_EXISTS_REPLACE)) {
+        $success = FALSE;
+      }
+    }
+    elseif ($file_info['file_content']) {
+      if (FALSE === file_put_contents($file_path, $file_info['file_content'])) {
+        $success = FALSE;
+      }
+    }
+  }
+
+  return $success;
 }

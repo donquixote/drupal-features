@@ -640,7 +640,7 @@ function _drush_features_export($info, $module_name = NULL, $directory = NULL) {
           if (strpos($file_name, '/')) {
             $file_directory = $directory . '/' . substr($file_name, 0, strrpos($file_name, '/'));
             if (!is_dir($file_directory)) {
-              drush_op('mkdir', $file_directory);
+              drush_op('mkdir', $file_directory, 0777, TRUE);
             }
           }
           if (!empty($file_info['file_path'])) {
