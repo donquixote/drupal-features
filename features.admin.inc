@@ -886,11 +886,15 @@ function features_export_build_form_submit($form, &$form_state) {
     if ($generate) {
       $success = TRUE;
       $destination = variable_get('features_default_export_path', FEATURES_DEFAULT_EXPORT_PATH);
-      $directory = !empty($export['project path'])
-        ? $export['project path'] . '/' . $module_name
-        : (isset($feature->filename)
-          ? dirname($feature->filename)
-          : $destination . '/' . $module_name);
+      if (!empty($export['project path'])) {
+        $directory = $export['project path'] . '/' . $module_name;
+      }
+      elseif (isset($feature->filename)) {
+        $directory = dirname($feature->filename);
+      }
+      else {
+        $directory = $destination . '/' . $module_name;
+      }
       if (!is_dir($directory)) {
         if (mkdir($directory, 0777, true) === FALSE) {
           $success = FALSE;
