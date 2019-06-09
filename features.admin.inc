@@ -885,7 +885,6 @@ function features_export_build_form_submit($form, &$form_state) {
 
     if ($generate) {
       $success = TRUE;
-      $destination = variable_get('features_default_export_path', FEATURES_DEFAULT_EXPORT_PATH);
       if (!empty($export['project path'])) {
         $directory = $export['project path'] . '/' . $module_name;
       }
@@ -893,6 +892,7 @@ function features_export_build_form_submit($form, &$form_state) {
         $directory = dirname($feature->filename);
       }
       else {
+        $destination = variable_get('features_default_export_path', FEATURES_DEFAULT_EXPORT_PATH);
         $directory = $destination . '/' . $module_name;
       }
       if (!is_dir($directory)) {
