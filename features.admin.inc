@@ -913,6 +913,7 @@ function features_export_build_form_submit($form, &$form_state) {
     // Copy any files if _files key is there.
     if (!empty($files['_files'])) {
       foreach ($files['_files'] as $file_name => $file_info) {
+        $file_path = $directory . '/' . $file_name;
         if ($generate) {
           // See if files are in a sub directory.
           if (strpos($file_name, '/')) {
@@ -922,18 +923,18 @@ function features_export_build_form_submit($form, &$form_state) {
             }
           }
           if (!empty($file_info['file_path'])) {
-            file_unmanaged_copy($file_info['file_path'], "{$directory}/{$file_name}", FILE_EXISTS_REPLACE);
+            file_unmanaged_copy($file_info['file_path'], $file_path, FILE_EXISTS_REPLACE);
           }
           elseif ($file_info['file_content']) {
-            file_put_contents("{$directory}/{$file_name}", $file_info['file_content']);
+            file_put_contents($file_path, $file_info['file_content']);
           }
         }
         else {
           if (!empty($file_info['file_path'])) {
-            print features_tar_create("{$directory}/{$file_name}", file_get_contents($file_info['file_path']));
+            print features_tar_create($file_path, file_get_contents($file_info['file_path']));
           }
           elseif ($file_info['file_content']) {
-            print features_tar_create("{$directory}/{$file_name}", $file_info['file_content']);
+            print features_tar_create($file_path, $file_info['file_content']);
           }
         }
       }
@@ -943,14 +944,16 @@ function features_export_build_form_submit($form, &$form_state) {
       if (!in_array($extension, array('module', 'info'))) {
         $extension .= '.inc';
       }
-      $filenames[] = "{$module_name}.$extension";
+      $file_name = $module_name . '.' . $extension;
+      $filenames[] = $file_name;
+      $file_path = $directory . '/' . $file_name;
       if ($generate) {
-        if (file_put_contents("{$directory}/{$module_name}.$extension", $file_contents) === FALSE) {
+        if (file_put_contents($file_path, $file_contents) === FALSE) {
           $success = FALSE;
         }
       }
       else {
-        print features_tar_create("{$directory}/{$module_name}.$extension", $file_contents);
+        print features_tar_create($file_path, $file_contents);
       }
     }
     if (features_get_modules($module_name, TRUE)) {
