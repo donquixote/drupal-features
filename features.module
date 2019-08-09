@@ -533,16 +533,30 @@ function features_get_modules($name = NULL, $reset = FALSE) {
 }
 
 /**
- * Returns the array of supported components.
+ * Gets component types declared with hook_features_api().
  *
- * @see hook_features_api
+ * @param string $component
+ *   (optional) A specific type of component that supports features.
+ *   E.g. "field_instance".
+ * @param string $key
+ *   (optional) The name of a property to retrieve for each component type.
+ *   E.g. "name", "default_hook" or "base".
+ * @param bool $reset
+ *   (optional) If TRUE, the components cache will be cleared.
  *
- * @param $component
- *   A specific type of component that supports features.
- * @param $key
- *   A key that hook_features_api supports.
+ * @return mixed|mixed[]|array|array[]|null
+ *   Return value depending on parameters:
+ *   - If both $component and $key are provided:
+ *     A specific value from the info of the specified component.
+ *   - If only $key is provided:
+ *     List with the same value from each component.
+ *   - If only $component is provided:
+ *     Info array of the specified component.
+ *     If the component is not found, a notice is triggered, and NULL is returned.
+ *   - If neither $component nor $key are provided:
+ *     List of component info arrays, keyed by component.
  *
- * @return An array of component labels keyed by the component names.
+ * @see hook_features_api()
  */
 function features_get_components($component = NULL, $key = NULL, $reset = FALSE) {
   features_include();
@@ -581,6 +595,10 @@ function features_get_components($component = NULL, $key = NULL, $reset = FALSE)
 
 /**
  * Returns components that are offered as an option on feature creation.
+ *
+ * @return array[]
+ *   Components from hook_features_api() where 'features_source' is TRUE.
+ *   Format: $[$component] = $component_info
  */
 function features_get_feature_components() {
   return array_intersect_key(features_get_components(), array_filter(features_get_components(NULL, 'feature_source')));
