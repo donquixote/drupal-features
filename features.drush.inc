@@ -680,7 +680,7 @@ function _drush_features_export($info, $module_name = NULL, $directory = NULL) {
  * @param $module_name
  *  Optional. The name for the exported module.
  */
-function _drush_features_generate_export(&$info, &$module_name) {
+function _drush_features_generate_export(&$info, $module_name) {
   module_load_include('inc', 'features', 'features.export');
   $export = features_populate($info, $module_name);
   if (!features_load_feature($module_name)) {
