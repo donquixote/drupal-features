@@ -162,6 +162,12 @@ function features_drush_command() {
 
 /**
  * Implements hook_drush_help().
+ *
+ * @param string $section
+ *   The help topic/section.
+ *
+ * @return string|void
+ *   The (translated) help text, or NULL if none available.
  */
 function features_drush_help($section) {
   // If Features is enabled display the configured default export path,
