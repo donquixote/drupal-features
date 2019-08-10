@@ -295,7 +295,11 @@ function drush_features_components() {
 }
 
 /**
- * Returns a listing of all known components, indexed by source.
+ * Returns all component item labels, grouped by component type.
+ *
+ * @return string[][]
+ *   Format: $[$component][$name] = $title
+ *   E.g. $['node']['article'] = 'Article'.
  */
 function _drush_features_component_list() {
   $components = array();
