@@ -718,6 +718,10 @@ function features_get_info($type = 'module', $name = NULL, $reset = FALSE) {
       'module' => array(),
     );
     $ignored = variable_get('features_ignored_orphans', array());
+    /**
+     * @var \stdClass[] $files
+     *   Info about all available modules, keyed by module name.
+     */
     $files = system_rebuild_module_data();
 
     foreach ($files as $row) {
