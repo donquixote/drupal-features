@@ -687,7 +687,25 @@ function features_get_features($name = NULL, $reset = FALSE) {
 }
 
 /**
- * Helper for retrieving info from system table.
+ * Retrieves module info from the system table.
+ *
+ * @param string $type
+ *   (optional) One of 'module' or 'feature'.
+ *   If 'module', all modules are returned.
+ *   If 'feature', only those modules are returned that act as features.
+ * @param string|null $name
+ *   (optional) Name of a (feature or not) module.
+ *   If the module is not a feature, and $type is 'feature', FALSE will be
+ *   returned instead.
+ * @param bool $reset
+ *   (optional) If TRUE, the cache will be cleared before fetching.
+ *
+ * @return \stdClass[]|\stdClass|false
+ *   If $name is NULL: $[$module] = $module_info_object
+ *   If $name is not NULL: A specific module info object.
+ *   If no matching module is found, FALSE is returned.
+ *
+ * @see system_rebuild_module_data()
  */
 function features_get_info($type = 'module', $name = NULL, $reset = FALSE) {
   static $cache;
