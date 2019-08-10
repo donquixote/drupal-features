@@ -671,6 +671,16 @@ function features_install_modules($modules) {
 /**
  * Wrapper around features_get_info() that returns an array
  * of module info objects that are features.
+ *
+ * @param string|null $name
+ *   (optional) Name of a feature module.
+ * @param bool $reset
+ *   (optional) If TRUE, the cache will be cleared before fetching.
+ *
+ * @return \stdClass[]|\stdClass|false
+ *   If $name is NULL: $[$module] = $module_info_object
+ *   If $name is not NULL: A specific module info object.
+ *   If no matching module is found, FALSE is returned.
  */
 function features_get_features($name = NULL, $reset = FALSE) {
   return features_get_info('feature', $name, $reset);
