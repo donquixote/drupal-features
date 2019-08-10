@@ -207,7 +207,7 @@ Lastly, a pattern without a colon is interpreted as having \":%\" appended, for 
  * Get a list of all feature modules.
  */
 function drush_features_list() {
-  $status = drush_get_option('status') ? drush_get_option('status') : 'all';
+  $status = drush_get_option('status') ?: 'all';
   if (!in_array($status, array('enabled', 'disabled', 'all'))) {
     return drush_set_error('', dt('!status is not valid', array('!status' => $status)));
   }
