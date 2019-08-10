@@ -518,15 +518,16 @@ function features_load_feature($name, $reset = FALSE) {
 /**
  * Return a module 'object' including .info information.
  *
- * @param $name
- *   The name of the module to retrieve information for. If omitted,
+ * @param string|null $name
+ *   (optional) The name of the module to retrieve information for. If omitted,
  *   an array of all available modules will be returned.
- * @param $reset
- *   Whether to reset the cache.
+ * @param bool $reset
+ *   (optional) If TRUE, the cache will be reset before fetching.
  *
- * @return
- *   If a module is request (and exists) a module object is returned. If no
- *   module is requested info for all modules is returned.
+ * @return \stdClass[]|\stdClass|false
+ *   If $name is NULL: $[$module] = $module_info_object
+ *   If $name is not NULL: A specific module info object.
+ *   If no matching module is found, FALSE is returned.
  */
 function features_get_modules($name = NULL, $reset = FALSE) {
   return features_get_info('module', $name, $reset);
@@ -694,13 +695,47 @@ function features_install_modules($modules) {
 /**
  * Wrapper around features_get_info() that returns an array
  * of module info objects that are features.
+ *
+ * @param string|null $name
+ *   (optional) Name of a feature module.
+ * @param bool $reset
+ *   (optional) If TRUE, the cache will be cleared before fetching.
+ *
+ * @return \stdClass[]|\stdClass|false
+ *   If $name is NULL: $[$module] = $module_info_object
+ *   If $name is not NULL: A specific module info object.
+ *   If no matching module is found, FALSE is returned.
  */
 function features_get_features($name = NULL, $reset = FALSE) {
   return features_get_info('feature', $name, $reset);
 }
 
 /**
- * Helper for retrieving info from system table.
+ * Retrieves module info from the system table.
+ *
+ * @param string $type
+ *   (optional) One of 'module' or 'feature'.
+ *   If 'module', all modules are returned.
+ *   If 'feature', only those modules are returned that act as features.
+ * @param string|null $name
+ *   (optional) Name of a (feature or not) module.
+ *   If the module is not a feature, and $type is 'feature', FALSE will be
+ *   returned instead.
+ * @param bool $reset
+ *   (optional) If TRUE, the cache will be cleared before fetching.
+ *
+ * @return \stdClass[]|\stdClass|false
+ *   If $name is NULL or empty:
+ *     List of modules according to $type.
+ *     Format: $[$module] = $module_info_object
+ *   If $name is not NULL or empty:
+ *     Module info object, if it matches $type.
+ *     FALSE, if the module does not exist, or if $type is 'feature' and the
+ *     module is not a feature.
+ *   If $type is something other than 'module' or 'feature':
+ *     FALSE, no matter the other parameters.
+ *
+ * @see system_rebuild_module_data()
  */
 function features_get_info($type = 'module', $name = NULL, $reset = FALSE) {
   static $cache;
