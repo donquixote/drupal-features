@@ -315,6 +315,18 @@ function _drush_features_component_list() {
 
 /**
  * Filters components by patterns.
+ *
+ * @param string[][] $all_components
+ *   Format: $[$component][$name] = $title
+ * @param string[] $patterns
+ *   Format: $[] = $pattern
+ * @param array $options
+ *
+ * @return array|false
+ *   Format: ['components' => $selected, 'sources' => $provided_by]
+ *     $['components'][$component][$name] = $title
+ *     $['sources'][$component . ':' . $name] =
+ *
  */
 function _drush_features_component_filter($all_components, $patterns = array(), $options = array()) {
   $options += array(
