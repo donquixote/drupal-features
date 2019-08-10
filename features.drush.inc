@@ -204,7 +204,9 @@ Lastly, a pattern without a colon is interpreted as having \":%\" appended, for 
 }
 
 /**
- * Get a list of all feature modules.
+ * Drush command callback for 'features-list'.
+ *
+ * Shows a list of all feature modules.
  */
 function drush_features_list() {
   $status = drush_get_option('status') ? drush_get_option('status') : 'all';
@@ -252,7 +254,11 @@ function drush_features_list() {
 }
 
 /**
- * List components, with pattern matching.
+ * Drush command callback for 'features-components'.
+ *
+ * Shows a list of exportable items, filtered by component or by pattern.
+ * If the item is already exported to a feature, that feature name is shown
+ * along with it.
  */
 function drush_features_components() {
   $args = func_get_args();
@@ -479,6 +485,8 @@ function _drush_features_component_print($filtered_components, $options = array(
 /**
  * Add a component to a features module, or create a new module with
  * the selected components.
+ *
+ * @return false|void
  */
 function drush_features_export() {
   if ($args = func_get_args()) {
@@ -571,6 +579,9 @@ function drush_features_update() {
 /**
  * Update all enabled features. Optionally pass in a list of features to
  * exclude from being updated.
+ *
+ * @return false|void
+ *   FALSE on error, NULL/void otherwise.
  */
 function drush_features_update_all() {
   $features_to_update = array();
@@ -830,6 +841,8 @@ function drush_features_revert() {
  *
  * @param ...
  *   (Optional) A list of features to exclude from being reverted.
+ *
+ * @return void|false
  */
 function drush_features_revert_all() {
   module_load_include('inc', 'features', 'features.export');
@@ -871,6 +884,8 @@ function drush_features_revert_all() {
 
 /**
  * Show the diff of a feature module.
+ *
+ * @return void|false
  */
 function drush_features_diff() {
   if (!$args = func_get_args()) {
@@ -964,6 +979,8 @@ function drush_features_diff() {
  *
  * @param ...
  *   (Optional) A list of features to exclude from being reverted.
+ *
+ * @return void|false
  */
 function drush_features_diff_all() {
   module_load_include('inc', 'features', 'features.export');
