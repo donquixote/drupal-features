@@ -898,6 +898,18 @@ function features_get_conflicts($reset = FALSE) {
 
 /**
  * Provide a component to feature map.
+ *
+ * @param string|null $key
+ *   (optional) Component type to filter by.
+ * @param bool $reset
+ *   (optional) If TRUE,
+ *
+ * @return string[][][]|string[][]
+ *   Format:
+ *   - If $key is NULL:
+ *     $[$component][$name][] = $module
+ *   - If $key is not NULL:
+ *     $[$name][] = $module
  */
 function features_get_component_map($key = NULL, $reset = FALSE) {
   static $map;
