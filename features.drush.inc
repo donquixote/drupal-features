@@ -204,7 +204,9 @@ Lastly, a pattern without a colon is interpreted as having \":%\" appended, for 
 }
 
 /**
- * Get a list of all feature modules.
+ * Drush command callback for 'features-list'.
+ *
+ * Shows a list of all feature modules.
  */
 function drush_features_list() {
   $status = drush_get_option('status') ? drush_get_option('status') : 'all';
@@ -252,7 +254,11 @@ function drush_features_list() {
 }
 
 /**
- * List components, with pattern matching.
+ * Drush command callback for 'features-components'.
+ *
+ * Shows a list of exportable items, filtered by component or by pattern.
+ * If the item is already exported to a feature, that feature name is shown
+ * along with it.
  */
 function drush_features_components() {
   $args = func_get_args();
