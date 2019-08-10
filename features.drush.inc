@@ -8,8 +8,9 @@
 /**
  * Implements hook_drush_command().
  *
- * @return
+ * @return array[]
  *   An associative array describing your command(s).
+ *   Format: [$command_name] = $command_info
  *
  * @see drush_parse_command()
  */
