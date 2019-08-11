@@ -1594,6 +1594,7 @@ function _features_get_used($module_name = NULL) {
   $component_info = features_get_components();
   $map = features_get_component_map();
 
+  // @todo The variable names are inconsistent with other code in features! See #3074006.
   foreach ($map as $type => $components) {
     // Only check conflicts for components we know about.
     if (isset($component_info[$type])) {
