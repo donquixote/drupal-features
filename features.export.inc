@@ -663,6 +663,10 @@ function features_translatables_export($translatables, $indent = '') {
 
 /**
  * Get a summary storage state for a feature.
+ *
+ * @param string $module_name
+ *
+ * @return int
  */
 function features_get_storage($module_name) {
   // Get component states, and array_diff against array(FEATURES_DEFAULT).
