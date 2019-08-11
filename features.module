@@ -482,6 +482,13 @@ function features_include_defaults($components = NULL, $reset = FALSE) {
 
 /**
  * Feature object loader.  DEPRECATED but included for backwards compatibility
+ *
+ * @param string $name
+ * @param bool $reset
+ *
+ * @return false|mixed|\stdClass|\stdClass[]
+ *
+ * @deprecated
  */
 function feature_load($name, $reset = FALSE) {
   return features_load_feature($name, $reset);
