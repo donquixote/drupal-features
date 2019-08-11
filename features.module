@@ -1340,6 +1340,15 @@ function _features_export_language($language = NULL) {
 
 /**
  * Implements hook_features_ignore().
+ *
+ * @param string $component
+ *   Name of a component type, e.g. "field_instance".
+ *
+ * @return int[]
+ *   Map of keys to ignore at specific recursion levels.
+ *   Format: $[$key] = $level
+ *
+ * @todo Add hook_features_ignore() in features.api.php.
  */
 function features_features_ignore($component) {
   // Determine which keys need to be ignored for override diff for various components.
