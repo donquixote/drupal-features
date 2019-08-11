@@ -481,7 +481,15 @@ function features_include_defaults($components = NULL, $reset = FALSE) {
 }
 
 /**
- * Feature object loader.  DEPRECATED but included for backwards compatibility
+ * Menu wildcard loader for '%feature'.
+ *
+ * @param string $name
+ *   Path fragment.
+ * @param bool $reset
+ *   (optional) If TRUE, the cache will be cleared before fetching.
+ *
+ * @return \stdClass|false
+ *   Object with module info, or FALSE if not found or not a feature.
  */
 function feature_load($name, $reset = FALSE) {
   return features_load_feature($name, $reset);
