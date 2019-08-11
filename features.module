@@ -391,6 +391,11 @@ function features_modules_enabled($modules) {
 /**
  * Load includes for any modules that implement the features API and
  * load includes for those provided by features.
+ *
+ * @param bool $reset
+ *   (optional) If TRUE, the operation will run again even if it has run before
+ *   in the same request. This is useful e.g. if additional modules were enabled
+ *   since then.
  */
 function features_include($reset = FALSE) {
   static $once;
@@ -423,6 +428,13 @@ function features_include($reset = FALSE) {
 /**
  * Load features includes for all components that require includes before
  * collecting defaults.
+ *
+ * @param string[]|string|null $components
+ *   (optional) A list of component names, or one component name, or NULL.
+ *   If provided, only the files for the specified components are included.
+ * @param bool $reset
+ *   (optional) If TRUE, the operation will run again even if it has already run
+ *   during the same request. This is useful e.g. when new modules were enabled.
  */
 function features_include_defaults($components = NULL, $reset = FALSE) {
   static $include_components;
