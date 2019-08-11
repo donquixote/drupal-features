@@ -1013,11 +1013,11 @@ function features_get_component_states($features = array(), $rebuild_only = TRUE
  * Helper function to eliminate whitespace differences in code.
  */
 function _features_linetrim($code) {
-  $code = explode("\n", $code);
-  foreach ($code as $k => $line) {
-    $code[$k] = trim($line);
+  $lines = explode("\n", $code);
+  foreach ($lines as $k => $line) {
+    $lines[$k] = trim($line);
   }
-  return implode("\n", $code);
+  return implode("\n", $lines);
 }
 
 /**
