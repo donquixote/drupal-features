@@ -928,7 +928,9 @@ function features_get_component_states($features = array(), $rebuild_only = TRUE
   }
 
   foreach ($features as $feature) {
-    $cache[$feature] = isset($cache[$feature]) ? $cache[$feature] : array();
+    if (!isset($cache[$feature])) {
+      $cache[$feature] = array();
+    }
     if (module_exists($feature) && !empty($all_features[$feature]->components)) {
       foreach (array_intersect($all_features[$feature]->components, $components) as $component) {
         if (!isset($cache[$feature][$component])) {
