@@ -1151,14 +1151,24 @@ function _features_is_assoc($array) {
 }
 
 /**
- * Removes recursion from an object or array.
+ * Returns a deep copy of the object or array without recursion.
  *
- * Taken from https://code.google.com/p/formaldehyde/source/browse/trunk/formaldehyde.php
- * Also used in node_export module
+ * Properties or array values with recursive references are replaced with dummy
+ * string values.
  *
- * @param $o mixed
- * @return mixed
- *   returns a copy of the object or array with recursion removed
+ * The algorithm operates on a serialized version of the data. It was introduced
+ * in features in #2543306, mainly for performance reasons. It is taken from
+ * https://code.google.com/p/formaldehyde/source/browse/trunk/formaldehyde.php.
+ * The algorithm is also used in the node_export module.
+ *
+ * @param object|array|mixed $o
+ *   Original object or array, or an arbitrary value.
+ *
+ * @return object|array|mixed
+ *   A copy of the object or array with recursion removed.
+ *   If the original value was not an object or array, it is returned unaltered.
+ *
+ * @todo Needs unit tests.
  */
 function features_remove_recursion($o) {
   if (is_array($o) || is_object($o)) {
@@ -1189,6 +1199,24 @@ function features_remove_recursion($o) {
 
 /**
  * Callback function for preg_replace_callback() to remove recursion.
+ *
+ * The regular expression in calling code is '#(r|R):([0-9]+);#'. The source
+ * string is a serialized array or object. The modified source string will be
+ * sent back to unserialize(), so all replacements must be compatible with that.
+ *
+ * @internal
+ * Designed for internal use within @see features_remove_recursion().
+ *
+ * @param string[] $m
+ *   Match parts from preg_replace_callback().
+ *   $m[0] contains the complete matching fragment for "(r|R):([0-9]+);".
+ *   $m[1] contains the sub-fragment for "(r|R)".
+ *   $m[2] contains the sub-fragment for "([0-9]+)".
+ *
+ * @return string
+ *   Replacement string fragment.
+ *
+ * @see preg_replace_callback()
  */
 function _features_remove_recursion($m) {
   $r = "\x00{$m[1]}ecursion_features";
