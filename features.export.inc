@@ -107,6 +107,13 @@ function _features_populate($pipe, &$export, $module_name = '', $reset = FALSE) 
 
 /**
  * Iterates over data and convert to dependencies if already defined elsewhere.
+ *
+ * @param string[] $data
+ *   Names of component items/objects, e.g. "node-article-body".
+ * @param array $export
+ * @param string $module_name
+ * @param string $component
+ *   E.g. "field_instance".
  */
 function _features_resolve_dependencies(&$data, &$export, $module_name, $component) {
   if ($map = features_get_default_map($component)) {
