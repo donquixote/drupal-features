@@ -797,6 +797,17 @@ function _features_module_exists($module) {
 
 /**
  * Get defaults for a given module/component pair.
+ *
+ * @param string $component
+ * @param string|null $module_name
+ *   (optional) If specified, only return defaults for this module.
+ * @param bool $alter
+ *   (optional) If TRUE,
+ * @param bool $reset
+ *
+ * @return array[]|false
+ *   Format: $[$name] = $item_export_data
+ *   E.g. $['node-article-body'] = ['
  */
 function features_get_default($component, $module_name = NULL, $alter = TRUE, $reset = FALSE) {
   $cache = &drupal_static(__FUNCTION__, array());
