@@ -1082,7 +1082,11 @@ function _features_sanitize(&$array, $remove_empty = TRUE) {
  * @return True is the array is an associative array, false otherwise
  */
 function _features_is_assoc($array) {
-  return (is_array($array) && (0 !== count(array_diff_key($array, array_keys(array_keys($array)))) || count($array)==0));
+  return is_array($array)
+    && ([] === $array
+      || [] !== array_diff_key(
+        $array,
+        array_keys(array_keys($array))));
 }
 
 /**
