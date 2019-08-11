@@ -936,6 +936,25 @@ function features_get_default_map($component, $attribute = NULL, $callback = NUL
 
 /**
  * Retrieve an array of features/components and their current states.
+ *
+ * @param string[] $features
+ *   (optional) Machine names of feature modules.
+ *   If empty, states for all features will be returned.
+ * @param bool $rebuild_only
+ *   (optional) If TRUE, only rebuildable components are returned.
+ * @param bool $reset
+ *   (optional) If TRUE, relevant caches will be reset before fetching.
+ *
+ * @return int[][]
+ *   Component states by module and component.
+ *   Format: $[$module][$component] = $state
+ *   where $state will be one of the states listed below.
+ *
+ * @see FEATURES_REBUILDABLE
+ * @see FEATURES_DEFAULT
+ * @see FEATURES_OVERRIDDEN
+ * @see FEATURES_NEEDS_REVIEW
+ * @see FEATURES_REBUILDING
  */
 function features_get_component_states($features = array(), $rebuild_only = TRUE, $reset = FALSE) {
   // Ensure that the export will be created in the English language.
