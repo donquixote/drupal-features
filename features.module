@@ -495,7 +495,15 @@ function feature_load($name, $reset = FALSE) {
 }
 
 /**
- * Feature object loader.
+ * Gets an object with information about a feature module.
+ *
+ * @param string $name
+ *   Name of a (feature) module.
+ * @param bool $reset
+ *   (optional) If TRUE, the cache will be cleared before fetching.
+ *
+ * @return \stdClass|false
+ *   Object with module info, or FALSE if not found or not a feature.
  */
 function features_load_feature($name, $reset = FALSE) {
   // Use an alternative code path during installation, for better performance.
