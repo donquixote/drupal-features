@@ -1080,9 +1080,12 @@ function _features_linetrim($code) {
 /**
  * Helper function to "sanitize" an array or object.
  * Converts everything to an array, sorts the keys, removes recursion.
- * @param $array
- * @param $component string name of component
- * @param bool $remove_empty if set, remove null or empty values for assoc arrays.
+ *
+ * @param array|object $array
+ * @param string $component
+ *   (optional) Name of a component type, e.g. "field_instance".
+ * @param bool $remove_empty
+ *   (optional) If TRUE, remove null or empty values for assoc arrays.
  */
 function features_sanitize(&$array, $component = NULL, $remove_empty = TRUE) {
   $array = features_remove_recursion($array);
@@ -1097,9 +1100,28 @@ function features_sanitize(&$array, $component = NULL, $remove_empty = TRUE) {
 }
 
 /**
- * "Sanitizes" an array recursively, performing two key operations:
- * - Sort an array by its keys (assoc) or values (non-assoc)
- * @param bool $remove_empty if set, remove null or empty values for assoc arrays.
+ * Internal. "Sanitizes" a (nested) array (or object) recursively.
+ *
+ * The following operations are performed on every recursion level:
+ * - Objects are converted to array via get_object_vars().
+ * - "Associative" arrays are sorted by key.
+ * - Non-associative/serial arrays are sorted by value.
+ * - Empty values and empty sub-trees are removed if $remove_empty is TRUE.
+ *
+ * @internal
+ * This function is designed for internal use within @see features_sanitize().
+ *
+ * @param array|object|mixed $array
+ *   Array or object to be sanitized.
+ *   If $array is an object, it will be converted to array via get_object_vars().
+ *   Any nested objects will be converted to array in the same way.
+ *   If $array is not an array or object, it will be left as-is.
+ * @param bool $remove_empty
+ *   If TRUE, remove null or empty values for assoc arrays.
+ *   This will also remove empty arrays or objects nested in the hierarchy.
+ *
+ * @todo Needs unit tests.
+ * @todo A better name might be "normalize", not "sanitize".
  */
 function _features_sanitize(&$array, $remove_empty = TRUE) {
   if (is_object($array)) {
@@ -1128,15 +1150,28 @@ function _features_sanitize(&$array, $remove_empty = TRUE) {
 }
 
 /**
- * Is the given array an associative array. This basically extracts the keys twice to get the
- * numerically ordered keys. It then does a diff with the original array and if there is no
- * key diff then the original array is not associative.
+ * Internal. Checks whether the array is "associative".
  *
- * NOTE: If you have non-sequential numerical keys, this will identify the array as assoc.
+ * An array is considered "associative" by this function, if:
+ * - it is empty (no values), or
+ * - it has any non-integer keys, or
+ * - some numeric indices are missing, e,g, [0 => $v, 1 => $v, 3 => $v].
+ *
+ * Note: The order of numeric indices is irrelevant.
+ * E.g. [1 => $v, 0 => $v] is considered NOT associative.
  *
  * Borrowed from: http://www.php.net/manual/en/function.is-array.php#96724
  *
- * @return True is the array is an associative array, false otherwise
+ * @internal
+ * This function is designed for internal use within @see _features_sanitize().
+ *
+ * @param array $array
+ *   The array to be tested.
+ *
+ * @return bool
+ *   TRUE if the array is considered "associative".
+ *
+ * @todo Needs unit tests.
  */
 function _features_is_assoc($array) {
   return (is_array($array) && (0 !== count(array_diff_key($array, array_keys(array_keys($array)))) || count($array)==0));
@@ -1218,10 +1253,14 @@ function _features_remove_recursion($m) {
 /**
  * Helper to removes a set of keys an object/array.
  *
- * @param $item
+ * @internal
+ * Designed for internal use within @see features_sanitize().
+ *
+ * @param object|array $item
  *   An object or array passed by reference.
- * @param $ignore_keys
+ * @param int[] $ignore_keys
  *   Array of keys to be ignored. Values are the level of the key.
+ *   Format: $[$key] = $level
  * @param $level
  *   Level of key to remove.  Up to 2 levels deep because $item can still be
  *   recursive
@@ -1249,8 +1288,20 @@ function _features_remove_ignores(&$item, $ignore_keys, $level = -1) {
 
 /**
  * Returns an array of keys to be ignored for various exportables
- * @param $component
- *   The component to retrieve ignore_keys from.
+ *
+ * @internal
+ * Designed for use within @see features_sanitize().
+ *
+ * @param string $component
+ *   Name of a component type, e.g. "field_instance".
+ *
+ * @return int[]
+ *   Map of keys to ignore at specific recursion levels.
+ *   Format: $[$key] = $level
+ *
+ * @see features_features_ignore()
+ *
+ * @todo Add hook_features_ignore() in features.api.php.
  */
 function _features_get_ignore_keys($component) {
   static $cache;
