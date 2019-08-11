@@ -186,8 +186,7 @@ function _features_export_minimize_dependencies($dependencies, $module_name = ''
         // that are captured by it.
         else {
           foreach ($module->info['dependencies'] as $j => $dependency) {
-            if (array_search($dependency, $dependencies) !== FALSE) {
-              $position = array_search($dependency, $dependencies);
+            if (FALSE !== $position = array_search($dependency, $dependencies)) {
               unset($dependencies[$position]);
             }
           }
@@ -1009,7 +1008,9 @@ function features_get_component_states($features = array(), $rebuild_only = TRUE
   }
 
   foreach ($features as $feature) {
-    $cache[$feature] = isset($cache[$feature]) ? $cache[$feature] : array();
+    if (!isset($cache[$feature])) {
+      $cache[$feature] = array();
+    }
     if (module_exists($feature) && !empty($all_features[$feature]->components)) {
       foreach (array_intersect($all_features[$feature]->components, $components) as $component) {
         if (!isset($cache[$feature][$component])) {
@@ -1098,11 +1099,11 @@ function features_get_component_states($features = array(), $rebuild_only = TRUE
  *   Modified piece of code with no leading or trailing whitespace per line.
  */
 function _features_linetrim($code) {
-  $code = explode("\n", $code);
-  foreach ($code as $k => $line) {
-    $code[$k] = trim($line);
+  $lines = explode("\n", $code);
+  foreach ($lines as $k => $line) {
+    $lines[$k] = trim($line);
   }
-  return implode("\n", $code);
+  return implode("\n", $lines);
 }
 
 /**
@@ -1202,7 +1203,11 @@ function _features_sanitize(&$array, $remove_empty = TRUE) {
  * @todo Needs unit tests.
  */
 function _features_is_assoc($array) {
-  return (is_array($array) && (0 !== count(array_diff_key($array, array_keys(array_keys($array)))) || count($array)==0));
+  return is_array($array)
+    && ([] === $array
+      || [] !== array_diff_key(
+        $array,
+        array_keys(array_keys($array))));
 }
 
 /**
