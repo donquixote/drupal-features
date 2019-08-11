@@ -889,14 +889,16 @@ function features_get_default($component, $module_name = NULL, $alter = TRUE, $r
 }
 
 /**
- * Get a map of components to their providing modules.
+ * Gets a map of components to their providing modules.
  *
  * @param string $component
  * @param string $attribute
  * @param callable $callback
  * @param bool $reset
  *
- * @return array|bool
+ * @return string[]|false
+ *   Format: $[$name] = $module
+ *   E.g. $['node-article-field_body'] = 'mysite_ct_article'.
  */
 function features_get_default_map($component, $attribute = NULL, $callback = NULL, $reset = FALSE) {
   $map = &drupal_static(__FUNCTION__, array());
