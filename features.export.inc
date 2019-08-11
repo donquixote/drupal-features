@@ -1070,6 +1070,12 @@ function features_get_component_states($features = array(), $rebuild_only = TRUE
 
 /**
  * Helper function to eliminate whitespace differences in code.
+ *
+ * @param string $code
+ *   Original (multi-line) piece of code.
+ *
+ * @return string
+ *   Modified piece of code with no leading or trailing whitespace per line.
  */
 function _features_linetrim($code) {
   $code = explode("\n", $code);
