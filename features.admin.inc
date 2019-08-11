@@ -1592,6 +1592,11 @@ function _features_get_used($module_name = NULL) {
 
   $conflicts = array();
   $component_info = features_get_components();
+  /**
+   * @var string[][][] $map
+   *   Format: $[$component][$name][] = $module
+   *   E.g. $['node']['article'][] = 'myfeature'
+   */
   $map = features_get_component_map();
 
   foreach ($map as $type => $components) {
