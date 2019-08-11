@@ -1581,6 +1581,12 @@ function features_autocomplete_packages($search_string) {
 /**
  * Return a list of all used components/items not matching a given feature module
  * similar to features_get_conflicts but returns all component items "in use"
+ *
+ * @param string|null $module_name
+ *
+ * @return string[][][]
+ *   Format: $[$module][$component][] = $name
+ *   E.g. $['myfeature']['node'][] = 'article'
  */
 function _features_get_used($module_name = NULL) {
 
