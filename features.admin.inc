@@ -1628,6 +1628,9 @@ function _features_get_used($module_name = NULL) {
  *
  * @internal - This function might return cached result with outdated data,
  * use with caution.
+ *
+ * @return \stdClass[]
+ *   Format: $[$module] = $module_info_object
  */
 function _features_get_features_list() {
   $features = array();
