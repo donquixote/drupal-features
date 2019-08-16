@@ -663,8 +663,6 @@ function features_hook($component, $hook, $reset = FALSE) {
  *
  * @param $modules
  *   An array of modules to install.
- * @param $reset
- *   Clear the module info cache.
  */
 function features_install_modules($modules) {
   variable_set('features_modules_changed', TRUE);
