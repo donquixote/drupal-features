@@ -142,8 +142,7 @@ function _features_export_minimize_dependencies($dependencies, $module_name = ''
         // that are captured by it.
         else {
           foreach ($module->info['dependencies'] as $j => $dependency) {
-            if (array_search($dependency, $dependencies) !== FALSE) {
-              $position = array_search($dependency, $dependencies);
+            if (FALSE !== $position = array_search($dependency, $dependencies)) {
               unset($dependencies[$position]);
             }
           }
