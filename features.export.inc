@@ -24,8 +24,8 @@ function features_populate($info, $module_name) {
   $items['dependencies'] = !empty($info['dependencies']) ? drupal_map_assoc(array_filter($info['dependencies'])) : array();
 
   // Populate stub
-  $stub = array('features' => array(), 'dependencies' => array(), 'conflicts' => array()) + $info + array('features_exclude' => array());
-  $export = _features_populate($items, $stub, $module_name, TRUE);
+  $export = array('features' => array(), 'dependencies' => array(), 'conflicts' => array()) + $info + array('features_exclude' => array());
+  _features_populate($items, $export, $module_name, TRUE);
 
   // Add Features API version. Any module with this entry in the .info file
   // will be treated as a Feature and included in the admin/build/features UI.

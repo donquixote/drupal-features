@@ -1598,8 +1598,14 @@ function _features_get_used($module_name = NULL) {
 
   $conflicts = array();
   $component_info = features_get_components();
+  /**
+   * @var string[][][] $map
+   *   Format: $[$component][$name][] = $module
+   *   E.g. $['node']['article'][] = 'myfeature'
+   */
   $map = features_get_component_map();
 
+  // @todo The variable names are inconsistent with other code in features! See #3074006.
   foreach ($map as $type => $components) {
     // Only check conflicts for components we know about.
     if (isset($component_info[$type])) {
@@ -1645,7 +1651,9 @@ function _features_get_features_list() {
     features_get_info(NULL, NULL, TRUE);
     features_rebuild();
 
+    /** @var \stdClass[] $modules */
     $modules = array_filter(features_get_modules(), 'features_filter_hidden');
+    /** @var \stdClass[] $features */
     $features = array_filter(features_get_features(), 'features_filter_hidden');
 
     foreach ($modules as $key => $module) {
