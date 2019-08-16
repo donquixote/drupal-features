@@ -26,6 +26,7 @@ function features_drush_command() {
     $path = 'sites/all/modules';
   }
 
+  /* @see drush_features_list() */
   $items['features-list'] = array(
     'description' => "List all the available features for your site.",
     'options' => array(
@@ -40,6 +41,8 @@ function features_drush_command() {
       'output-data-type' => 'format-table',
     ),
   );
+
+  /* @see drush_features_export() */
   $items['features-export'] = array(
     'description' => "Export a feature from your site into a module.",
     'arguments' => array(
@@ -55,6 +58,8 @@ function features_drush_command() {
     'drupal dependencies' => array('features'),
     'aliases' => array('fe'),
   );
+
+  /* @see drush_features_add() */
   $items['features-add'] = array(
     'description' => "Add a component to a feature module. (DEPRECATED: use features-export)",
     'arguments' => array(
@@ -68,6 +73,8 @@ function features_drush_command() {
     'drupal dependencies' => array('features'),
     'aliases' => array('fa'),
   );
+
+  /* @see drush_features_components() */
   $items['features-components'] = array(
     'description' => 'List features components.',
     'arguments' => array(
@@ -86,6 +93,8 @@ function features_drush_command() {
     ),
     'aliases' => array('fc'),
   );
+
+  /* @see drush_features_update() */
   $items['features-update'] = array(
     'description' => "Update a feature module on your site.",
     'arguments' => array(
@@ -98,6 +107,8 @@ function features_drush_command() {
     'drupal dependencies' => array('features'),
     'aliases' => array('fu'),
   );
+
+  /* @see drush_features_update_all() */
   $items['features-update-all'] = array(
     'description' => "Update all feature modules on your site.",
     'arguments' => array(
@@ -106,6 +117,8 @@ function features_drush_command() {
     'drupal dependencies' => array('features'),
     'aliases' => array('fu-all', 'fua'),
   );
+
+  /* @see drush_features_revert() */
   $items['features-revert'] = array(
     'description' => "Revert a feature module on your site.",
     'arguments' => array(
@@ -121,6 +134,8 @@ function features_drush_command() {
     'drupal dependencies' => array('features'),
     'aliases' => array('fr'),
   );
+
+  /* @see drush_features_revert_all() */
   $items['features-revert-all'] = array(
     'description' => "Revert all enabled feature module on your site.",
     'arguments' => array(
@@ -132,6 +147,8 @@ function features_drush_command() {
     'drupal dependencies' => array('features'),
     'aliases' => array('fr-all', 'fra'),
   );
+
+  /* @see drush_features_diff() */
   $items['features-diff'] = array(
     'description' => "Show the difference between the default and overridden state of a feature.",
     'arguments' => array(
@@ -145,6 +162,7 @@ function features_drush_command() {
     'aliases' => array('fd'),
   );
 
+  /* @see drush_features_diff_all() */
   $items['features-diff-all'] = array(
     'description' => "Show the code difference for all enabled features not in their default state.",
     'arguments' => array(
