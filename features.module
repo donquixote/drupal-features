@@ -730,9 +730,15 @@ function features_get_features($name = NULL, $reset = FALSE) {
  *   (optional) If TRUE, the cache will be cleared before fetching.
  *
  * @return \stdClass[]|\stdClass|false
- *   If $name is NULL: $[$module] = $module_info_object
- *   If $name is not NULL: A specific module info object.
- *   If no matching module is found, FALSE is returned.
+ *   If $name is NULL or empty:
+ *     List of modules according to $type.
+ *     Format: $[$module] = $module_info_object
+ *   If $name is not NULL or empty:
+ *     Module info object, if it matches $type.
+ *     FALSE, if the module does not exist, or if $type is 'feature' and the
+ *     module is not a feature.
+ *   If $type is something other than 'module' or 'feature':
+ *     FALSE, no matter the other parameters.
  *
  * @see system_rebuild_module_data()
  */
