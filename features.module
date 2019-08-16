@@ -353,6 +353,10 @@ function features_modules_disabled($modules) {
 
 /**
  * Implements hook_modules_enabled().
+ *
+ * @param string[] $modules
+ *   Names of modules that were just enabled.
+ *   Format: $[] = $module
  */
 function features_modules_enabled($modules) {
   // Allow distributions to disable this behavior and rebuild the features
