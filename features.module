@@ -683,10 +683,9 @@ function features_hook($component, $hook, $reset = FALSE) {
  * already enabled & installed. Consider this a helper or
  * extension to drupal_install_modules().
  *
- * @param $modules
+ * @param string[] $modules
  *   An array of modules to install.
- * @param $reset
- *   Clear the module info cache.
+ *   Format: $[] = $module_name.
  */
 function features_install_modules($modules) {
   variable_set('features_modules_changed', TRUE);
