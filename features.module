@@ -764,6 +764,12 @@ function features_get_info($type = 'module', $name = NULL, $reset = FALSE) {
   if (!empty($name)) {
     return !empty($cache->data[$type][$name]) ? clone $cache->data[$type][$name] : FALSE;
   }
+  // The fallback FALSE below only occurs if:
+  // - $type is something other than 'module' or 'feature', OR
+  // - $type is 'feature', and no feature exists. This never happens because we
+  //   always have 'features_test' module.
+  // Still this is no good.
+  // @todo An empty array should be returned as a fallback!
   return !empty($cache->data[$type]) ? $cache->data[$type] : FALSE;
 }
 
