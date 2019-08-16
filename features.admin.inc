@@ -1641,7 +1641,9 @@ function _features_get_features_list() {
     features_get_info(NULL, NULL, TRUE);
     features_rebuild();
 
+    /** @var \stdClass[] $modules */
     $modules = array_filter(features_get_modules(), 'features_filter_hidden');
+    /** @var \stdClass[] $features */
     $features = array_filter(features_get_features(), 'features_filter_hidden');
 
     foreach ($modules as $key => $module) {
