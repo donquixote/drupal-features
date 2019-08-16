@@ -149,6 +149,15 @@ function _features_resolve_dependencies(&$data, &$export, $module_name, $compone
 /**
  * Iterates over a list of dependencies and kills modules that are
  * captured by other modules 'higher up'.
+ *
+ * @param string[] $dependencies
+ *   List of module names required by the given module.
+ *   Format: $[$dependency] = $dependency.
+ * @param string $module_name
+ *   Module name whose dependencies are being processed.
+ *
+ * @return string[]
+ *   Format: $[$dependency] = $dependency
  */
 function _features_export_minimize_dependencies($dependencies, $module_name = '') {
   // Ensure that the module doesn't depend upon itself
