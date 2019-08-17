@@ -360,6 +360,13 @@ function features_permission() {
 
 /**
  * Implements hook_help().
+ *
+ * @param string $path
+ * @param mixed[] $arg
+ *   Wildcard parameters that are passed to hook_help().
+ *   Not used here.
+ *
+ * @return string|void
  */
 function features_help($path, $arg) {
   switch ($path) {
