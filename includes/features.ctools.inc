@@ -131,7 +131,6 @@ function ctools_features_export_render($module, $data) {
   }
 
   return $component_exports;
-
 }
 
 /**
