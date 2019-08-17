@@ -944,7 +944,12 @@ function _features_export_generate($export, $form_state, $feature = NULL) {
 }
 
 /**
- * Form submission handler for features_export_form().
+ * First submit handler 'Generate feature' and 'Download feature' buttons.
+ *
+ * @param array $form
+ * @param array $form_state
+ *
+ * @see features_export_form()
  */
 function features_export_build_form_submit($form, &$form_state) {
   $feature = $form['#feature'];
