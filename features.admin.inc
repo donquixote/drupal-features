@@ -1219,7 +1219,9 @@ function features_admin_form($form, $form_state) {
 
     $href = "admin/structure/features/{$name}";
     $href_overridden = module_exists('diff') ? $href . '/diff' : $href;
-    $module_name = (user_access('administer features')) ? l($module->info['name'], $href) : $module->info['name'];
+    $module_name = user_access('administer features')
+      ? l($module->info['name'], $href)
+      : $module->info['name'];
     $form[$package]['status'][$name] = array(
       '#type' => 'checkbox',
       '#title' => $module_name,
