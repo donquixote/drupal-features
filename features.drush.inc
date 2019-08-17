@@ -1044,7 +1044,7 @@ function drush_features_diff_all() {
   module_load_include('inc', 'features', 'features.export');
   $features_to_exclude = func_get_args();
 
-  $features_to_revert = array();
+  $features_to_diff = array();
   foreach (features_get_features(NULL, TRUE) as $module) {
     if ($module->status && !in_array($module->name, $features_to_exclude)) {
       switch (features_get_storage($module->name)) {
