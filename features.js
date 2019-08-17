@@ -257,7 +257,9 @@ jQuery.fn.sortElements = (function(){
         var excluded = Drupal.settings.features.excluded;
         var postData = {'items': items, 'excluded': excluded};
         jQuery.post(url, postData, function(data) {
-          if (inTimeout > 0) inTimeout--;
+          if (inTimeout > 0) {
+            inTimeout--;
+          }
           // if we have triggered another timeout then don't update with old results
           if (inTimeout == 0) {
             // data is an object keyed by component listing the exports of the feature
