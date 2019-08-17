@@ -394,7 +394,6 @@ function _drush_features_component_filter($all_components, $patterns = array(), 
   foreach ($patterns as $pattern) {
     // Rewrite * to %. Let users use both as wildcard.
     $pattern = strtr($pattern, array('*' => '%'));
-    $sources = array();
     if (strpos($pattern, ':') !== FALSE) {
       list($source_pattern, $component_pattern) = explode(':', $pattern, 2);
     }
@@ -423,7 +422,6 @@ function _drush_features_component_filter($all_components, $patterns = array(), 
     if (strpos($component_pattern, '%') !== FALSE) {
       $preg_component_pattern = '^' . $preg_component_pattern . '$';
     }
-    $matches = array();
 
     // Find the sources.
     $all_sources = array_keys($pool);
