@@ -1069,6 +1069,14 @@ function features_form_system_modules_alter(&$form) {
 
 /**
  * Restore the specified modules to the default state.
+ *
+ * @param string $op
+ *   One of 'revert', 'rebuild', 'disable', 'enable'.
+ * @param string[][] $items
+ *   Modules and their components to be processed according to $op.
+ *   If empty, all applicable feature modules will be processed.
+ *   Format: $[$module_name][] = $component
+ *   E.g. $['myfeature'][] = 'field_instance'.
  */
 function _features_restore($op, $items = array()) {
   $lockable = FALSE;
