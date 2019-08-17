@@ -1435,7 +1435,12 @@ function features_form_validate(&$form, &$form_state) {
 }
 
 /**
- * Submit handler for the 'manage features' form
+ * Submit handler for the 'manage features' form.
+ *
+ * @param array $form
+ * @param array $form_state
+ *
+ * @see \features_admin_form()
  */
 function features_form_submit(&$form, &$form_state) {
   // Clear drupal caches after enabling a feature. We do this in a separate
