@@ -280,6 +280,19 @@ function hook_features_post_restore($op, $items) {
 }
 
 /**
+ * Module hook to alter the export options.
+ *
+ * @param string[] $options
+ *   Format: $[$value] = $label
+ * @param string $component
+ *
+ * @see hook_features_export_options()
+ */
+function hook_features_export_options_alter(array &$options, $component) {
+
+}
+
+/**
  * Alter the final array of Component names to be exported, just prior to
  * the rendering of defaults. Allows modules a final say in whether or not
  * certain Components are exported (the Components' actual data, however,
