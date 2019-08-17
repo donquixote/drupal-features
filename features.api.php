@@ -351,14 +351,19 @@ function hook_features_pipe_alter(&$pipe, $data, $export) {
   }
 }
 
-
 /**
  * Add extra files to the exported file.
  *
- * @return array
+ * @param string $module_name
+ * @param array $export
+ *
+ * @return string[][]
  *   An array of files, keyed by file name that will appear in feature and
  *   with either file_path key to indicate where to copy the file from or
  *   file_content key to indicate the contents of the file.
+ *   Format: A mix of:
+ *   - $[$path]['file_content'] = $file_content
+ *   - $[$path]['file_path'] = $source_file_to_copy
  */
 function hook_features_export_files($module_name, $export) {
   return array('css/main.css' => array('file_content' => 'body {background-color:blue;}'));
