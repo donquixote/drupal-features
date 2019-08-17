@@ -1008,7 +1008,6 @@ function features_export_build_form_submit($form, &$form_state) {
       drupal_send_headers();
     }
 
-    $tar = array();
     $filenames = array();
     // Copy any files if _files key is there.
     if (!empty($files['_files'])) {
