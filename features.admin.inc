@@ -50,6 +50,8 @@ function features_settings_form($form, $form_state) {
       '#type' => 'checkbox',
       '#default_value' => variable_get('features_admin_show_component_' . $component, TRUE),
     );
+    /* @see hook_features_revert() */
+    /* @see hook_features_rebuild() */
     if (features_hook($component, 'features_revert') || features_hook($component, 'features_rebuild')) {
       $form['lock_components']['features_component_locked_' . $component] = array(
         '#title' => t('@name (@machine)', array('@name' => $info['name'], '@machine' => $component)),
