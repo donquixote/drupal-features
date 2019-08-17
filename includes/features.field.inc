@@ -167,7 +167,7 @@ function field_instance_features_export($data, &$export, $module_name = '') {
  * @return array
  */
 function field_base_features_export_render($module, $data, $export = NULL) {
-  $translatables = $code = array();
+  $code = array();
   $code[] = '  $field_bases = array();';
   $code[] = '';
   foreach ($data as $identifier) {
