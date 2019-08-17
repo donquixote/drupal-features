@@ -968,15 +968,24 @@ function features_export_build_form_submit($form, &$form_state) {
     $filename = (!empty($export['version']) ? "{$module_name}-{$export['version']}" : $module_name) . '.tar';
 
     if ($generate) {
-      $success = TRUE;
-      $destination = variable_get('features_default_export_path', FEATURES_DEFAULT_EXPORT_PATH);
-      $directory = (!empty($export['project path'])) ? $export['project path'] . '/' . $module_name :
-        (isset($feature->filename) ? dirname($feature->filename) : $destination . '/' . $module_name);
-      if (!is_dir($directory)) {
-        if (mkdir($directory, 0777, true) === FALSE) {
-          $success = FALSE;
-        }
+      if (!empty($export['project path'])) {
+        $directory = $export['project path'] . '/' . $module_name;
       }
+      elseif (isset($feature->filename)) {
+        $directory = dirname($feature->filename);
+      }
+      else {
+        $destination = variable_get('features_default_export_path', FEATURES_DEFAULT_EXPORT_PATH);
+        $directory = $destination . '/' . $module_name;
+      }
+      $success = FALSE
+        // Check if the directory already exists.
+        || is_dir($directory)
+        // Create the directory, if it does not exist yet.
+        || mkdir($directory, 0777, TRUE)
+        // Check if another process has created the directory in the meantime.
+        // See https://github.com/kalessil/phpinspectionsea/blob/master/docs/probable-bugs.md#mkdir-race-condition
+        || is_dir($directory);
     }
     else {
       // Clear out output buffer to remove any garbage from tar output.
