@@ -48,9 +48,9 @@ function filter_features_export($data, &$export, $module_name = '') {
       $export['features']['filter'][$format->format] = $format->format;
 
       // Iterate through filters and ensure each filter's module is included as a dependency
-      foreach (array_keys($format->filters) as $name) {
-        if (isset($filter_info[$name], $filter_info[$name]['module'])) {
-          $module = $filter_info[$name]['module'];
+      foreach (array_keys($format->filters) as $filter_name) {
+        if (isset($filter_info[$filter_name]['module'])) {
+          $module = $filter_info[$filter_name]['module'];
           $export['dependencies'][$module] = $module;
         }
       }
