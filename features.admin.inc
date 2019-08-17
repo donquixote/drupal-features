@@ -270,6 +270,12 @@ function features_export_form($form, $form_state, $feature = NULL) {
 
 /**
  * Machine name existence callback for the module name.
+ *
+ * @param string $value
+ *   Module name to check.
+ *
+ * @return bool
+ *   TRUE, if a module with this name already exists (enabled or not).
  */
 function features_export_form_module_name_exists($value) {
   return (bool) features_get_info('module', $value);
