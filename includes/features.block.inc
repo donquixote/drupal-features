@@ -8,7 +8,14 @@ function block_features_api() {
 }
 
 /**
- * Implements hook_features_export().
+ * Implements hook_features_export() for 'block' component.
+ *
+ * @param string[] $data
+ * @param array $export
+ *
+ * @return array
+ *
+ * @see \hook_features_export()
  */
 function block_features_export($data, &$export) {
   $pipe = array();
