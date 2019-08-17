@@ -278,6 +278,13 @@ function ctools_component_features_export_render($component, $module, $data) {
 
 /**
  * Master implementation of hook_features_revert() for all ctools components.
+ *
+ * This is not registered as a hook implementation by itself. Instead, it gets
+ * called from other implementations, especially those dynamically declared in
+ * ctools_features_declare_functions().
+ *
+ * @param string $component
+ * @param string $module
  */
 function ctools_component_features_revert($component, $module) {
   if ($objects = features_get_default($component, $module)) {
