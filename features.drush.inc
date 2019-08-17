@@ -494,7 +494,7 @@ function _drush_features_component_filter($all_components, $patterns = array(), 
       foreach ($components as $name => $title) {
         $exported = !empty($components_map[$source][$name]);
         if ($exported) {
-          $provided_by[$source . ':' . $name] = join(', ', $components_map[$source][$name]);
+          $provided_by[$source . ':' . $name] = implode(', ', $components_map[$source][$name]);
         }
       }
     }
