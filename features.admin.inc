@@ -297,9 +297,12 @@ function features_export_form_module_name_exists($value) {
 }
 
 /**
- * Return the render array elements for the Components selection on the Export form
- * @param  array $feature    - feature associative array
- * @param  array $components - array of components in feature
+ * Adds form elements for component selection on the export form.
+ *
+ * @param array $form
+ *   Form array to add the form elements to.
+ * @param array $form_state
+ *   The form state array coming from Drupal core.
  */
 function _features_export_form_components(&$form, &$form_state) {
   global $features_ignore_conflicts;
