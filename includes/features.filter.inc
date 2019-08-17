@@ -96,7 +96,7 @@ function filter_features_export_render($module, $data, $export = NULL) {
  * @param string $module
  */
 function filter_features_revert($module) {
-  return filter_features_rebuild($module);
+  filter_features_rebuild($module);
 }
 
 /**
