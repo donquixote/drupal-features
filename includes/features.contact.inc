@@ -102,6 +102,7 @@ function contact_categories_features_revert($module) {
 function contact_categories_features_rebuild($module) {
   if ($defaults = features_get_default('contact_categories', $module)) {
     foreach ($defaults as $default_category) {
+      /** @noinspection NullPointerExceptionInspection */
       $existing_categories = db_select('contact', 'c')
         ->fields('c', array('cid', 'category'))
         ->execute()
