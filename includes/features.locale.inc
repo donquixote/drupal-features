@@ -97,7 +97,7 @@ function language_features_export_render($module, $data, $export = NULL) {
  * @param string $module
  */
 function language_features_revert($module) {
-  return language_features_rebuild($module);
+  language_features_rebuild($module);
 }
 
 /**
