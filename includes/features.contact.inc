@@ -29,7 +29,7 @@ function contact_categories_features_export_options() {
   /** @noinspection NullPointerExceptionInspection */
   $categories = db_select('contact', 'c')->fields('c')->execute()->fetchAll();
   foreach ($categories as $category) {
-    $options["$category->category"] = "$category->category";
+    $options[(string) $category->category] = (string) $category->category;
   }
   return $options;
 }
