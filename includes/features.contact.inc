@@ -35,7 +35,13 @@ function contact_categories_features_export_options() {
 }
 
 /**
- * Implements hook_features_export().
+ * Implements hook_features_export() for 'contact_categories' component.
+ *
+ * @param array $data
+ * @param array $export
+ * @param string $module_name
+ *
+ * @return array
  */
 function contact_categories_features_export($data, &$export, $module_name = '') {
   $export['dependencies']['features'] = 'features';
