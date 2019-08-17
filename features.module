@@ -1193,21 +1193,33 @@ function _features_restore($op, $items = array()) {
   switch ($op) {
     case 'revert':
       $restore_states = array(FEATURES_OVERRIDDEN, FEATURES_REBUILDABLE, FEATURES_NEEDS_REVIEW);
+      /* @see \hook_pre_features_revert() - module hook. */
+      /* @see \hook_features_revert() - component hook. */
+      /* @see \hook_post_features_revert() - module hook. */
       $restore_hook = 'features_revert';
       $log_action = 'Revert';
       $lockable = TRUE;
       break;
     case 'rebuild':
       $restore_states = array(FEATURES_REBUILDABLE);
+      /* @see \hook_pre_features_rebuild() - module hook. */
+      /* @see \hook_features_rebuild() - component hook. */
+      /* @see \hook_post_features_rebuild() - module hook. */
       $restore_hook = 'features_rebuild';
       $log_action = 'Rebuild';
       $lockable = variable_get('features_lock_mode', 'all') == 'all';
       break;
     case 'disable':
+      /* @see \hook_pre_features_disable_feature() - module hook. */
+      /* @see \hook_features_disable_feature() - component hook. */
+      /* @see \hook_post_features_disable_feature() - module hook. */
       $restore_hook = 'features_disable_feature';
       $log_action = 'Disable';
       break;
     case 'enable':
+      /* @see \hook_pre_features_enable_feature() - module hook. */
+      /* @see \hook_features_enable_feature() - component hook. */
+      /* @see \hook_post_features_enable_feature() - module hook. */
       $restore_hook = 'features_enable_feature';
       $log_action = 'Enable';
       break;
