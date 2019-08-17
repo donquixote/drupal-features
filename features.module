@@ -1182,6 +1182,12 @@ function features_revert($revert = array()) {
 
 /**
  * Wrapper around _features_restore().
+ *
+ * @param string[][] $rebuild
+ *   Module components to be rebuilt.
+ *   If empty, all applicable feature modules will be rebuilt.
+ *   Format: $[$module_name][] = $component
+ *   E.g. $['myfeature'][] = 'field_instance'.
  */
 function features_rebuild($rebuild = array()) {
   return _features_restore('rebuild', $rebuild);
