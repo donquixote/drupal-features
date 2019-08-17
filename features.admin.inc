@@ -1020,7 +1020,10 @@ function features_export_build_form_submit($form, &$form_state) {
           if (strpos($file_name, '/')) {
             $file_directory = $directory . '/' . substr($file_name, 0, strrpos($file_name, '/'));
             if (!is_dir($file_directory)) {
-              mkdir($file_directory);
+              // @todo Add error handling for failing filesystem operations.
+              if (!mkdir($file_directory) && !is_dir($file_directory)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $file_directory));
+              }
             }
           }
           if (!empty($file_info['file_path'])) {
