@@ -409,7 +409,7 @@ function _ctools_features_export_default_list($table, $schema) {
   if (ctools_api_version('1.7')) {
     return ctools_export_default_list($table, $schema);
   }
-  elseif ($objects = ctools_export_load_object($table, 'all')) {
+  if ($objects = ctools_export_load_object($table)) {
     return drupal_map_assoc(array_keys($objects));
   }
   return array();
