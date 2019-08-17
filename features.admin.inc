@@ -132,6 +132,7 @@ function features_export_form($form, $form_state, $feature = NULL) {
   features_include();
 
   $feature_name = !empty($feature->name) ? $feature->name : '';
+  /** @noinspection SuspiciousAssignmentsInspection */
   $form = array(
     '#attributes' => array('class' => array('features-export-form', 'clearfix')),
     '#feature' => isset($feature) ? $feature : NULL,
