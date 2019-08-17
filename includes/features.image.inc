@@ -15,7 +15,9 @@ function image_features_api() {
 }
 
 /**
- * Implements hook_features_export_options().
+ * Implements hook_features_export_options() for 'image' component.
+ *
+ * @return string[]
  */
 function image_features_export_options() {
   $options = array();
@@ -26,7 +28,13 @@ function image_features_export_options() {
 }
 
 /**
- * Implements hook_features_export().
+ * Implements hook_features_export() for 'image' component.
+ *
+ * @param string[] $data
+ * @param array $export
+ * @param string $module_name
+ *
+ * @return array
  */
 function image_features_export($data, &$export, $module_name = '') {
   $pipe = array();
@@ -47,7 +55,13 @@ function image_features_export($data, &$export, $module_name = '') {
 }
 
 /**
- * Implements hook_features_export_render().
+ * Implements hook_features_export_render() for 'image' component.
+ *
+ * @param string $module_name
+ * @param string[] $data
+ * @param array|null $export
+ *
+ * @return array
  */
 function image_features_export_render($module_name, $data, $export = NULL) {
   $code = array();
@@ -69,7 +83,9 @@ function image_features_export_render($module_name, $data, $export = NULL) {
 }
 
 /**
- * Implements hook_features_revert().
+ * Implements hook_features_revert() for 'image' component.
+ *
+ * @param string $module
  */
 function image_features_revert($module) {
   if ($default_styles = features_get_default('image', $module)) {
