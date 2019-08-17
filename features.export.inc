@@ -806,11 +806,21 @@ function features_translatables_export($translatables, $indent = '') {
 }
 
 /**
- * Get a summary storage state for a feature.
+ * Gets a summary storage state for a feature.
  *
  * @param string $module_name
+ *   Module name.
  *
  * @return int
+ *   Value of one of the component state constants listed below.
+ *   The number is the maximum of all individual component states for the given
+ *   module, or FEATURES_DEFAULT if no component states found in the module.
+ *
+ * @see FEATURES_REBUILDABLE
+ * @see FEATURES_DEFAULT
+ * @see FEATURES_OVERRIDDEN
+ * @see FEATURES_NEEDS_REVIEW
+ * @see FEATURES_REBUILDING
  */
 function features_get_storage($module_name) {
   // Get component states, and array_diff against array(FEATURES_DEFAULT).
