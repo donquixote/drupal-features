@@ -1006,6 +1006,9 @@ function features_export_build_form_submit($form, &$form_state) {
       drupal_add_http_header('Content-type', 'application/x-tar');
       drupal_add_http_header('Content-Disposition', 'attachment; filename="'. $filename .'"');
       drupal_send_headers();
+      // @todo Separate the cases so that $directory won't be undefined.
+      $directory = NULL;
+      $success = NULL;
     }
 
     $filenames = array();
