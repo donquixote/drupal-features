@@ -1093,12 +1093,12 @@ function drush_features_diff_all() {
 /**
  * Helper function to call drush_set_error().
  *
- * @param $feature
+ * @param string $feature
  *   The string name of the feature.
- * @param $error
+ * @param string $error
  *   A text string identifying the type of error.
- * @return
- *   FALSE.  See drush_set_error().
+ * @return false
+ *   See drush_set_error().
  */
 function _features_drush_set_error($feature, $error = '') {
   $args = array('!feature' => $feature);
