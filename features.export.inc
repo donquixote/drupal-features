@@ -855,10 +855,9 @@ function features_get_signature($state = 'default', $module_name, $component, $r
     case 'cache':
       /* @var object|false $cache */
       $cache = cache_get('features_codecache', 'cache_featurestate');
-      if (!empty($cache->data)) {
-        $codecache = $cache->data;
-      }
-      return isset($codecache[$module_name][$component]) ? $codecache[$module_name][$component] : FALSE;
+      return isset($cache->data[$module_name][$component])
+        ? $cache->data[$module_name][$component]
+        : FALSE;
     case 'default':
       $objects = features_get_default($component, $module_name, TRUE, $reset);
       break;
