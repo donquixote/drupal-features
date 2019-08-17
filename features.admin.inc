@@ -917,7 +917,6 @@ function features_export_form_validate_field($element, &$form_state) {
 function _features_export_generate($export, $form_state, $feature = NULL) {
   unset($export['components']); // remove the UI data that we are not saving to disk
 
-  $module_name = $form_state['values']['module_name'];
   // Directly copy the following attributes from form_state
   $attr = array('name', 'description', 'package', 'project path');
   foreach ($attr as $key) {
