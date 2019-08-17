@@ -21,6 +21,7 @@ function features_schema() {
  */
 function features_install() {
   _features_install_menu();
+  /** @noinspection PhpUndefinedMethodInspection */
   db_update('system')
     ->fields(array('weight' =>  20))
     ->condition('name', 'features')
