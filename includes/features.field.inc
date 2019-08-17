@@ -253,7 +253,12 @@ function field_instance_features_export_render($module, $data, $export = NULL) {
   return array('field_default_field_instances' => $code);
 }
 
-// Helper to enforce consistency in field export arrays.
+/**
+ * Helper to normalize and sort field export arrays.
+ *
+ * @param array $field
+ * @param bool $sort
+ */
 function _field_instance_features_export_sort(&$field, $sort = TRUE) {
 
   // Some arrays are not sorted to preserve order (for example allowed_values).
