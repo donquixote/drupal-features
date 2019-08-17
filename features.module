@@ -716,8 +716,16 @@ function features_invoke($component, $callback) {
 /**
  * Checks whether a component implements the given hook.
  *
- * @return
+ * @param string $component
+ *   A component name, e.g. 'field_instance'.
+ * @param string $hook
+ *   A component hook name, e.g. 'features_revert'.
+ * @param bool $reset
+ *   (obsolete) The parameter has no effect.
+ *
+ * @return string|false
  *   The function implementing the hook, or FALSE.
+ *   E.g. 'field_instance_features_revert'.
  */
 function features_hook($component, $hook, $reset = FALSE) {
   // Determine the function callback base.
