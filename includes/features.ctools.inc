@@ -1,10 +1,11 @@
 <?php
 
-function ctools_features_declare_functions($reset = FALSE) {
 /**
- * This is called by Features to ensure ctools component functions are defined
- * Dynamically declare functions under a ctools component's namespace if they are not already declared.
+ * Dynamically declares functions for components based on ctools.
+ *
+ * @param bool $reset
  */
+function ctools_features_declare_functions($reset = FALSE) {
   if (function_exists('_ctools_features_get_info')) {
    foreach (_ctools_features_get_info(NULL, $reset) as $component => $info) {
       $code = '';
