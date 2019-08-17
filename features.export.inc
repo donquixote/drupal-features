@@ -488,6 +488,12 @@ function features_export_render($export, $module_name, $reset = FALSE) {
 
 /**
  * Detect differences between DB and code components of a feature.
+ *
+ * @param \stdClass $module
+ *   A module info object.
+ *
+ * @return string[][]
+ *   Format: $[$component] = ['normal' => '..', 'default' => '..']
  */
 function features_detect_overrides($module) {
   $cache = &drupal_static(__FUNCTION__, array());
