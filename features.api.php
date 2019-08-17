@@ -152,7 +152,10 @@ function hook_features_export_options() {
  *   The full export array of the current feature being exported. This is only
  *   passed when hook_features_export_render() is invoked for an actual feature
  *   update or recreate, not during state checks or other operations.
- * @return array
+ * @return string[]|mixed[]
+ *   Format: Combination of:
+ *     - $[$hook] = $function_body
+ *     - $[$hook] = ['code' => $function_body, 'args' => $params_php]
  *   An associative array of rendered PHP code where the key is the name of the
  *   hook that should wrap the PHP code. The hook should not include the name
  *   of the module, e.g. the key for `hook_example` should simply be `example`
