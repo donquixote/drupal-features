@@ -171,7 +171,7 @@ function _features_export_minimize_dependencies($dependencies, $module_name = ''
   // - Remove "intermediate" dependencies.
   $required = drupal_required_modules();
   foreach ($dependencies as $k => $v) {
-    if (empty($v) || in_array($v, $required)) {
+    if (empty($v) || in_array($v, $required, TRUE)) {
       unset($dependencies[$k]);
     }
     else {
@@ -179,14 +179,14 @@ function _features_export_minimize_dependencies($dependencies, $module_name = ''
       if ($module && !empty($module->info['dependencies'])) {
         // If this dependency depends on the module itself, we have a circular dependency.
         // Don't let it happen. Only you can prevent forest fires.
-        if (in_array($module_name, $module->info['dependencies'])) {
+        if (in_array($module_name, $module->info['dependencies'], TRUE)) {
           unset($dependencies[$k]);
         }
         // Iterate through the dependency's dependencies and remove any dependencies
         // that are captured by it.
         else {
           foreach ($module->info['dependencies'] as $j => $dependency) {
-            if (FALSE !== $position = array_search($dependency, $dependencies)) {
+            if (FALSE !== $position = array_search($dependency, $dependencies, TRUE)) {
               unset($dependencies[$position]);
             }
           }
