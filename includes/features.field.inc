@@ -620,6 +620,10 @@ function field_features_rebuild($module) {
 /**
  * Load a field's configuration and instance configuration by an
  * entity_type-bundle-field_name identifier.
+ *
+ * @param string $identifier
+ *
+ * @return array|bool
  */
 function features_field_load($identifier) {
   list($entity_type, $bundle, $field_name) = explode('-', $identifier);
