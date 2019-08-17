@@ -417,6 +417,9 @@ function _ctools_features_export_default_list($table, $schema) {
 
 /**
  * Wrapper around ctools_export_crud_delete() for < 1.7 compatibility.
+ *
+ * @param string $table
+ * @param object $object
  */
 function _ctools_features_export_crud_delete($table, $object) {
   if (ctools_api_version('1.7')) {
