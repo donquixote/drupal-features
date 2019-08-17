@@ -301,6 +301,11 @@ function ctools_component_features_revert($component, $module) {
 
 /**
  * Helper function to return various ctools information for components.
+ *
+ * @param string|null $identifier
+ * @param bool $reset
+ *
+ * @return array|mixed|false
  */
 function _ctools_features_get_info($identifier = NULL, $reset = FALSE) {
   static $components;
