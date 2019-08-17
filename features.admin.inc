@@ -1655,7 +1655,7 @@ function features_feature_lock_confirm_form($form, $form_state, $feature, $compo
   $is_locked = features_feature_is_locked($feature->name, $component, FALSE);
   $args = array(
     '@name' => $feature->name,
-    '@component' => $component ? $component : t('all'),
+    '@component' => $component ?: t('all'),
     '!action' => $is_locked ? t('unlock') : t('lock'),
   );
   $question = t('Are you sure you want to !action this Feature @name (component @component)?', $args);
