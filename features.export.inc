@@ -535,6 +535,19 @@ function features_detect_overrides($module) {
 
 /**
  * Gets the available default hooks keyed by components.
+ *
+ * @param string|null $component
+ *   A component name, e.g. 'field_instance', or NULL to list all components.
+ * @param bool $reset
+ *   (optional) If TRUE, the components cache will be cleared.
+ *
+ * @return string[]|string|null
+ *   Return value depending on parameters:
+ *   - If $component is NULL:
+ *     The default hook for each component.
+ *     Format: $[$component] = $default_hook
+ *   - If $component is provided:
+ *     The default hook (string), or NULL.
  */
 function features_get_default_hooks($component = NULL, $reset = FALSE) {
   return features_get_components($component, 'default_hook', $reset);
