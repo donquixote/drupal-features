@@ -391,7 +391,7 @@ function _ctools_features_export_crud_load($table, $name) {
   if (ctools_api_version('1.7')) {
     return ctools_export_crud_load($table, $name);
   }
-  elseif ($objects = ctools_export_load_object($table, 'names', array($name))) {
+  if ($objects = ctools_export_load_object($table, 'names', array($name))) {
     return array_shift($objects);
   }
   return FALSE;
