@@ -978,14 +978,24 @@ function features_export_build_form_submit($form, &$form_state) {
         $destination = variable_get('features_default_export_path', FEATURES_DEFAULT_EXPORT_PATH);
         $directory = $destination . '/' . $module_name;
       }
-      $success = FALSE
-        // Check if the directory already exists.
-        || is_dir($directory)
-        // Create the directory, if it does not exist yet.
-        || mkdir($directory, 0777, TRUE)
-        // Check if another process has created the directory in the meantime.
+      if (is_dir($directory)) {
+        // Directory already exists, we are good.
+        $success = TRUE;
+      }
+      elseif (mkdir($directory, 077, TRUE)) {
+        // Directory was successfully created, we are good.
+        $success = TRUE;
+      }
+      elseif (is_dir($directory)) {
+        // Directory was created by another process milliseconds ago, causing
+        // our own mkdir() to fail. Either way, good for us.
         // See https://github.com/kalessil/phpinspectionsea/blob/master/docs/probable-bugs.md#mkdir-race-condition
-        || is_dir($directory);
+        $success = TRUE;
+      }
+      else {
+        // Directory creation failed.
+        $success = FALSE;
+      }
     }
     else {
       // Clear out output buffer to remove any garbage from tar output.
