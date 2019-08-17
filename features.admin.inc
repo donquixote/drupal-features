@@ -1437,7 +1437,12 @@ function features_admin_components_revert(&$form, &$form_state) {
 }
 
 /**
- * Submit handler for revert form.
+ * Submit handler for the 'Mark as reviewed' button.
+ *
+ * @param array $form
+ * @param array $form_state
+ *
+ * @see \features_admin_components()
  */
 function features_admin_components_review(&$form, &$form_state) {
   module_load_include('inc', 'features', 'features.export');
