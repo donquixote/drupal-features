@@ -171,7 +171,7 @@ function ctools_component_features_api($module_name) {
  *
  * @param string $component
  *
- * @return array
+ * @return string[]
  */
 function ctools_component_features_export_options($component) {
   $options = array();
