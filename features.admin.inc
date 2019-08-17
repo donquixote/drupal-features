@@ -104,14 +104,24 @@ function features_settings_form($form, $form_state) {
 }
 
 /**
- * Form constructor for features export form.
+ * Form builder for features export form.
+ *
+ * Used on:
+ * - 'admin/structure/features/create'
+ * - 'admin/structure/features/%feature/recreate'
  *
  * Acts as a router based on the form_state.
  *
+ * @param array $form
+ * @param array $form_state
  * @param object|null $feature
  *   The feature object, if available. NULL by default.
  *
- * @see features_export_build_form_submit()
+ * @return array
+ *   Form array.
+ *
+ * @see \features_export_build_form_submit()
+ * @see \features_form_rebuild()
  * @ingroup forms
  */
 function features_export_form($form, $form_state, $feature = NULL) {
