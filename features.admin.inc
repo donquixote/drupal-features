@@ -884,7 +884,15 @@ function features_export_form_validate_field($element, &$form_state) {
 }
 
 /**
- * Return the $export array to be rendered for the feature export
+ * Return the $export array to be rendered for the feature export.
+ *
+ * @param array $export
+ * @param array $form_state
+ * @param \stdClass|null $feature
+ *   Feature module info object.
+ *
+ * @return array
+ *   Export array.
  */
 function _features_export_generate($export, $form_state, $feature = NULL) {
   unset($export['components']); // remove the UI data that we are not saving to disk
