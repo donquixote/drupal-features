@@ -786,7 +786,7 @@ function _drush_features_generate_export(&$info, $module_name) {
         $version_minor = preg_replace($pattern, $number, $version_minor);
       }
     }
-    array_push($version_explode, $version_minor);
+    $version_explode[] = $version_minor;
     // Rebuild version string.
     $version = implode('.', $version_explode);
     $export['version'] = $version;
