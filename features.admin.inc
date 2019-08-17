@@ -1752,6 +1752,14 @@ function features_dom_decode($key) {
 /**
  * Decode an array of option values that have been encoded by
  * features_dom_encode_options().
+ *
+ * @param string[] $options
+ *   Format: $[$key] = $value
+ * @param bool $keys_only
+ *
+ * @return string[]
+ *   Format, if $keys_only: $[$key_decoded] = $value
+ *   Format, if !$keys_only: $[$key_decoded] = $value_decoded
  */
 function features_dom_decode_options($options, $keys_only = FALSE) {
   $replacements = array_flip(features_dom_encode_map());
