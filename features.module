@@ -1223,6 +1223,8 @@ function _features_restore($op, $items = array()) {
       $restore_hook = 'features_enable_feature';
       $log_action = 'Enable';
       break;
+    default:
+      throw new \InvalidArgumentException('Invalid value for $op parameter.');
   }
 
   if (empty($items)) {
