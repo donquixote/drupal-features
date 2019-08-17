@@ -1147,6 +1147,7 @@ function features_admin_form($form, $form_state) {
     return $form ;
   }
 
+  /** @noinspection SuspiciousAssignmentsInspection */
   $form = array('#features' => $features);
 
   // Generate features form. Features are sorted by dependencies, resort alpha
