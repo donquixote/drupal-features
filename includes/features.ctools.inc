@@ -381,6 +381,11 @@ function _ctools_features_export_crud_export($table, $object, $indent = '') {
 
 /**
  * Wrapper around ctools_export_crud_load() for < 1.7 compatibility.
+ *
+ * @param string $table
+ * @param string $name
+ *
+ * @return bool|mixed|null
  */
 function _ctools_features_export_crud_load($table, $name) {
   if (ctools_api_version('1.7')) {
