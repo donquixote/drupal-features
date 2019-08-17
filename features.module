@@ -380,6 +380,10 @@ function features_help($path, $arg) {
 
 /**
  * Implements hook_modules_disabled().
+ *
+ * @param string[] $modules
+ *   Names of modules that were disabled.
+ *   Format: $[] = $module_name
  */
 function features_modules_disabled($modules) {
   // Go through all modules and gather features that can be disabled.
