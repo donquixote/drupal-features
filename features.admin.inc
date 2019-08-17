@@ -858,10 +858,14 @@ function features_info_file_preview($form, &$form_state){
 }
 
 /**
- * Render API callback: Validates a project field.
+ * Form API callback: Validates a project field.
  *
  * This function is assigned as an #element_validate callback in
  * features_export_form().
+ *
+ * @param array $element
+ *   Form element with '#type' => 'textfield'.
+ * @param array $form_state
  */
 function features_export_form_validate_field($element, &$form_state) {
   switch ($element['#name']) {
