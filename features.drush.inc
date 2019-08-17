@@ -1037,6 +1037,8 @@ function drush_features_diff() {
  *
  * @param ...
  *   (Optional) A list of features to exclude from being reverted.
+ *
+ * @return void|false
  */
 function drush_features_diff_all() {
   module_load_include('inc', 'features', 'features.export');
