@@ -797,6 +797,11 @@ function _features_export_build($feature, &$form_state) {
 
 /**
  * AJAX callback for features_export_form.
+ *
+ * @param array $form
+ * @param array $form_state
+ *
+ * @return array
  */
 function features_export_form_ajax($form, &$form_state) {
   return $form['export'];
