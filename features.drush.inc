@@ -537,6 +537,8 @@ function _drush_features_component_print($filtered_components, $options = array(
 /**
  * Add a component to a features module, or create a new module with
  * the selected components.
+ *
+ * @return false|void
  */
 function drush_features_export() {
   if ($args = func_get_args()) {
