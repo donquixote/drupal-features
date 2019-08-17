@@ -1027,6 +1027,7 @@ function features_get_conflicts($reset = FALSE) {
    */
   $map = features_get_component_map(NULL, $reset);
 
+  // @todo Variable names are misleading and inconsistent with other code.
   foreach ($map as $type => $components) {
     // Only check conflicts for components we know about.
     if (isset($component_info[$type])) {
