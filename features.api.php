@@ -336,7 +336,7 @@ function hook_features_pipe_COMPONENT_alter(&$pipe, $data, $export) {
  *
  * @param array &$pipe
  *   By reference. The pipe array of further processors that should be called.
- * @param array $data
+ * @param string[] $data
  *   An array of machine names for the component in question to be exported.
  * @param array &$export
  *   By reference. An array of all components to be exported with a given
