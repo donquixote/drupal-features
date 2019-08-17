@@ -995,7 +995,17 @@ function features_get_component_map($key = NULL, $reset = FALSE) {
 }
 
 /**
- * Simple wrapper returns the status of a module.
+ * Checks whether a module is enabled, disabled or missing.
+ *
+ * @param string $module
+ *   A module name.
+ *
+ * @return int
+ *   One of the constants mentioned below, depending on the module status.
+ *
+ * @see FEATURES_MODULE_ENABLED
+ * @see FEATURES_MODULE_DISABLED
+ * @see FEATURES_MODULE_MISSING
  */
 function features_get_module_status($module) {
   if (module_exists($module)) {
