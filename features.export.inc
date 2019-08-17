@@ -229,7 +229,7 @@ function _features_export_maximize_dependencies($dependencies, $module_name = ''
   foreach ($dependencies as $k => $v) {
     $parsed_dependency = drupal_parse_dependency($v);
     $name = $parsed_dependency['name'];
-    if (!in_array($name, $maximized)) {
+    if (!in_array($name, $maximized, TRUE)) {
       $maximized[] = $name;
       $module = features_get_modules($name);
       if ($module && !empty($module->info['dependencies'])) {
