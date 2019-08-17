@@ -214,7 +214,9 @@ function features_export_form($form, $form_state, $feature = NULL) {
     /* @see \features_export_form_validate_field() */
     '#element_validate' => array('features_export_form_validate_field'),
   );
-  $directory = (!empty($feature->filename)) ? dirname($feature->filename) : variable_get('features_default_export_path', FEATURES_DEFAULT_EXPORT_PATH);
+  $directory = !empty($feature->filename)
+    ? dirname($feature->filename)
+    : variable_get('features_default_export_path', FEATURES_DEFAULT_EXPORT_PATH);
   if (!empty($feature_name) && substr_compare($directory, $feature_name, strlen($directory)-strlen($feature_name), strlen($feature_name)) === 0) {
     // if path ends with module_name, strip it
     $directory = dirname($directory);
