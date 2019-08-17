@@ -899,6 +899,8 @@ function drush_features_revert() {
  *
  * @param ...
  *   (Optional) A list of features to exclude from being reverted.
+ *
+ * @return void|false
  */
 function drush_features_revert_all() {
   module_load_include('inc', 'features', 'features.export');
