@@ -403,7 +403,7 @@ function _ctools_features_export_crud_load($table, $name) {
  * @param string $table
  * @param array $schema
  *
- * @return array
+ * @return string[]
  */
 function _ctools_features_export_default_list($table, $schema) {
   if (ctools_api_version('1.7')) {
