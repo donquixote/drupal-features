@@ -1010,7 +1010,6 @@ function features_get_default($component, $module_name = NULL, $alter = TRUE, $r
   features_include();
   features_include_defaults($component);
   $default_hook = features_get_default_hooks($component);
-  $components = features_get_components();
 
   // Collect defaults for all modules if no module name was specified.
   if (isset($module_name)) {
