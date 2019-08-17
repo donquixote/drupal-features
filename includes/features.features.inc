@@ -57,7 +57,9 @@ function dependencies_features_export($data, &$export, $module_name = '') {
 }
 
 /**
- * Implements hook_features_revert().
+ * Implements hook_features_revert() for 'dependencies' component.
+ *
+ * @param string $module
  */
 function dependencies_features_revert($module) {
   dependencies_features_rebuild($module);
