@@ -258,6 +258,8 @@ function drush_features_list() {
       case FEATURES_NEEDS_REVIEW:
         $storage = dt('Needs review');
         break;
+      default:
+        $storage = dt('Unexpected storage value');
     }
     if (
       ($m->status == 0 && ($status == 'all' || $status == 'disabled')) ||
