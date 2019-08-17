@@ -435,7 +435,7 @@ function _drush_features_component_filter($all_components, $patterns = array(), 
           $matches = array($source_pattern);
         }
         else {
-          return drush_set_error('', dt('Ambiguous source "!source", matches !matches', array('!source' => $source_pattern, '!matches' => join(', ', $matches))));
+          return drush_set_error('', dt('Ambiguous source "!source", matches !matches', array('!source' => $source_pattern, '!matches' => implode(', ', $matches))));
         }
       }
       // Loose the indexes preg_grep preserved.
@@ -461,7 +461,7 @@ function _drush_features_component_filter($all_components, $patterns = array(), 
             $matches = array($component_pattern);
           }
           else {
-            return drush_set_error('', dt('Ambiguous component "!component", matches !matches', array('!component' => $component_pattern, '!matches' => join(', ', $matches))));
+            return drush_set_error('', dt('Ambiguous component "!component", matches !matches', array('!component' => $component_pattern, '!matches' => implode(', ', $matches))));
           }
         }
         if (empty($selected[$source])) {
