@@ -818,6 +818,11 @@ function features_export_form_rebuild($form, &$form_state) {
   $form_state['rebuild'] = TRUE;
 }
 
+/**
+ * Page callback for 'features/ajaxcallback/%'.
+ *
+ * @param string $feature_name
+ */
 function features_export_components_json($feature_name) {
   module_load_include('inc', 'features', 'features.export');
   $export = array('features' => array());
