@@ -867,6 +867,11 @@ function features_export_components_json($feature_name) {
 
 /**
  * AJAX callback to get .info file preview.
+ *
+ * @param array $form
+ * @param array $form_state
+ *
+ * @return mixed
  */
 function features_info_file_preview($form, &$form_state){
   return $form['export'];
