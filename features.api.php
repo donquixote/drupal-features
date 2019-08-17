@@ -326,7 +326,7 @@ function hook_features_export_alter(&$export, $module_name) {
  *   feature.
  */
 function hook_features_pipe_COMPONENT_alter(&$pipe, $data, $export) {
-  if (in_array($data, 'my-node-type')) {
+  if (in_array('my-node-type', $data)) {
     $pipe['dependencies'][] = 'mymodule';
   }
 }
