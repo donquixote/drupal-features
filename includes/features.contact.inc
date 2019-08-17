@@ -20,7 +20,9 @@ function contact_features_api() {
 }
 
 /**
- * Implements hook_features_export_options().
+ * Implements hook_features_export_options() for 'contact_categories' component.
+ *
+ * @return string[]
  */
 function contact_categories_features_export_options() {
   $options = array();
