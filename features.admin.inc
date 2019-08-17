@@ -1244,7 +1244,20 @@ function features_admin_form($form, $form_state) {
 }
 
 /**
- * Display the components of a feature.
+ * Form builder for 'admin/structure/features/%feature'.
+ *
+ * The form shows an overview of components in the feature.
+ *
+ * @param array $form
+ * @param array $form_state
+ * @param \stdClass $feature
+ *   Feature module info object.
+ *
+ * @return array
+ *   Form array.
+ *
+ * @throws \Exception
+ *   Exception that may theoretically be thrown in theme().
  */
 function features_admin_components($form, $form_state, $feature) {
   // Breadcrumb navigation
