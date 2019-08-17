@@ -1219,9 +1219,9 @@ function features_revert_module($module) {
 /**
  * Log a message, environment agnostic.
  *
- * @param $message
+ * @param string $message
  *   The message to log.
- * @param $severity
+ * @param string $severity
  *   The severity of the message: status, warning or error.
  */
 function features_log($message, $severity = 'status') {
