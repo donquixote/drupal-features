@@ -198,7 +198,32 @@ function _features_export_minimize_dependencies($dependencies, $module_name = ''
 }
 
 /**
- * Iterates over a list of dependencies and maximize the list of modules.
+ * Completes a list of dependencies by adding all indirect dependencies as well.
+ *
+ * Mathematically this would be called a 'transitive closure'.
+ *
+ * This function is recursive, some of its parameters are only meant to be used
+ * in recursive calls.
+ *
+ * @param string[] $dependencies
+ *   Original list of dependencies.
+ *   Format: $[*] = $module
+ *   The array keys will be ignored, which means this has the same result for
+ *   serial or associative arrays.
+ * @param string $module_name
+ *   (obsolete) Name of the module whose dependencies are being processed.
+ *   This has no effect whatsoever, so it can be safely omitted.
+ * @param string[] $maximized
+ *   (recursive) List of modules that were already processed in previous
+ *   recursion levels. Omit in non-recursive call.
+ * @param bool $first
+ *   (recursive) TRUE, if this is not a recursive call.
+ *
+ * @return string[]
+ *   Complete list of direct and indirect dependencies.
+ *   Format: $[] = $module
+ *
+ * @see _module_build_dependencies()
  */
 function _features_export_maximize_dependencies($dependencies, $module_name = '', $maximized = array(), $first = TRUE) {
   foreach ($dependencies as $k => $v) {
