@@ -1396,6 +1396,7 @@ function features_admin_components($form, $form_state, $feature) {
       $form['buttons']['revert'] = array(
         '#type' => 'submit',
         '#value' => t('Revert components'),
+        /* @see \features_admin_components_revert() */
         '#submit' => array('features_admin_components_revert'),
       );
     }
@@ -1403,6 +1404,7 @@ function features_admin_components($form, $form_state, $feature) {
       $form['buttons']['review'] = array(
         '#type' => 'submit',
         '#value' => t('Mark as reviewed'),
+        /* @see \features_admin_components_review() */
         '#submit' => array('features_admin_components_review'),
       );
     }
