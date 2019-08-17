@@ -48,7 +48,9 @@ function menu_features_export($data, &$export, $module_name = '') {
 }
 
 /**
- * Implements hook_features_export_options().
+ * Implements hook_features_export_options() for 'menu_custom' component.
+ *
+ * @return string[]
  */
 function menu_custom_features_export_options() {
   $options = array();
@@ -60,7 +62,13 @@ function menu_custom_features_export_options() {
 }
 
 /**
- * Implements hook_features_export().
+ * Implements hook_features_export() for 'menu_custom' component.
+ *
+ * @param string[] $data
+ * @param array $export
+ * @param string $module_name
+ *
+ * @return array
  */
 function menu_custom_features_export($data, &$export, $module_name = '') {
   // Default hooks are provided by the feature module so we need to add
@@ -84,7 +92,12 @@ function menu_custom_features_export($data, &$export, $module_name = '') {
 }
 
 /**
- * Implements hook_features_export_render().
+ * Implements hook_features_export_render() for 'menu_custom' component.
+ *
+ * @param string $module
+ * @param string[] $data
+ *
+ * @return array
  */
 function menu_custom_features_export_render($module, $data) {
   $code = array();
@@ -116,14 +129,18 @@ function menu_custom_features_export_render($module, $data) {
 }
 
 /**
- * Implements hook_features_revert().
+ * Implements hook_features_revert() for 'menu_custom' component.
+ *
+ * @param string $module
  */
 function menu_custom_features_revert($module) {
   menu_custom_features_rebuild($module);
 }
 
 /**
- * Implements hook_features_rebuild().
+ * Implements hook_features_rebuild() for 'menu_custom' component.
+ *
+ * @param string $module
  */
 function menu_custom_features_rebuild($module) {
   if ($defaults = features_get_default('menu_custom', $module)) {
