@@ -1285,6 +1285,12 @@ function _features_restore($op, $items = array()) {
 
 /**
  * Wrapper around _features_restore().
+ *
+ * @param string[][] $revert
+ *   Module components to be reverted.
+ *   If empty, all applicable feature modules will be reverted.
+ *   Format: $[$module_name][] = $component
+ *   E.g. $['myfeature'][] = 'field_instance'
  */
 function features_revert($revert = array()) {
   return _features_restore('revert', $revert);
