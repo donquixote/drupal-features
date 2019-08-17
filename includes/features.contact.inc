@@ -82,7 +82,11 @@ function contact_categories_features_export_render($module, $data, $export = NUL
 }
 
 /**
- * Implements hook_features_revert().
+ * Implements hook_features_revert() for 'contact_categories' component.
+ *
+ * @param string $module
+ *
+ * @throws \InvalidMergeQueryException
  */
 function contact_categories_features_revert($module) {
   return contact_categories_features_rebuild($module);
