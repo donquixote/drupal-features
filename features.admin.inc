@@ -1739,6 +1739,11 @@ function features_dom_encode($key) {
   return strtr($key, $replacements);
 }
 
+/**
+ * @param string $key
+ *
+ * @return string
+ */
 function features_dom_decode($key) {
   $replacements = array_flip(features_dom_encode_map());
   return strtr($key, $replacements);
