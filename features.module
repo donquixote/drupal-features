@@ -1438,7 +1438,14 @@ function features_feature_unlock($feature, $component = NULL) {
 }
 
 /**
- * Sets/Returns the current language to english to ensure a proper export.
+ * Sets/Returns the current language to English to ensure a proper export.
+ *
+ * @param \stdClass|null $language
+ *   (optional) The language object to set, or NULL for English.
+ *
+ * @return \stdClass
+ *   The previously active language object.
+ *   This should be kept in a variable, to restore the original language later.
  */
 function _features_export_language($language = NULL) {
   $current = $GLOBALS['language'];
