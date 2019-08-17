@@ -50,8 +50,8 @@ function context_features_export($data, &$export, $module_name = '') {
 /**
  * Implements hook_features_revert().
  *
- * @param $module
- * name of module to revert content for
+ * @param string $module
+ *   Name of module to revert content for
  */
 function context_features_revert($module = NULL) {
   $return = ctools_component_features_revert('context', $module);
