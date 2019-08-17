@@ -853,6 +853,7 @@ function features_get_storage($module_name) {
 function features_get_signature($state = 'default', $module_name, $component, $reset = FALSE) {
   switch ($state) {
     case 'cache':
+      /* @var object|false $cache */
       $cache = cache_get('features_codecache', 'cache_featurestate');
       if (!empty($cache->data)) {
         $codecache = $cache->data;
