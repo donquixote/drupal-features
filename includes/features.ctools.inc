@@ -94,6 +94,11 @@ function ctools_features_export($data, &$export, $module_name = '') {
 /**
  * Implements hook_features_export_render().
  * Adds the ctools mothership hook, ctools_plugin_api().
+ *
+ * @param string $module
+ * @param string[] $data
+ *
+ * @return mixed[]
  */
 function ctools_features_export_render($module, $data) {
   $component_exports =  array();
