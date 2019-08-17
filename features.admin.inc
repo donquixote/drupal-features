@@ -1590,18 +1590,25 @@ function features_feature_diff($feature, $component = NULL) {
   return $output;
 }
 
-
-
 /**
  * Page callback to lock a component.
  *
- * @param $feature
- *  Loaded feature object to be processed for component locking.
- * @param $component
+ * Paths:
+ *   - 'admin/structure/features/%module/lock' . "/ajax/{$component}"
+ *   - 'admin/structure/features/%module/lock' . "/ajax/{$component}"
+ *
+ * @param \stdClass $feature
+ *   Loaded feature object to be processed for component locking.
+ * @param string $type
+ * @param string|null $component
  *   (optional) A specific component to lock.
  *
- * @return
- *   Themed display of what is different.
+ * @return array|void
+ *   Render element that  display of what is different.
+ *   In case of 'ajax',
+ *
+ * @throws \Exception
+ *   in theme() if called too early in the request.
  */
 function features_admin_lock($feature, $type = 'ajax', $component = NULL) {
   if ($type == 'ajax' && !empty($_GET['token']) && drupal_valid_token($_GET['token'], 'features/' . $feature->name . '/' . ($component ? $component : '')) == $_GET['token']) {
