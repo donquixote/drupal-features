@@ -978,7 +978,7 @@ function features_get_orphans($reset = FALSE) {
 
     // Find the list of orphaned modules.
     $orphaned = array_diff($dependencies['disabled'], $dependencies['enabled']);
-    $orphaned = array_intersect($orphaned, module_list(FALSE, FALSE));
+    $orphaned = array_intersect($orphaned, module_list());
     $orphaned = array_diff($orphaned, drupal_required_modules());
     $orphaned = array_diff($orphaned, array('features'));
 
