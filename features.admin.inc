@@ -1611,7 +1611,12 @@ function features_feature_diff($feature, $component = NULL) {
  *   in theme() if called too early in the request.
  */
 function features_admin_lock($feature, $type = 'ajax', $component = NULL) {
-  if ($type == 'ajax' && !empty($_GET['token']) && drupal_valid_token($_GET['token'], 'features/' . $feature->name . '/' . ($component ? $component : '')) == $_GET['token']) {
+  if ($type == 'ajax'
+    && !empty($_GET['token'])
+    && drupal_valid_token(
+      $_GET['token'],
+      'features/' . $feature->name . '/' . ($component ?: '')) == $_GET['token']
+  ) {
     if (features_feature_is_locked($feature->name, $component, FALSE)) {
       features_feature_unlock($feature->name, $component);
     }
