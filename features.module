@@ -592,9 +592,8 @@ function features_load_feature($name, $reset = FALSE) {
 
     return $features[$name];
   }
-  else {
-    return features_get_features($name, $reset);
-  }
+
+  return features_get_features($name, $reset);
 }
 
 /**
