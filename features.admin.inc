@@ -529,11 +529,16 @@ function _features_export_form_components(&$form, &$form_state) {
 }
 
 /**
- * Return the full feature export array based upon user selections in form_state
- * @param  array $feature    Feature array to be exported
- * @param  array $form_state Optional form_state information for user selections
- *   can be updated to reflect new selection status
- * @return array             New export array to be exported
+ * Return the full feature export array based upon user selections in form_state.
+ *
+ * @param \stdClass $feature
+ *   Feature info object.
+ * @param array $form_state
+ *   Optional form_state information for user selections.
+ *   Can be updated to reflect new selection status.
+ *
+ * @return array
+ *   New export array to be exported
  *   array['components'][$component_name] = $component_info
  *     $component_info['options'][$section] is list of available options
  *     $component_info['selected'][$section] is option state TRUE/FALSE
