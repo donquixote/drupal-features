@@ -309,6 +309,15 @@ function features_export_prepare($export, $module_name, $reset = FALSE, $add_dep
 
 /**
  * Generate an array of hooks and their raw code.
+ *
+ * @param array $export
+ * @param string $module_name
+ * @param bool $reset
+ *   TRUE to reset the cache.
+ *
+ * @return string[][]
+ *   Format: $[$component][$hook_name] = $function_body_php
+ *   E.g. $['node']['node_info'] = '$items = array(..); [..] return $items;'
  */
 function features_export_render_hooks($export, $module_name, $reset = FALSE) {
   features_include();
