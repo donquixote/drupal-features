@@ -67,6 +67,7 @@ function contact_categories_features_export($data, &$export, $module_name = '') 
 function contact_categories_features_export_render($module, $data, $export = NULL) {
   $render = array();
   foreach ($data as $name) {
+    /** @noinspection NullPointerExceptionInspection */
     $export_category = db_select('contact', 'c')
       ->fields('c', array('cid', 'category'))
       ->condition('category', $name, 'LIKE')
