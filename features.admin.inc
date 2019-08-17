@@ -1698,6 +1698,12 @@ function features_compare_component_name($a, $b) {
 
 /**
  * Javascript callback that returns the status of a feature.
+ *
+ * @param \stdClass $feature
+ *   Feature module info object.
+ *
+ * @return void
+ *   Sets the headers and prints json output, but does not return anything.
  */
 function features_feature_status($feature) {
   module_load_include('inc', 'features', 'features.export');
