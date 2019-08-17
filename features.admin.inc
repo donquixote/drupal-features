@@ -789,6 +789,10 @@ function features_export_form_ajax($form, &$form_state) {
 
 /**
  * Tells the ajax form submission to rebuild form state.
+ *
+ * @param array $form
+ * @param array $form_state
+ *   Form state array to modify.
  */
 function features_export_form_rebuild($form, &$form_state) {
   $form_state['rebuild'] = TRUE;
