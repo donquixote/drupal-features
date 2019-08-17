@@ -942,6 +942,8 @@ function drush_features_revert_all() {
 
 /**
  * Show the diff of a feature module.
+ *
+ * @return void|false
  */
 function drush_features_diff() {
   if (!$args = func_get_args()) {
