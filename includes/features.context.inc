@@ -48,7 +48,7 @@ function context_features_export($data, &$export, $module_name = '') {
 }
 
 /**
- * Implements hook_features_revert().
+ * Implements hook_features_revert() for 'context' component.
  *
  * @param string $module
  *   Name of module to revert content for
