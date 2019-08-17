@@ -1570,6 +1570,8 @@ function features_feature_diff($feature, $component = NULL) {
     $formatter = new DrupalDiffFormatter();
 
     $rows = array();
+    // @todo Do not override function parameter!
+    /** @noinspection SuspiciousLoopInspection */
     foreach ($overrides as $component => $items) {
       $rows[] = array(array('data' => $component, 'colspan' => 4, 'header' => TRUE));
       $diff = new Diff(explode("\n", $items['default']), explode("\n", $items['normal']));
