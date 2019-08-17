@@ -159,9 +159,10 @@ jQuery.fn.sortElements = (function(){
       }
 
       function updateComponentCountInfo(item, section) {
+        var parent;
         switch (section) {
           case 'select':
-            var parent = $(item).closest('.features-export-list').siblings('.features-export-component');
+            parent = $(item).closest('.features-export-list').siblings('.features-export-component');
             $('.component-count', parent).text(function (index, text) {
                 return +text + 1;
               }
@@ -169,7 +170,7 @@ jQuery.fn.sortElements = (function(){
             break;
           case 'added':
           case 'detected':
-            var parent = $(item).closest('.features-export-component');
+            parent = $(item).closest('.features-export-component');
             $('.component-count', parent).text(function (index, text) {
               return text - 1;
             });
