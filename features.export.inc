@@ -569,6 +569,18 @@ function features_get_default_alter_hook($component) {
 
 /**
  * Return a code string representing an implementation of a defaults module hook.
+ *
+ * @param string $module
+ *   The module name or component name.
+ * @param string $hook
+ *   The hook name.
+ * @param string $code
+ *   Function body.
+ * @param string $args
+ *   (optional) A parameter list.
+ *
+ * @return string
+ *   The PHP code for a function declaration with doc comment.
  */
 function features_export_render_defaults($module, $hook, $code, $args = '') {
   $output = array();
