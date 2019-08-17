@@ -631,6 +631,9 @@ function drush_features_update() {
 /**
  * Update all enabled features. Optionally pass in a list of features to
  * exclude from being updated.
+ *
+ * @return false|void
+ *   FALSE on error, NULL/void otherwise.
  */
 function drush_features_update_all() {
   $features_to_update = array();
