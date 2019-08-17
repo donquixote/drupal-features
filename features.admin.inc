@@ -160,6 +160,7 @@ function features_export_form($form, $form_state, $feature = NULL) {
     '#required' => TRUE,
     '#default_value' => $feature_name,
     '#machine_name' => array(
+      /* @see \features_export_form_module_name_exists() */
       'exists' => 'features_export_form_module_name_exists',
       'source' => array('info', 'name'),
     ),
@@ -191,6 +192,7 @@ function features_export_form($form, $form_state, $feature = NULL) {
     '#required' => FALSE,
     '#default_value' => !empty($feature->info['version']) ? $feature->info['version'] : '',
     '#size' => 30,
+    /* @see \features_export_form_validate_field() */
     '#element_validate' => array('features_export_form_validate_field'),
   );
   $form['advanced'] = array(
@@ -209,6 +211,7 @@ function features_export_form($form, $form_state, $feature = NULL) {
     '#type' => 'textfield',
     '#required' => FALSE,
     '#default_value' => !empty($feature->info['project status url']) ? $feature->info['project status url'] : '',
+    /* @see \features_export_form_validate_field() */
     '#element_validate' => array('features_export_form_validate_field'),
   );
   $directory = (!empty($feature->filename)) ? dirname($feature->filename) : variable_get('features_default_export_path', FEATURES_DEFAULT_EXPORT_PATH);
@@ -228,6 +231,8 @@ function features_export_form($form, $form_state, $feature = NULL) {
     $form['advanced']['generate'] = array(
       '#type' => 'submit',
       '#value' => t('Generate feature'),
+      /* @see \features_export_build_form_submit() */
+      /* @see \features_form_rebuild() */
       '#submit' => array('features_export_build_form_submit', 'features_form_rebuild'),
     );
   }
@@ -238,6 +243,7 @@ function features_export_form($form, $form_state, $feature = NULL) {
     '#type' => 'button',
     '#value' => t('Preview .info file'),
     '#ajax' => array(
+      /* @see \features_info_file_preview() */
       'callback' => 'features_info_file_preview',
       'wrapper' => 'features-export-wrapper',
     ),
@@ -254,6 +260,7 @@ function features_export_form($form, $form_state, $feature = NULL) {
   );
 
   $form['buttons'] = array(
+    /* @see \theme_features_form_buttons() */
     '#theme' => 'features_form_buttons',
     '#tree' => FALSE,
     '#weight' => 99,
@@ -264,6 +271,8 @@ function features_export_form($form, $form_state, $feature = NULL) {
     '#type' => 'submit',
     '#value' => t('Download feature'),
     '#weight' => 10,
+    /* @see \features_export_build_form_submit() */
+    /* @see \features_form_rebuild() */
     '#submit' => array('features_export_build_form_submit', 'features_form_rebuild'),
   );
 
