@@ -690,7 +690,27 @@ function features_tar_create($name, $contents) {
 }
 
 /**
- * Export var function -- from Views.
+ * Alternative to var_export(), with a more pleasant output format.
+ *
+ * The function is recursive, some parameters should only be provided on
+ * recursive calls.
+ *
+ * The function is inspired/adapted from views_var_export().
+ *
+ * @param mixed $var
+ *   The value to export.
+ * @param string $prefix
+ *   (recursive) Prefix for indentation.
+ * @param bool $init
+ *   (recursive) TRUE, if this is the first level of recursion.
+ * @param int $count
+ *   (recursive) The recursion depth. Starts with 0.
+ *
+ * @return string
+ *   A php statement whose return value is $var.
+ *
+ * @see \views_var_export()
+ * @see \var_export()
  */
 function features_var_export($var, $prefix = '', $init = TRUE, $count = 0) {
   if ($count > 50) {
