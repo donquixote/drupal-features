@@ -596,13 +596,15 @@ function features_export_render_defaults($module, $hook, $code, $args = '') {
 /**
  * Generate code friendly to the Drupal .info format from a structured array.
  *
- * @param $info
+ * @param mixed $info
  *   An array or single value to put in a module's .info file.
- * @param $parents
+ * @param string[] $parents
  *   Array of parent keys (internal use only).
  *
- * @return
+ * @return string
  *   A code string ready to be written to a module's .info file.
+ *
+ * @todo It would be faster to pass a string for $parents.
  */
 function features_export_info($info, $parents = array()) {
   $output = '';
