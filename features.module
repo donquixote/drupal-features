@@ -666,10 +666,10 @@ function features_get_components($component = NULL, $key = NULL, $reset = FALSE)
   if ($key && $component) {
     return !empty($components[$component][$key]) ? $components[$component][$key] : NULL;
   }
-  elseif ($key) {
+  if ($key) {
     return !empty($component_by_key[$key]) ? $component_by_key[$key] : array();
   }
-  elseif ($component) {
+  if ($component) {
     return $components[$component];
   }
   return $components;
