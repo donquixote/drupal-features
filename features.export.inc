@@ -629,13 +629,13 @@ function features_export_info($info, $parents = array()) {
 /**
  * Tar creation function. Written by dmitrig01.
  *
- * @param $name
+ * @param string $name
  *   Filename of the file to be tarred.
- * @param $contents
- *   String contents of the file.
+ * @param string $contents
+ *   File contents to be written as tar.
  *
- * @return
- *   A string of the tar file contents.
+ * @return string
+ *   The raw tar file contents.
  */
 function features_tar_create($name, $contents) {
   /* http://www.mkssoftware.com/docs/man4/tar.4.asp */
