@@ -605,7 +605,6 @@ function features_load_feature($name, $reset = FALSE) {
  * @param bool $reset
  *   (optional) If TRUE, the cache will be reset before fetching.
  *
- *
  * @return \stdClass[]|\stdClass|false
  *   If $name is NULL: $[$module] = $module_info_object
  *   If $name is not NULL: A specific module info object.
