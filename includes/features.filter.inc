@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Implements hook_features_api().
+ * Implements hook_features_api() for 'filter' module.
  */
 function filter_features_api() {
   return array(
