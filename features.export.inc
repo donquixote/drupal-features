@@ -775,9 +775,21 @@ function features_var_export($var, $prefix = '', $init = TRUE, $count = 0) {
 }
 
 /**
- * Helper function to return an array of t()'d translatables strings.
- * Useful for providing a separate array of translatables with your
- * export so that string extractors like potx can detect them.
+ * Creates PHP code with t() statements for given translatable strings.
+ *
+ * This PHP code can be added to generated code, to allow string extractors like
+ * potx to extract a list of translatables from the exported module.
+ *
+ * This is typically called from hook_features_export_render() implementations.
+ *
+ * @param string[] $translatables
+ *   List of translatable strings.
+ *   Format: $[] = $string
+ * @param string $indent
+ *   Indentation to prepend to each line of code.
+ *
+ * @return string
+ *   PHP code with t() statements for each translatable string.
  */
 function features_translatables_export($translatables, $indent = '') {
   $output = '';
