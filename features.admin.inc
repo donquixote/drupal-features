@@ -1658,6 +1658,11 @@ function features_feature_status($feature) {
  * Make a Drupal options array safe for usage with jQuery DOM selectors.
  * Encodes known bad characters into __[ordinal]__ so that they may be
  * safely referenced by JS behaviors.
+ *
+ * @param array $options
+ * @param bool $keys_only
+ *
+ * @return array
  */
 function features_dom_encode_options($options = array(), $keys_only = TRUE) {
   $replacements = features_dom_encode_map();
@@ -1668,11 +1673,21 @@ function features_dom_encode_options($options = array(), $keys_only = TRUE) {
   return $encoded;
 }
 
+/**
+ * @param string $key
+ *
+ * @return string
+ */
 function features_dom_encode($key) {
   $replacements = features_dom_encode_map();
   return strtr($key, $replacements);
 }
 
+/**
+ * @param string $key
+ *
+ * @return string
+ */
 function features_dom_decode($key) {
   $replacements = array_flip(features_dom_encode_map());
   return strtr($key, $replacements);
@@ -1681,6 +1696,14 @@ function features_dom_decode($key) {
 /**
  * Decode an array of option values that have been encoded by
  * features_dom_encode_options().
+ *
+ * @param string[] $options
+ *   Format: $[$key] = $value.
+ * @param bool $keys_only
+ *
+ * @return string[]
+ *   Format, if $keys_only: $[$key_decoded] = $value
+ *   Format, if !$keys_only: $[$key_decoded] = $value_decoded
  */
 function features_dom_decode_options($options, $keys_only = FALSE) {
   $replacements = array_flip(features_dom_encode_map());
@@ -1693,6 +1716,9 @@ function features_dom_decode_options($options, $keys_only = FALSE) {
 
 /**
  * Returns encoding map for decode and encode options.
+ *
+ * @return string[]
+ *   Format: $[$char] = $char_encoded
  */
 function features_dom_encode_map() {
   return array(
