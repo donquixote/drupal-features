@@ -390,6 +390,10 @@ function field_instance_features_rebuild($module) {
 
 /**
  * Load a field base configuration by a field_name identifier.
+ *
+ * @param string $field_name
+ *
+ * @return array|false
  */
 function features_field_base_load($field_name) {
   if ($field_info = field_info_field($field_name)) {
