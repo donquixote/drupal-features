@@ -1255,6 +1255,25 @@ function features_hook_info() {
 
 /**
  * Change vocabularies permission, from vocab id to machine name and vice versa.
+ *
+ * The taxonomy module builds permission machine names from auto-increment
+ * taxonomy vocabulary vids, which is not useful when exporting to features.
+ *
+ * On features export, these permission names are converted, replacing the vids
+ * with taxonomy machine names. On import, this is reversed.
+ *
+ * @param string $perm
+ *   A permission machine name from the real permissions system,
+ *   or a modified permission machine name from a feature module.
+ *   This will by modified (by reference), if it is one of:
+ *   - 'edit terms in ' . $vid_or_name
+ *   - 'delete terms in ' . $vid_or_name.
+ * @param string $type
+ *   One of 'vid' or 'machine_name'.
+ *   If 'vid', vocabulary ids will be replaced by machine names.
+ *   If 'machine_name', vocabulary machine names will be replaced by vids.
+ *
+ * @see \taxonomy_permission()
  */
 function _user_features_change_term_permission(&$perm, $type = 'vid') {
   if (!module_exists('taxonomy')) {
