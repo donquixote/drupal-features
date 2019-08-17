@@ -837,6 +837,19 @@ function features_get_storage($module_name) {
  * Wrapper around features_get_[storage] to return an md5hash of a normalized
  * defaults/normal object array. Can be used to compare normal/default states
  * of a module's component.
+ *
+ * @param string $state
+ *   One of 'cache', 'default' or 'normal'.
+ * @param string $module_name
+ *   A module name.
+ * @param string $component
+ *   A component name, e.g. 'field_instance'.
+ * @param bool $reset
+ *   If TRUE, the static cache for features_get_default() or
+ *   features_get_normal() will be reset.
+ *
+ * @return string|false
+ *   An md5 signature, or FALSE if not found.
  */
 function features_get_signature($state = 'default', $module_name, $component, $reset = FALSE) {
   switch ($state) {
