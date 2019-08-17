@@ -2,6 +2,12 @@
 
 /**
  * Implements hook_features_export().
+ *
+ * @param string[] $data
+ * @param array $export
+ * @param string $module_name
+ *
+ * @return array
  */
 function context_features_export($data, &$export, $module_name = '') {
   $pipe = ctools_component_features_export('context', $data, $export, $module_name);
