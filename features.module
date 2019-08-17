@@ -688,6 +688,17 @@ function features_get_feature_components() {
 
 /**
  * Invoke a component callback.
+ *
+ * @param string $component
+ *   Component name, e.g. 'field_instance'.
+ * @param string $callback
+ *   Component hook name, e.g. 'features_revert'.
+ *
+ * @return mixed|void
+ *   The return value from the component hook callback.
+ *   If the callback does not exist, NULL ("void") is returned.
+ *
+ * @todo Explicitly return NULL if hook not found, replace the 'void' doc.
  */
 function features_invoke($component, $callback) {
   $args = func_get_args();
