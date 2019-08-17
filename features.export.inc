@@ -458,7 +458,7 @@ function features_export_render($export, $module_name, $reset = FALSE) {
       }
       foreach (file_scan_directory(drupal_get_path('module', $module_name), '/.*/') as $file) {
         if (in_array($file->name, $deprecated_files, TRUE)) {
-          features_log(t('The file @filename has been deprecated and can be removed.', array('@filename' => $file->filename)), 'status');
+          features_log(t('The file @filename has been deprecated and can be removed.', array('@filename' => $file->filename)));
         }
         elseif ($file->name === "{$module_name}.features" && empty($code['features'])) {
           // Try and remove features.inc include.
