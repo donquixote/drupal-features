@@ -136,8 +136,18 @@ function ctools_features_export_render($module, $data) {
 /**
  * Master implementation of hook_features_api() for all ctools components.
  *
+ * This is not registered as a hook implementation by itself. Instead, it gets
+ * called from other implementations, especially those dynamically declared in
+ * ctools_features_declare_functions().
+ *
  * Note that this master hook does not use $component like the others, but uses the
  * component module's namespace instead.
+ *
+ * @param string $module_name
+ *
+ * @return array[]
+ *
+ * @see \ctools_features_declare_functions()
  */
 function ctools_component_features_api($module_name) {
   $api = array();
