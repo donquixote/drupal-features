@@ -371,6 +371,13 @@ function hook_features_export_files($module_name, $export) {
 
 /**
  * Alter the extra files added to the export.
+ *
+ * @param array[] $files
+ *   Format: A mix of:
+ *   - $[$path]['file_content'] = $file_content
+ *   - $[$path]['file_path'] = $source_file_to_copy
+ * @param string $module_name
+ * @param array $export
  */
 function hook_features_export_files_alter(&$files, $module_name, $export) {
   $files['css/main.css']['file_content'] = 'body {background-color:black;}';
