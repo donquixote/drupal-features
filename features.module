@@ -934,6 +934,29 @@ function features_get_info($type = 'module', $name = NULL, $reset = FALSE) {
 
 /**
  * Generate an array of feature dependencies that have been orphaned.
+ *
+ * The original idea was that a module is "orphan" if it is not needed anymore
+ * and can be safely disabled.
+ *
+ * KNOWN ISSUES:
+ * - The function poisons original objects from elsewhere.
+ * - The function does not really work as advertised. It returns an empty list
+ *   most of the time.
+ * - Do not use!!
+ *
+ * @deprecated
+ *   This function is no longer used in features itself since #719308, where the
+ *   UI for orphan module detection was removed. It might still be used in some
+ *   exotic contrib or custom modules.
+ *
+ * @param bool $reset
+ *   If TRUE, the static cache will be reset.
+ *
+ * @return \stdClass[]
+ *   List of (feature) modules that are considered "orphan".
+ *   Format: $[$module] = $module_info_object
+ *
+ * @todo This should be removed eventually.
  */
 function features_get_orphans($reset = FALSE) {
   static $orphans;
