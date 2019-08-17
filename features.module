@@ -315,6 +315,13 @@ function features_flush_caches() {
 
 /**
  * Implements hook_form().
+ *
+ * @param object $node
+ *   A node entity object.
+ * @param array $form_state
+ *   The form state.
+ *
+ * @return array
  */
 function features_form($node, $form_state) {
   return node_content_form($node, $form_state);
