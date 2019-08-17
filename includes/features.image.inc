@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Implements hook_features_api().
+ * Implements hook_features_api() for 'image' module.
  */
 function image_features_api() {
   return array(
