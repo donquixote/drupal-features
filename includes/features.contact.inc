@@ -93,7 +93,11 @@ function contact_categories_features_revert($module) {
 }
 
 /**
- * Implements hook_features_rebuild().
+ * Implements hook_features_rebuild() for 'contact_categories' component.
+ *
+ * @param string $module
+ *
+ * @throws \InvalidMergeQueryException
  */
 function contact_categories_features_rebuild($module) {
   if ($defaults = features_get_default('contact_categories', $module)) {
