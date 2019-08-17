@@ -1108,6 +1108,12 @@ function features_export_build_form_submit($form, &$form_state) {
 
 /**
  * array_filter() callback for excluding hidden modules.
+ *
+ * @param \stdClass $module
+ *   Module info object.
+ *
+ * @return bool
+ *   TRUE, if the module is NOT hidden.
  */
 function features_filter_hidden($module) {
   return empty($module->info['hidden']);
