@@ -112,6 +112,8 @@ function language_features_rebuild($module) {
     }
 
     // Set correct language count.
+    /** @noinspection NullPointerExceptionInspection */
+    /** @noinspection PhpUndefinedMethodInspection */
     $enabled_languages = db_select('languages')
       ->condition('enabled', 1)
       ->fields('languages')
