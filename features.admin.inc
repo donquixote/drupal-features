@@ -1512,7 +1512,9 @@ function features_form_submit(&$form, &$form_state) {
 }
 
 /**
- * Submit handler for the 'manage features' form rebuild button.
+ * Second submit handler for 'Generate feature' and 'Download feature' buttons.
+ *
+ * @see \features_export_form()
  */
 function features_form_rebuild() {
   cache_clear_all('features:features_list', 'cache');
