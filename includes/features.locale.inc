@@ -20,14 +20,22 @@ function locale_features_api() {
 }
 
 /**
- * Implements hook_features_export_options().
+ * Implements hook_features_export_options() for 'language' component.
+ *
+ * @return string[]
  */
 function language_features_export_options() {
   return locale_language_list('native', TRUE);
 }
 
 /**
- * Implements hook_features_export().
+ * Implements hook_features_export() for 'language' component.
+ *
+ * @param string[] $data
+ * @param array $export
+ * @param string $module_name
+ *
+ * @return array
  */
 function language_features_export($data, &$export, $module_name = '') {
   $export['dependencies']['features'] = 'features';
@@ -48,7 +56,13 @@ function language_features_export($data, &$export, $module_name = '') {
 }
 
 /**
- * Implements hook_features_export_render().
+ * Implements hook_features_export_render() for 'language' component.
+ *
+ * @param string $module
+ * @param string[] $data
+ * @param array|null $export
+ *
+ * @return mixed[]
  */
 function language_features_export_render($module, $data, $export = NULL) {
   $code = array();
@@ -78,14 +92,18 @@ function language_features_export_render($module, $data, $export = NULL) {
 }
 
 /**
- * Implements hook_features_revert().
+ * Implements hook_features_revert() for 'language' component.
+ *
+ * @param string $module
  */
 function language_features_revert($module) {
   return language_features_rebuild($module);
 }
 
 /**
- * Implements hook_features_rebuild().
+ * Implements hook_features_rebuild() for 'language' component.
+ *
+ * @param string $module
  */
 function language_features_rebuild($module) {
   if ($defaults = features_get_default('language', $module)) {
