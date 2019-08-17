@@ -55,7 +55,14 @@ function contact_categories_features_export($data, &$export, $module_name = '') 
 }
 
 /**
- * Implements hook_features_export_render().
+ * Implements hook_features_export_render() for 'contact_categories' component.
+ *
+ * @param string $module
+ * @param string[] $data
+ * @param array|null $export
+ *
+ * @return string[]
+ *   Format: $[$hook] = $function_body
  */
 function contact_categories_features_export_render($module, $data, $export = NULL) {
   $render = array();
