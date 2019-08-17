@@ -1227,7 +1227,7 @@ function _features_restore($op, $items = array()) {
       throw new \InvalidArgumentException('Invalid value for $op parameter.');
   }
 
-  if (empty($items)) {
+  if (empty($items) && !empty($restore_states)) {
     // Drush may execute a whole chain of commands that may trigger feature
     // rebuilding multiple times during a single request. Make sure we do not
     // rebuild the same cached list of modules over and over again by setting
