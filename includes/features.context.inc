@@ -54,7 +54,6 @@ function context_features_export($data, &$export, $module_name = '') {
  *   Name of module to revert content for
  */
 function context_features_revert($module = NULL) {
-  $return = ctools_component_features_revert('context', $module);
+  ctools_component_features_revert('context', $module);
   context_invalidate_cache();
-  return $return;
 }
