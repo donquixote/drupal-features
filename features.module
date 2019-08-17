@@ -677,6 +677,10 @@ function features_get_components($component = NULL, $key = NULL, $reset = FALSE)
 
 /**
  * Returns components that are offered as an option on feature creation.
+ *
+ * @return array[]
+ *   Components from hook_features_api() where 'features_source' is TRUE.
+ *   Format: $[$component] = $component_info
  */
 function features_get_feature_components() {
   return array_intersect_key(features_get_components(), array_filter(features_get_components(NULL, 'feature_source')));
