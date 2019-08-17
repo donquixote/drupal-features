@@ -450,7 +450,9 @@ function page_manager_pages_features_export_render($module, $data) {
 }
 
 /**
- * Implements hook_features_revert() for page_manager.
+ * Implements hook_features_revert() for 'page_manager_pages' component.
+ *
+ * @param string $module
  */
 function page_manager_pages_features_revert($module) {
   if ($pages = features_get_default('page_manager_pages', $module)) {
