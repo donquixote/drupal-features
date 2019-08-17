@@ -63,7 +63,7 @@ function features_uninstall() {
 function _features_install_menu() {
   if (db_table_exists('menu_custom') && !db_query("SELECT menu_name FROM {menu_custom} WHERE menu_name = :menu_name", array(':menu_name' => 'features'))->fetchField()) {
     $t = get_t();
-    $id = db_insert('menu_custom')
+    db_insert('menu_custom')
       ->fields(array(
         'menu_name' => 'features',
         'title' => $t('Features'),
