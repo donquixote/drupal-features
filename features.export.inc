@@ -243,13 +243,20 @@ function _features_export_maximize_dependencies($dependencies, $module_name = ''
 
 /**
  * Prepare a feature export array into a finalized info array.
- * @param $export
- *  An exported feature definition.
- * @param $module_name
- *  The name of the module to be exported.
- * @param $reset
- *  Boolean flag for resetting the module cache. Only set to true when
- *  doing a final export for delivery.
+ *
+ * @param array $export
+ *   An exported feature definition.
+ *   This has the same structure as a module *.info array, but it may be missing
+ *   some keys, or have the keys in the wrong order.
+ * @param string $module_name
+ *   The name of the module to be exported.
+ * @param bool $reset
+ *   TRUE to reset the module cache. Only set to true when
+ *   doing a final export for delivery.
+ * @param bool $add_deprecated
+ *
+ * @return array
+ *   Complete *.info array with all required keys added and standardized order.
  */
 function features_export_prepare($export, $module_name, $reset = FALSE, $add_deprecated = TRUE) {
   $existing = features_get_modules($module_name, $reset);
