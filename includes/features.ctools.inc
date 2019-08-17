@@ -276,6 +276,11 @@ function ctools_component_features_revert($component, $module) {
 
 /**
  * Helper function to return various ctools information for components.
+ *
+ * @param string|null $identifier
+ * @param bool $reset
+ *
+ * @return array|mixed|false
  */
 function _ctools_features_get_info($identifier = NULL, $reset = FALSE) {
   static $components;
@@ -336,6 +341,12 @@ function _ctools_features_get_info($identifier = NULL, $reset = FALSE) {
 
 /**
  * Wrapper around ctools_export_crud_export() for < 1.7 compatibility.
+ *
+ * @param string $table
+ * @param object $object
+ * @param string $indent
+ *
+ * @return string
  */
 function _ctools_features_export_crud_export($table, $object, $indent = '') {
   return ctools_api_version('1.7') ? ctools_export_crud_export($table, $object, $indent) : ctools_export_object($table, $object, $indent);
@@ -343,6 +354,11 @@ function _ctools_features_export_crud_export($table, $object, $indent = '') {
 
 /**
  * Wrapper around ctools_export_crud_load() for < 1.7 compatibility.
+ *
+ * @param string $table
+ * @param string $name
+ *
+ * @return bool|mixed|null
  */
 function _ctools_features_export_crud_load($table, $name) {
   if (ctools_api_version('1.7')) {
@@ -356,6 +372,11 @@ function _ctools_features_export_crud_load($table, $name) {
 
 /**
  * Wrapper around ctools_export_default_list() for < 1.7 compatibility.
+ *
+ * @param string $table
+ * @param array $schema
+ *
+ * @return string[]
  */
 function _ctools_features_export_default_list($table, $schema) {
   if (ctools_api_version('1.7')) {
@@ -369,6 +390,9 @@ function _ctools_features_export_default_list($table, $schema) {
 
 /**
  * Wrapper around ctools_export_crud_delete() for < 1.7 compatibility.
+ *
+ * @param string $table
+ * @param object $object
  */
 function _ctools_features_export_crud_delete($table, $object) {
   if (ctools_api_version('1.7')) {
