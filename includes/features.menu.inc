@@ -28,10 +28,16 @@ function menu_features_api() {
 }
 
 /**
- * Implements hook_features_export().
+ * Implements hook_features_export() for deprecated 'menu' component.
  *
  * DEPRECATED: This implementation simply migrates deprecated `menu` items
  * to the `menu_links` type.
+ *
+ * @param string[] $data
+ * @param array $export
+ * @param string $module_name
+ *
+ * @return array
  */
 function menu_features_export($data, &$export, $module_name = '') {
   $pipe = array();
