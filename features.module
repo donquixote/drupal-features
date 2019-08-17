@@ -1021,6 +1021,12 @@ function features_get_module_status($module) {
 
 /**
  * Menu title callback.
+ *
+ * @param \stdClass $feature
+ *   Feature module object.
+ *
+ * @return string
+ *   The human name of the module, as specified in the *.info file.
  */
 function features_get_feature_title($feature) {
   return $feature->info['name'];
