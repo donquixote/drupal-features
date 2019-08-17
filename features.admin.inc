@@ -528,7 +528,7 @@ function _features_export_build($feature, &$form_state) {
   $conflicts = _features_get_used($feature_name);
   $reset = FALSE;
   if (isset($form_state['triggering_element']['#name']) && ($form_state['triggering_element']['#name'] == 'features_allow_conflicts')) {
-    // when clicking the Allow Conflicts button, reset the feature back to it's original state
+    // when clicking the Allow Conflicts button, reset the feature back to its original state
     $reset = TRUE;
   }
 
