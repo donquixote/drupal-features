@@ -1534,7 +1534,12 @@ function features_feature_lock($feature, $component = NULL) {
 }
 
 /**
- * Unlocks a feature or it's component.
+ * Unlocks a feature or its component.
+ *
+ * @param string $feature
+ *   A (feature) module name.
+ * @param string|null $component
+ *   (optional) A component name, e.g. 'field_instance'.
  */
 function features_feature_unlock($feature, $component = NULL) {
   $locked = variable_get('features_feature_locked', array());
