@@ -5,9 +5,14 @@
  * Forms for Features admin screens
  */
 
-
 /**
- * Settings form for features
+ * Form builder for 'admin/structure/features/settings'.
+ *
+ * @param array $form
+ * @param array $form_state
+ *
+ * @return array
+ *   Form array.
  */
 function features_settings_form($form, $form_state) {
   $form = array();
