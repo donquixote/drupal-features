@@ -433,7 +433,12 @@ function _ctools_features_export_crud_delete($table, $object) {
 }
 
 /**
- * Implements hook_features_export_render() for page_manager.
+ * Implements hook_features_export_render() for 'page_manager_pages' component.
+ *
+ * @param string $module
+ * @param string[] $data
+ *
+ * @return array
  */
 function page_manager_pages_features_export_render($module, $data) {
   // Reset the export display static to prevent clashes.
