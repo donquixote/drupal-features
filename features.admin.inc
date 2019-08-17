@@ -1714,6 +1714,11 @@ function features_feature_status($feature) {
  * Make a Drupal options array safe for usage with jQuery DOM selectors.
  * Encodes known bad characters into __[ordinal]__ so that they may be
  * safely referenced by JS behaviors.
+ *
+ * @param array $options
+ * @param bool $keys_only
+ *
+ * @return array
  */
 function features_dom_encode_options($options = array(), $keys_only = TRUE) {
   $replacements = features_dom_encode_map();
