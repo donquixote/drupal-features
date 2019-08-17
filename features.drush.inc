@@ -795,7 +795,7 @@ function _drush_features_generate_export(&$info, $module_name) {
 }
 
 /**
- * Revert a feature to it's code definition.
+ * Revert a feature to its code definition.
  * Optionally accept a list of components to revert.
  */
 function drush_features_revert() {
@@ -818,7 +818,7 @@ function drush_features_revert() {
 
       if (isset($module)) {
         if (empty($component)) {
-          // If we received just a feature name, this means that we need all of it's components.
+          // If we received just a feature name, this means that we need all of its components.
           $modules[$module] = TRUE;
         }
         elseif ($modules[$module] !== TRUE) {
