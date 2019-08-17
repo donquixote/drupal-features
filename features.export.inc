@@ -990,11 +990,13 @@ function _features_module_exists($module) {
  * Get defaults for a given module/component pair.
  *
  * @param string $component
+ *   A component name, e.g. 'field_instance'.
  * @param string|null $module_name
  *   (optional) If specified, only return defaults for this module.
  * @param bool $alter
- *   (optional) If TRUE,
+ *   (optional) If TRUE, the defaults will be passed through an alter hook.
  * @param bool $reset
+ *   If TRUE, the static cache will be reset.
  *
  * @return array[]|false
  *   Format: $[$name] = $item_export_data
