@@ -124,9 +124,10 @@ function hook_features_export($data, &$export, $module_name) {
  *
  * List all objects for a component that may be exported.
  *
- * @return array
+ * @return string[]
  *   A keyed array of items, suitable for use with a FormAPI select or
  *   checkboxes element.
+ *   Format: $[$value] = $label
  */
 function hook_features_export_options() {
   $options = array();
