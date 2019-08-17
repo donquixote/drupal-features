@@ -66,8 +66,11 @@ function dependencies_features_revert($module) {
 }
 
 /**
- * Implements hook_features_rebuild().
+ * Implements hook_features_rebuild() for 'dependencies' component.
+ *
  * Ensure that all of a feature's dependencies are enabled.
+ *
+ * @param string $module
  */
 function dependencies_features_rebuild($module) {
   $feature = features_get_features($module);
