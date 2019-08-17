@@ -93,7 +93,10 @@ function features_update_6100() {
         $sql = "SELECT COUNT(*) FROM {node_type} WHERE module = 'node' AND type = '%s'";
         // Only update if the hook_node_info type's module is 'features' and the db type's
         // module is 'node'.
+        // @todo This code was written for D6, but will be executed in D7..
+        /** @noinspection PhpParamsInspection */
         if (($type_data['module'] == 'features') && db_query($sql, $type)->fetchField()) {
+          /** @noinspection PhpUndefinedFunctionInspection */
           $ret[] = update_sql("UPDATE {node_type} SET module = 'features' WHERE type = '$type'");
         }
       }
