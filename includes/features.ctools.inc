@@ -164,6 +164,14 @@ function ctools_component_features_api($module_name) {
 
 /**
  * Master implementation of hook_features_export_options() for all ctools components.
+ *
+ * This is not registered as a hook implementation by itself. Instead, it gets
+ * called from other implementations, especially those dynamically declared in
+ * ctools_features_declare_functions().
+ *
+ * @param string $component
+ *
+ * @return array
  */
 function ctools_component_features_export_options($component) {
   $options = array();
