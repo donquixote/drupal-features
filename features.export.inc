@@ -564,7 +564,7 @@ function features_get_default_alter_hook($component) {
   $default_hook = features_get_components($component, 'default_hook');
   $alter_hook = features_get_components($component, 'alter_hook');
   $alter_type = features_get_components($component, 'alter_type');
-  return empty($alter_type) || $alter_type != 'none' ? ($alter_hook ? $alter_hook : $default_hook) : FALSE;
+  return empty($alter_type) || $alter_type != 'none' ? ($alter_hook ?: $default_hook) : FALSE;
 }
 
 /**
