@@ -473,7 +473,14 @@ function _drush_features_component_filter($all_components, $patterns = array(), 
         // No matches. If the source was a pattern, just carry on, else
         // error out. Allows for patterns like :*field*
         if ($preg_source_pattern[0] != '^') {
-          return drush_set_error('', dt('No !state !source components match "!component"', array('!state' => $state_string, '!component' => $component_pattern, '!source' => $source)));
+          return drush_set_error(
+            '',
+            dt('No !state !source components match "!component"',
+              array(
+                '!state' => $state_string,
+                '!component' => $component_pattern,
+                '!source' => $source,
+              )));
         }
       }
     }
