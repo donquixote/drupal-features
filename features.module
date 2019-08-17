@@ -1021,6 +1021,10 @@ function features_get_orphans($reset = FALSE) {
 function features_get_conflicts($reset = FALSE) {
   $conflicts = array();
   $component_info = features_get_components();
+  /**
+   * @var string[][][] $map
+   *   Format: $[$component][$name][] = $module
+   */
   $map = features_get_component_map(NULL, $reset);
 
   foreach ($map as $type => $components) {
