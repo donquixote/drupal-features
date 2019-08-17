@@ -15,6 +15,7 @@
  *   Form array.
  */
 function features_settings_form($form, $form_state) {
+  /** @noinspection SuspiciousAssignmentsInspection */
   $form = array();
 
   $components = features_get_components();
