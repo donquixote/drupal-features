@@ -392,7 +392,7 @@ function hook_features_export_files_alter(&$files, $module_name, $export) {
  *
  * CTools also has a variety of hook_FOO_alters.
  *
- * Note: While views is a component of features, it declares it's own alter
+ * Note: While views is a component of features, it declares its own alter
  * function which takes a similar form:
  * hook_views_default_views_alter(&$views)
  */
