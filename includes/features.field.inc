@@ -405,8 +405,15 @@ function features_field_base_load($field_name) {
 }
 
 /**
- * Load a field's instance configuration by an entity_type-bundle-field_name
- * identifier.
+ * Loads a field instance definition array suitable for export.
+ *
+ * @param string $identifier
+ *   Format: "$entity_type-$bundle-$field_name"
+ *
+ * @return array|false
+ *   Field instance definition array as from field_info_instance().
+ *   The auto-increment keys 'id' and 'field_id' are removed, to reduce noise
+ *   in the export.
  */
 function features_field_instance_load($identifier) {
   list($entity_type, $bundle, $field_name) = explode('-', $identifier);
