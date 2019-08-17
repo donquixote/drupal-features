@@ -1628,6 +1628,13 @@ function features_feature_lock_confirm_form_submit($form, &$form_state) {
 
 /**
  * Compare the component names. Used to sort alphabetically.
+ *
+ * @param array $a
+ *   Component info array.
+ * @param array $b
+ *   Component info array.
+ *
+ * @return int
  */
 function features_compare_component_name($a, $b) {
   return strcasecmp($a['name'], $b['name']);
