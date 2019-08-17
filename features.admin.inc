@@ -1492,14 +1492,17 @@ function features_cleanup() {
  * Page callback to display the differences between what's in code and
  * what is in the db.
  *
- * @param $feature
+ * @param \stdClass $feature
  *   A loaded feature object to display differences for.
- * @param $component
+ * @param string $component
  *   (optional) Specific component to display differences for. If excluded, all
  *   components are used.
  *
- * @return
- *   Themed display of what is different.
+ * @return array
+ *   Render element showing the difference between code and db.
+ *
+ * @throws \Exception
+ *   Exception theoretically thrown in theme().
  */
 function features_feature_diff($feature, $component = NULL) {
   drupal_add_css(drupal_get_path('module', 'features') . '/features.css');
