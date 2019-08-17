@@ -382,10 +382,12 @@ function _features_export_form_components(&$form, &$form_state) {
       'title' => t("Refresh the list of auto-detected items."),
       'class' => array('features-refresh-button'),
     ),
+    /* @see \features_export_form_rebuild() */
     '#submit' => array('features_export_form_rebuild'),
     '#prefix' => "<div class='features-refresh-wrapper'>",
     '#suffix' => "</div>",
     '#ajax' => array(
+      /* @see \features_export_form_ajax() */
       'callback' => 'features_export_form_ajax',
       'wrapper' => 'features-export-wrapper',
     ),
@@ -399,6 +401,7 @@ function _features_export_form_components(&$form, &$form_state) {
     '#type' => 'checkbox',
     '#default_value' => $features_ignore_conflicts,
     '#ajax' => array(
+      /* @see \features_export_form_ajax() */
       'callback' => 'features_export_form_ajax',
       'wrapper' => 'features-export-wrapper',
     ),
