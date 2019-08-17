@@ -1673,11 +1673,11 @@ function features_feature_lock_confirm_form_submit($form, &$form_state) {
   $component = $form['#component'];
   if (features_feature_is_locked($feature, $component, FALSE)) {
     features_feature_unlock($feature, $component);
-    drupal_set_message(t('Feature @name (component @component) has been unlocked.', array('@name' => $feature, '@component' => $component ? $component : t('all'))));
+    drupal_set_message(t('Feature @name (component @component) has been unlocked.', array('@name' => $feature, '@component' => $component ?: t('all'))));
   }
   else {
     features_feature_lock($feature, $component);
-    drupal_set_message(t('Feature @name (component @component) has been locked.', array('@name' => $feature, '@component' => $component ? $component : t('all'))));
+    drupal_set_message(t('Feature @name (component @component) has been locked.', array('@name' => $feature, '@component' => $component ?: t('all'))));
   }
   $form_state['redirect'] = 'admin/structure/features/' . $feature;
 }
