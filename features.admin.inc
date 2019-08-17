@@ -1772,6 +1772,9 @@ function features_dom_decode_options($options, $keys_only = FALSE) {
 
 /**
  * Returns encoding map for decode and encode options.
+ *
+ * @return string[]
+ *   Format: $[$char] = $char_encoded
  */
 function features_dom_encode_map() {
   return array(
