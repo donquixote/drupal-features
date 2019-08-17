@@ -1282,7 +1282,9 @@ function features_admin_form($form, $form_state) {
   $form['buttons']['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Save settings'),
+    /* @see \features_form_submit() */
     '#submit' => array('features_form_submit'),
+    /* @see \features_form_validate() */
     '#validate' => array('features_form_validate'),
   );
   return $form;
