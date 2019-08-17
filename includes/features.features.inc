@@ -31,7 +31,7 @@ function dependencies_features_export_options() {
 }
 
 /**
- * Implements hook_features_export().
+ * Implements hook_features_export() for 'dependencies' component.
  *
  * @param string[] $data
  *   Format: $[$dependency] = $dependency
@@ -41,6 +41,8 @@ function dependencies_features_export_options() {
  *   $export['features'] contains
  * @param string $module_name
  *   Name of the feature module being processed.
+ *
+ * @see \hook_features_export()
  */
 function dependencies_features_export($data, &$export, $module_name = '') {
   // Don't allow a module to depend upon itself.
