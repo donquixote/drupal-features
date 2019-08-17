@@ -1035,7 +1035,8 @@ function features_get_conflicts($reset = FALSE) {
         if (isset($component_info[$type]['duplicates']) && $component_info[$type]['duplicates'] == FEATURES_DUPLICATES_ALLOWED) {
           continue;
         }
-        elseif (count($modules) > 1) {
+
+        if (count($modules) > 1) {
           foreach ($modules as $module) {
             if (!isset($conflicts[$module])) {
               $conflicts[$module] = array();
