@@ -508,6 +508,10 @@ function _drush_features_component_filter($all_components, $patterns = array(), 
 
 /**
  * Prints a list of filtered components.
+ *
+ * @param $filtered_components
+ *   Format: $[$component][$name] = $value
+ * @param array $options
  */
 function _drush_features_component_print($filtered_components, $options = array()) {
   $rows = array(array(dt('Available sources')));
