@@ -874,6 +874,13 @@ function features_get_signature($state = 'default', $module_name, $component, $r
 
 /**
  * Set the signature of a module/component pair in the codecache.
+ *
+ * @param string $module
+ *   A module name.
+ * @param string $component
+ *   A component name, e.g. 'field_instance'.
+ * @param string|null $signature
+ *   An md5 signature, or NULL to auto-generate one.
  */
 function features_set_signature($module, $component, $signature = NULL) {
   $cache = cache_get('features_codecache', 'cache_featurestate');
