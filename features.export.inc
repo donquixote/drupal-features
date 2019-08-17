@@ -555,6 +555,10 @@ function features_get_default_hooks($component = NULL, $reset = FALSE) {
 
 /**
  * Gets the available default hooks keyed by components.
+ *
+ * @param string $component
+ *
+ * @return array|array[]|bool|mixed|mixed[]|null
  */
 function features_get_default_alter_hook($component) {
   $default_hook = features_get_components($component, 'default_hook');
