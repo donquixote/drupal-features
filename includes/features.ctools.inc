@@ -399,6 +399,11 @@ function _ctools_features_export_crud_load($table, $name) {
 
 /**
  * Wrapper around ctools_export_default_list() for < 1.7 compatibility.
+ *
+ * @param string $table
+ * @param array $schema
+ *
+ * @return array
  */
 function _ctools_features_export_default_list($table, $schema) {
   if (ctools_api_version('1.7')) {
