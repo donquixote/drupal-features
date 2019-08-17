@@ -653,7 +653,7 @@ function features_field_load($identifier) {
  * @param string $identifier
  *   The field identifier.
  *
- * @return BOOL
+ * @return bool
  *   TRUE if the line should be wrapped after the prefix, else FALSE.
  *
  * @see https://www.drupal.org/node/1354
