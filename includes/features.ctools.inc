@@ -374,7 +374,9 @@ function _ctools_features_get_info($identifier = NULL, $reset = FALSE) {
  * @return string
  */
 function _ctools_features_export_crud_export($table, $object, $indent = '') {
-  return ctools_api_version('1.7') ? ctools_export_crud_export($table, $object, $indent) : ctools_export_object($table, $object, $indent);
+  return ctools_api_version('1.7')
+    ? ctools_export_crud_export($table, $object, $indent)
+    : ctools_export_object($table, $object, $indent);
 }
 
 /**
