@@ -1737,7 +1737,7 @@ function features_dom_encode_map() {
 /**
  * Page callback: Autocomplete field for features package.
  *
- * @param $search_string
+ * @param string $search_string
  *   The char or string that user have written in autocomplete field,
  *   this is the string this function uses for filter.
  *
