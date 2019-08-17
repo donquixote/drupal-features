@@ -349,10 +349,10 @@ function _drush_features_component_list() {
  *   Format: $[] = $pattern
  * @param array $options
  *
- * @return array|false
- *   Format: ['components' => $selected, 'sources' => $provided_by]
+ * @return array[]|false
+ *   Format: Contains two sub-arrays:
  *     $['components'][$component][$name] = $title
- *     $['sources'][$component . ':' . $name] =
+ *     $['sources'][$component . ':' . $name] = implode(', ', $providing_modules)
  *
  */
 function _drush_features_component_filter($all_components, $patterns = array(), $options = array()) {
