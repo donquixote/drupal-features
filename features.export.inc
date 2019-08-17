@@ -643,10 +643,10 @@ function features_tar_create($name, $contents) {
   $bigheader = $header = '';
   if (strlen($name) > 100) {
     $bigheader = pack("a100a8a8a8a12a12a8a1a100a6a2a32a32a8a8a155a12",
-        '././@LongLink', '0000000', '0000000', '0000000',
-        sprintf("%011o", strlen($name)), '00000000000',
-        '        ', 'L', '', 'ustar ', '0',
-        '', '', '', '', '', '');
+      '././@LongLink', '0000000', '0000000', '0000000',
+      sprintf("%011o", strlen($name)), '00000000000',
+      '        ', 'L', '', 'ustar ', '0',
+      '', '', '', '', '', '');
 
     $bigheader .= str_pad($name, floor((strlen($name) + 512 - 1) / 512) * 512, "\0");
 
@@ -656,7 +656,7 @@ function features_tar_create($name, $contents) {
     }
     $bigheader = substr_replace($bigheader, sprintf("%06o", $checksum)."\0 ", 148, 8);
   }
- $header = pack("a100a8a8a8a12a12a8a1a100a6a2a32a32a8a8a155a12", // book the memorie area
+  $header = pack("a100a8a8a8a12a12a8a1a100a6a2a32a32a8a8a155a12", // book the memorie area
     substr($name,0,100),  //  0     100     File name
     '100644 ',            // File permissions
     '   765 ',            // UID,
