@@ -153,7 +153,9 @@ function ctools_component_features_api($module_name) {
   $api = array();
   foreach (_ctools_features_get_info() as $component => $info) {
     // if module owner is set to "ctools" we need to compare the component
-    if ($info['module'] == $module_name || ($info['module'] === 'ctools' && $component == $module_name) ) {
+    if ($info['module'] == $module_name
+      || ($info['module'] === 'ctools' && $component == $module_name)
+    ) {
       $api[$component] = $info;
     }
   }
