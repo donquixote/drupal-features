@@ -640,7 +640,6 @@ function features_export_info($info, $parents = array()) {
 function features_tar_create($name, $contents) {
   /* http://www.mkssoftware.com/docs/man4/tar.4.asp */
   /* http://www.phpclasses.org/browse/file/21200.html */
-  $tar = '';
   $bigheader = $header = '';
   if (strlen($name) > 100) {
     $bigheader = pack("a100a8a8a8a12a12a8a1a100a6a2a32a32a8a8a155a12",
