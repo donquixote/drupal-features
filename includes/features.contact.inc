@@ -89,7 +89,7 @@ function contact_categories_features_export_render($module, $data, $export = NUL
  * @throws \InvalidMergeQueryException
  */
 function contact_categories_features_revert($module) {
-  return contact_categories_features_rebuild($module);
+  contact_categories_features_rebuild($module);
 }
 
 /**
