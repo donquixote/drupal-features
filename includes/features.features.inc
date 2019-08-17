@@ -14,7 +14,9 @@ function features_features_api() {
 }
 
 /**
- * Implements hook_features_export_options().
+ * Implements hook_features_export_options() for 'dependencies' component.
+ *
+ * @return string[]
  */
 function dependencies_features_export_options() {
   // Excluded modules.
