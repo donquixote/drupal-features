@@ -827,7 +827,7 @@ function features_export_components_json($feature_name) {
   module_load_include('inc', 'features', 'features.export');
   $export = array('features' => array());
   if (!empty($_POST['items'])) {
-    $excluded = (!empty($_POST['excluded'])) ? $_POST['excluded'] : array();
+    $excluded = !empty($_POST['excluded']) ? $_POST['excluded'] : array();
     $stub = array();
     foreach ($_POST['items'] as $key) {
       preg_match('/^([^\[]+)(\[.+\])?\[(.+)\]\[(.+)\]$/', $key, $matches);
