@@ -132,6 +132,8 @@ function language_features_rebuild($module) {
  */
 function _features_language_save($language) {
 
+  /** @noinspection NullPointerExceptionInspection */
+  /** @noinspection PhpUndefinedMethodInspection */
   $current_language = db_select('languages')
     ->condition('language', $language->language)
     ->fields('languages')
