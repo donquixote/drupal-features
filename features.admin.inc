@@ -1457,6 +1457,11 @@ function features_admin_components_review(&$form, &$form_state) {
 
 /**
  * Validate handler for the 'manage features' form.
+ *
+ * @param array $form
+ * @param array $form_state
+ *
+ * @see \features_admin_form()
  */
 function features_form_validate(&$form, &$form_state) {
   include_once './includes/install.inc';
