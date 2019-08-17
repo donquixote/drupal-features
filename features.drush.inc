@@ -662,10 +662,12 @@ function drush_features_update_all() {
 /**
  * Write a module to the site dir.
  *
- * @param $info
+ * @param array $info
  *   The feature info associative array.
- * @param $module_name
- *  Optional. The name for the exported module.
+ * @param string|null $module_name
+ *   (optional) The name for the exported module.
+ * @param string|null $directory
+ *   (optional)
  */
 function _drush_features_export($info, $module_name = NULL, $directory = NULL) {
   $root = drush_get_option(array('r', 'root'), drush_locate_root());
