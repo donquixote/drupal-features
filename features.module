@@ -1293,7 +1293,7 @@ function _features_restore($op, $items = array()) {
  *   E.g. $['myfeature'][] = 'field_instance'
  */
 function features_revert($revert = array()) {
-  return _features_restore('revert', $revert);
+  _features_restore('revert', $revert);
 }
 
 /**
