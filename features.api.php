@@ -184,7 +184,8 @@ function hook_features_export_render($module_name, $data, $export = NULL) {
  *
  * @param string $module_name
  *   The name of the feature module whose components should be reverted.
- * @return boolean
+ *
+ * @return bool|void
  *   TRUE or FALSE for whether the components were successfully reverted.
  *   NOTE: This return value is no longer used in the latest Features so
  *   modules should no longer count on this value
