@@ -106,6 +106,8 @@ function menu_custom_features_export_render($module, $data) {
 
   $translatables = array();
   foreach ($data as $menu_name) {
+    /** @noinspection NullPointerExceptionInspection */
+    /** @noinspection PhpUndefinedMethodInspection */
     $row = db_select('menu_custom')
       ->fields('menu_custom')
       ->condition('menu_name', $menu_name)
