@@ -1035,6 +1035,12 @@ function features_get_feature_title($feature) {
 /**
  * Menu access callback for whether a user should be able to access
  * override actions for a given feature.
+ *
+ * @param \stdClass $feature
+ *   Feature module object.
+ *
+ * @return bool
+ *   TRUE to give access, FALSE to deny access.
  */
 function features_access_override_actions($feature) {
   if (user_access('administer features')) {
