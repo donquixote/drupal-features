@@ -192,6 +192,17 @@ function ctools_component_features_export_options($component) {
 
 /**
  * Master implementation of hook_features_export() for all ctools components.
+ *
+ * This is not registered as a hook implementation by itself. Instead, it gets
+ * called from other implementations, especially those dynamically declared in
+ * ctools_features_declare_functions().
+ *
+ * @param string $component
+ * @param string[] $data
+ * @param array $export
+ * @param string $module_name
+ *
+ * @return array
  */
 function ctools_component_features_export($component, $data, &$export, $module_name = '') {
   // Add the actual implementing module as a dependency
