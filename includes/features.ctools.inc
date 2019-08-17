@@ -63,8 +63,16 @@ function ctools_features_api() {
 }
 
 /**
- * Implements hook_features_export().
+ * Implements hook_features_export() for 'ctools' base component.
  * Adds references to the ctools mothership hook, ctools_plugin_api().
+ *
+ * @param string[] $data
+ * @param array $export
+ * @param string $module_name
+ *
+ * @return array
+ *
+ * @see \hook_features_export()
  */
 function ctools_features_export($data, &$export, $module_name = '') {
   // Add ctools dependency
