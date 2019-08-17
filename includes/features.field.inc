@@ -415,7 +415,9 @@ function features_field_instance_load($identifier) {
  */
 
 /**
- * Implements hook_features_export_options().
+ * Implements hook_features_export_options() for deprecated 'field' component.
+ *
+ * @return string[]
  */
 function field_features_export_options() {
   $options = array();
@@ -432,7 +434,13 @@ function field_features_export_options() {
 }
 
 /**
- * Implements hook_features_export().
+ * Implements hook_features_export() for deprecated 'field' component.
+ *
+ * @param string[] $data
+ * @param array $export
+ * @param string $module_name
+ *
+ * @return array
  */
 function field_features_export($data, &$export, $module_name = '') {
   $pipe = array();
@@ -442,7 +450,13 @@ function field_features_export($data, &$export, $module_name = '') {
 }
 
 /**
- * Implements hook_features_export_render().
+ * Implements hook_features_export_render() for deprecated 'field' component.
+ *
+ * @param string $module
+ * @param string[] $data
+ * @param array|null $export
+ *
+ * @return array
  */
 function field_features_export_render($module, $data, $export = NULL) {
   $translatables = $code = array();
@@ -508,15 +522,25 @@ function _field_features_export_sort(&$field, $sort = TRUE) {
 }
 
 /**
- * Implements hook_features_revert().
+ * Implements hook_features_revert() for deprecated 'field' component.
+ *
+ * @param string $module
+ *
+ * @throws \FieldException
+ *   In field_update_instance() and field_create_instance().
  */
 function field_features_revert($module) {
   field_features_rebuild($module);
 }
 
 /**
- * Implements of hook_features_rebuild().
+ * Implements hook_features_rebuild() for deprecated 'field' component.
+ *
  * Rebuilds fields from code defaults.
+ *
+ * @param string $module
+ *
+ * @throws \FieldException
  */
 function field_features_rebuild($module) {
   if ($fields = features_get_default('field', $module)) {
