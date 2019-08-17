@@ -113,8 +113,18 @@ function ctools_features_export_render($module, $data) {
 /**
  * Master implementation of hook_features_api() for all ctools components.
  *
+ * This is not registered as a hook implementation by itself. Instead, it gets
+ * called from other implementations, especially those dynamically declared in
+ * ctools_features_declare_functions().
+ *
  * Note that this master hook does not use $component like the others, but uses the
  * component module's namespace instead.
+ *
+ * @param string $module_name
+ *
+ * @return array[]
+ *
+ * @see \ctools_features_declare_functions()
  */
 function ctools_component_features_api($module_name) {
   $api = array();
@@ -129,6 +139,14 @@ function ctools_component_features_api($module_name) {
 
 /**
  * Master implementation of hook_features_export_options() for all ctools components.
+ *
+ * This is not registered as a hook implementation by itself. Instead, it gets
+ * called from other implementations, especially those dynamically declared in
+ * ctools_features_declare_functions().
+ *
+ * @param string $component
+ *
+ * @return string[]
  */
 function ctools_component_features_export_options($component) {
   $options = array();
@@ -149,6 +167,17 @@ function ctools_component_features_export_options($component) {
 
 /**
  * Master implementation of hook_features_export() for all ctools components.
+ *
+ * This is not registered as a hook implementation by itself. Instead, it gets
+ * called from other implementations, especially those dynamically declared in
+ * ctools_features_declare_functions().
+ *
+ * @param string $component
+ * @param string[] $data
+ * @param array $export
+ * @param string $module_name
+ *
+ * @return array
  */
 function ctools_component_features_export($component, $data, &$export, $module_name = '') {
   // Add the actual implementing module as a dependency
@@ -181,6 +210,16 @@ function ctools_component_features_export($component, $data, &$export, $module_n
 
 /**
  * Master implementation of hook_features_export_render() for all ctools components.
+ *
+ * This is not registered as a hook implementation by itself. Instead, it gets
+ * called from other implementations, especially those dynamically declared in
+ * ctools_features_declare_functions().
+ *
+ * @param string $component
+ * @param string $module
+ * @param string[] $data
+ *
+ * @return array
  */
 function ctools_component_features_export_render($component, $module, $data) {
   // Reset the export display static to prevent clashes.
@@ -214,6 +253,13 @@ function ctools_component_features_export_render($component, $module, $data) {
 
 /**
  * Master implementation of hook_features_revert() for all ctools components.
+ *
+ * This is not registered as a hook implementation by itself. Instead, it gets
+ * called from other implementations, especially those dynamically declared in
+ * ctools_features_declare_functions().
+ *
+ * @param string $component
+ * @param string $module
  */
 function ctools_component_features_revert($component, $module) {
   if ($objects = features_get_default($component, $module)) {
