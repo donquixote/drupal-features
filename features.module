@@ -990,6 +990,8 @@ function features_get_orphans($reset = FALSE) {
     foreach ($orphaned as $module) {
       if (!empty($modules[$module]->required_by)) {
         foreach ($modules[$module]->required_by as $module_name => $dependency) {
+          // @todo Don't manipulate the original objects!
+          // @todo Typically, $dependency['name'] === $module, so the array_intersect() below will never be empty.
           $modules[$module]->required_by[$module_name] = $dependency['name'];
         }
         // Determine whether any dependents are actually enabled.
