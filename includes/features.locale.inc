@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements of hook_features_api().
+ * Implements of hook_features_api() for 'locale' module.
  */
 function locale_features_api() {
   return array(
