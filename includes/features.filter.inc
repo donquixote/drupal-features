@@ -15,7 +15,9 @@ function filter_features_api() {
 }
 
 /**
- * Implements hook_features_export_options().
+ * Implements hook_features_export_options() for 'filter' component.
+ *
+ * @return string[]
  */
 function filter_features_export_options() {
   $options = array();
@@ -26,7 +28,13 @@ function filter_features_export_options() {
 }
 
 /**
- * Implements hook_features_export().
+ * Implements hook_features_export() for 'filter' component.
+ *
+ * @param string[] $data
+ * @param array $export
+ * @param string $module_name
+ *
+ * @return array
  */
 function filter_features_export($data, &$export, $module_name = '') {
   // The filter_default_formats() hook integration is provided by the
@@ -54,7 +62,13 @@ function filter_features_export($data, &$export, $module_name = '') {
 }
 
 /**
- * Implements hook_features_export_render().
+ * Implements hook_features_export_render() for 'filter' component.
+ *
+ * @param string $module
+ * @param string[] $data
+ * @param array|null $export
+ *
+ * @return array
  */
 function filter_features_export_render($module, $data, $export = NULL) {
   $code = array();
@@ -77,14 +91,18 @@ function filter_features_export_render($module, $data, $export = NULL) {
 }
 
 /**
- * Implements hook_features_revert().
+ * Implements hook_features_revert() for 'filter' component.
+ *
+ * @param string $module
  */
 function filter_features_revert($module) {
   return filter_features_rebuild($module);
 }
 
 /**
- * Implements hook_features_rebuild().
+ * Implements hook_features_rebuild() for 'filter' component.
+ *
+ * @param string $module
  */
 function filter_features_rebuild($module) {
   if ($defaults = features_get_default('filter', $module)) {
