@@ -1729,6 +1729,11 @@ function features_dom_encode_options($options = array(), $keys_only = TRUE) {
   return $encoded;
 }
 
+/**
+ * @param string $key
+ *
+ * @return string
+ */
 function features_dom_encode($key) {
   $replacements = features_dom_encode_map();
   return strtr($key, $replacements);
