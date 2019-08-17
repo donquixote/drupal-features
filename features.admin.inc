@@ -1608,6 +1608,9 @@ function features_feature_lock_confirm_form($form, $form_state, $feature, $compo
 
 /**
  * Submit callback to lock components of a feature.
+ *
+ * @param array $form
+ * @param array $form_state
  */
 function features_feature_lock_confirm_form_submit($form, &$form_state) {
   $feature = $form['#feature']->name;
