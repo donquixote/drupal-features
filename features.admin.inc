@@ -1636,7 +1636,18 @@ function features_admin_lock($feature, $type = 'ajax', $component = NULL) {
 }
 
 /**
- * Confirm form for locking a feature.
+ * Form builder for 'admin/structure/features/%feature/lock'.
+ *
+ * Shows a "Confirm" button that will lock or unlock the feature.
+ *
+ * @param array $form
+ * @param array $form_state
+ * @param \stdClass $feature
+ * @param string $component
+ *
+ * @return array
+ *
+ * @see \features_feature_lock_confirm_form_submit()
  */
 function features_feature_lock_confirm_form($form, $form_state, $feature, $component) {
   $form['#feature'] = $feature;
