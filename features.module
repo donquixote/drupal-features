@@ -1306,7 +1306,7 @@ function features_revert($revert = array()) {
  *   E.g. $['myfeature'][] = 'field_instance'
  */
 function features_rebuild($rebuild = array()) {
-  return _features_restore('rebuild', $rebuild);
+  _features_restore('rebuild', $rebuild);
 }
 
 /**
