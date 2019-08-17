@@ -930,6 +930,16 @@ function features_semaphore($op, $component) {
 
 /**
  * Get normal objects for a given module/component pair.
+ *
+ * @param string $component
+ *   The component name, e.g. 'field_instance'.
+ * @param string $module_name
+ *   The name of the exported module.
+ * @param bool $reset
+ *   If TRUE, the static cache will be reset.
+ *
+ * @return mixed|false
+ *   The normal objects that would be written into the feature on update.
  */
 function features_get_normal($component, $module_name, $reset = FALSE) {
   if ($reset) {
