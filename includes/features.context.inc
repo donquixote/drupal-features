@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Implements hook_features_export().
+ * Implements hook_features_export() for 'context' component.
  *
  * @param string[] $data
  * @param array $export
