@@ -1109,12 +1109,10 @@ function features_get_module_status($module) {
   if (module_exists($module)) {
     return FEATURES_MODULE_ENABLED;
   }
-  elseif (features_get_modules($module)) {
+  if (features_get_modules($module)) {
     return FEATURES_MODULE_DISABLED;
   }
-  else {
-    return FEATURES_MODULE_MISSING;
-  }
+  return FEATURES_MODULE_MISSING;
 }
 
 /**
