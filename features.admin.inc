@@ -1077,7 +1077,16 @@ function features_filter_hidden($module) {
 }
 
 /**
- * Form constructor for the features configuration form.
+ * Form builder for 'admin/structure/features'.
+ *
+ * The form shows a list of feautures grouped into vertical tabs.
+ *
+ * @param array $form
+ * @param array $form_state
+ *
+ * @return array
+ *
+ * @throws \Exception
  */
 function features_admin_form($form, $form_state) {
   $features = _features_get_features_list();
