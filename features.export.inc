@@ -975,8 +975,12 @@ function features_get_normal($component, $module_name, $reset = FALSE) {
 
 /**
  * Helper function to determine if a module is enabled
- * @param $module
+ *
+ * @param string $module
  *   This module name comes from the .info file and can have version info in it.
+ *
+ * @return bool
+ *   TRUE, if the module is enabled.
  */
 function _features_module_exists($module) {
   $parsed_dependency = drupal_parse_dependency($module);
