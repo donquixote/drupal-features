@@ -7,7 +7,7 @@
  */
 function ctools_features_declare_functions($reset = FALSE) {
   if (function_exists('_ctools_features_get_info')) {
-   foreach (_ctools_features_get_info(NULL, $reset) as $component => $info) {
+    foreach (_ctools_features_get_info(NULL, $reset) as $component => $info) {
       $code = '';
       if (!function_exists("{$info['module']}_features_api")) {
         $code .= 'function '. $info['module'] .'_features_api() { return ctools_component_features_api("'. $info['module'] .'"); }';
