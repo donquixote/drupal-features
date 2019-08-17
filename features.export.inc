@@ -894,7 +894,16 @@ function features_set_signature($module, $component, $signature = NULL) {
 }
 
 /**
- * Processing semaphore operations.
+ * Gets, sets or deletes a semaphore for a given component.
+ *
+ * @param string $op
+ *   One of 'get', 'set' or 'del'.
+ * @param string $component
+ *   A component name, e.g. 'field_instance'.
+ *
+ * @return int|false|void
+ *   If $op is 'get', the semaphore, or FALSE if none found for the component.
+ *   If $op is 'set' or 'del', nothing is returned.
  */
 function features_semaphore($op, $component) {
   // Note: we don't use variable_get() here as the inited variable
