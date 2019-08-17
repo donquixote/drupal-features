@@ -127,6 +127,7 @@ function features_filter_format_load($name) {
   $query->condition('format', $name);
 
   // Retrieve filters for the format and attach.
+  /** @noinspection NullPointerExceptionInspection */
   if ($format = $query->execute()->fetchObject()) {
     $format->filters = array();
     foreach (filter_list_format($format->format) as $filter) {
