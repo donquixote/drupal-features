@@ -1630,6 +1630,7 @@ function features_admin_lock($feature, $type = 'ajax', $component = NULL) {
     ajax_deliver($page);
   }
   else {
+    /* @see \features_feature_lock_confirm_form() */
     return drupal_get_form('features_feature_lock_confirm_form', $feature, $component);
   }
 }
