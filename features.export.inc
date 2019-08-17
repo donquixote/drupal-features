@@ -738,10 +738,10 @@ function features_var_export($var, $prefix = '', $init = TRUE, $count = 0) {
     $output = $var ? 'TRUE' : 'FALSE';
   }
   else if (is_int($var)) {
-    $output = intval($var);
+    $output = (int) $var;
   }
   else if (is_numeric($var)) {
-    $floatval = floatval($var);
+    $floatval = (float) $var;
     if (is_string($var) && ((string) $floatval !== $var)) {
       // Do not convert a string to a number if the string
       // representation of that number is not identical to the
