@@ -329,6 +329,9 @@ function features_form($node, $form_state) {
 
 /**
  * Implements hook_permission().
+ *
+ * @return array[]
+ *   Format: $[$permission_name] = $permission_info
  */
 function features_permission() {
   return array(
