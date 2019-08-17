@@ -898,7 +898,7 @@ function features_export_form_validate_field($element, &$form_state) {
       preg_match('/^(?P<core>\d+\.x)-(?P<major>\d+)\.(?P<patch>\d+)-?(?P<extra>\w+)?$/', $element['#value'], $matches);
       if (!empty($element['#value']) && !isset($matches['core'], $matches['major'])) {
         form_error($element, t('Please enter a valid version with core and major version number. Example: @example', array('@example' => '7.x-1.0')));
-      };
+      }
       break;
   }
 }
