@@ -45,7 +45,9 @@ function field_base_features_export_options() {
 }
 
 /**
- * Implements hook_features_export_options().
+ * Implements hook_features_export_options() for 'field_instance' component.
+ *
+ * @return string[]
  */
 function field_instance_features_export_options() {
   $options = array();
@@ -111,7 +113,13 @@ function field_base_features_export($data, &$export, $module_name = '') {
 }
 
 /**
- * Implements hook_features_export().
+ * Implements hook_features_export() for 'field_instance' component.
+ *
+ * @param string[] $data
+ * @param array $export
+ * @param string $module_name
+ *
+ * @return array
  */
 function field_instance_features_export($data, &$export, $module_name = '') {
   $pipe = array('field_base' => array());
@@ -199,7 +207,13 @@ function field_base_features_export_render($module, $data, $export = NULL) {
 }
 
 /**
- * Implements hook_features_export_render().
+ * Implements hook_features_export_render() for 'field_instance' component.
+ *
+ * @param string $module
+ * @param string[] $data
+ * @param array|null $export
+ *
+ * @return array
  */
 function field_instance_features_export_render($module, $data, $export = NULL) {
   $translatables = $code = array();
@@ -268,7 +282,9 @@ function field_base_features_revert($module) {
 }
 
 /**
- * Implements hook_features_revert().
+ * Implements hook_features_revert() for 'field_instance' component.
+ *
+ * @param string $module
  */
 function field_instance_features_revert($module) {
   field_instance_features_rebuild($module);
@@ -318,8 +334,11 @@ function field_base_features_rebuild($module) {
 }
 
 /**
- * Implements of hook_features_rebuild().
+ * Implements of hook_features_rebuild() for 'field_instance' component.
+ *
  * Rebuilds field instances from code defaults.
+ *
+ * @param string $module
  */
 function field_instance_features_rebuild($module) {
   if ($instances = features_get_default('field_instance', $module)) {
