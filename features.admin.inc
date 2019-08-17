@@ -1707,7 +1707,7 @@ function features_compare_component_name($a, $b) {
  */
 function features_feature_status($feature) {
   module_load_include('inc', 'features', 'features.export');
-  return drupal_json_output(array('storage' => features_get_storage($feature->name)));
+  drupal_json_output(array('storage' => features_get_storage($feature->name)));
 }
 
 /**
