@@ -235,6 +235,16 @@ function ctools_component_features_export($component, $data, &$export, $module_n
 
 /**
  * Master implementation of hook_features_export_render() for all ctools components.
+ *
+ * This is not registered as a hook implementation by itself. Instead, it gets
+ * called from other implementations, especially those dynamically declared in
+ * ctools_features_declare_functions().
+ *
+ * @param string $component
+ * @param string $module
+ * @param string[] $data
+ *
+ * @return array
  */
 function ctools_component_features_export_render($component, $module, $data) {
   // Reset the export display static to prevent clashes.
