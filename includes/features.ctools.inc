@@ -466,7 +466,11 @@ function page_manager_pages_features_revert($module) {
 }
 
 /**
- * Implements hook_features_pipe_COMPONENT_alter() for views_view.
+ * Implements hook_features_pipe_COMPONENT_alter() for 'views' module.
+ *
+ * @param string[][] $pipe
+ * @param string[] $data
+ * @param array $export
  */
 function views_features_pipe_views_view_alter(&$pipe, $data, $export) {
   // @todo Remove this check before next stable release.
