@@ -887,7 +887,9 @@ function features_set_signature($module, $component, $signature = NULL) {
   if (!empty($cache->data)) {
     $codecache = $cache->data;
   }
-  $signature = isset($signature) ? $signature : features_get_signature('default', $module, $component, TRUE);
+  if ($signature === NULL) {
+    $signature = features_get_signature('default', $module, $component, TRUE);
+  }
   $codecache[$module][$component] = $signature;
   cache_set('features_codecache', $codecache, 'cache_featurestate');
 }
