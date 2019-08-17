@@ -917,6 +917,14 @@ function features_get_orphans($reset = FALSE) {
 /**
  * Detect potential conflicts between any features that provide
  * identical components.
+ *
+ * @param bool $reset
+ *   If TRUE, relevant static caches will be reset.
+ *
+ * @return string[][][][]
+ *   Nested array/map of (feature) modules that have conflicting features.
+ *   Format: $[$module_A][$module_B][$component][] = $name
+ *   E.g. $['myfeature']['otherfeature']['node'][] = 'article'
  */
 function features_get_conflicts($reset = FALSE) {
   $conflicts = array();
