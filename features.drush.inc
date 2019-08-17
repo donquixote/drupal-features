@@ -674,7 +674,9 @@ function _drush_features_export($info, $module_name = NULL, $directory = NULL) {
   $skip_confirmation = drush_get_context('DRUSH_AFFIRMATIVE');
   if ($root) {
     $destination = drush_get_option(array('destination'), variable_get('features_default_export_path', FEATURES_DEFAULT_EXPORT_PATH));
-    $directory = isset($directory) ? $directory : $destination . '/' . $module_name;
+    if (NULL === $directory) {
+      $directory = $destination . '/' . $module_name;
+    }
     if (is_dir($directory)) {
       // If we aren't skipping confirmation and the directory already exists,
       // prompt the user. This message most make sense for but fe and fu.
