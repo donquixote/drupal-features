@@ -211,6 +211,13 @@ function theme_features_form_buttons(&$vars) {
 
 /**
  * Theme for features management form.
+ *
+ * @param array $vars
+ *
+ * @return string
+ *
+ * @throws \Exception
+ *   Exceptions can be thrown in theme(), if called pre-boot.
  */
 function theme_features_form_package(&$vars) {
   drupal_add_css(drupal_get_path('module', 'features') . '/features.css');
