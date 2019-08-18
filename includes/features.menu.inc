@@ -193,7 +193,10 @@ function menu_links_features_export_options() {
  */
 function menu_links_features_identifier($link, $old = FALSE) {
   // Add some uniqueness to these identifiers, allowing multiple links with the same path, but different titles.
-  $clean_title = features_clean_title(isset($link['title']) ? $link['title'] : $link['link_title']);
+  $clean_title = features_clean_title(
+    isset($link['title'])
+      ? $link['title']
+      : $link['link_title']);
 
   // The old identifier is requested.
   if ($old) {
@@ -202,17 +205,19 @@ function menu_links_features_identifier($link, $old = FALSE) {
       return $link['options']['identifier'];
     }
     // Providing backward compatibility and allowing/enabling multiple links with same paths.
-    else {
-      $identifier = isset($link['menu_name'], $link['link_path']) ? "{$link['menu_name']}:{$link['link_path']}" : FALSE;
-      // Checking if there are multiples of this identifier.
-      if (features_menu_link_load($identifier) !== FALSE) {
-        // This is where we return the upgrade posibility for links.
-        return $identifier;
-      }
+    $identifier = isset($link['menu_name'], $link['link_path'])
+      ? "{$link['menu_name']}:{$link['link_path']}"
+      : FALSE;
+    // Checking if there are multiples of this identifier.
+    if (features_menu_link_load($identifier) !== FALSE) {
+      // This is where we return the upgrade posibility for links.
+      return $identifier;
     }
   }
 
-  return isset($link['menu_name'], $link['link_path']) ? "{$link['menu_name']}_{$clean_title}:{$link['link_path']}" : FALSE;
+  return isset($link['menu_name'], $link['link_path'])
+    ? "{$link['menu_name']}_{$clean_title}:{$link['link_path']}"
+    : FALSE;
 }
 
 /**
