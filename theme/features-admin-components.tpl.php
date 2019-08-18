@@ -19,7 +19,8 @@
     <div class='components'>
       <?php print $components ?>
       <?php if (!empty($key)): ?>
-        <div class='clearfix features-key'><?php print theme('links', array('links' => $key)) ?></div>
+        <div class='clearfix features-key'><?php /** @noinspection PhpUnhandledExceptionInspection */
+          print theme('links', array('links' => $key)) ?></div>
       <?php endif; ?>
       <?php if (!empty($buttons)): ?>
         <div class='buttons clearfix'><?php print $buttons ?></div>
