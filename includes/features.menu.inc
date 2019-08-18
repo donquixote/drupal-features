@@ -638,11 +638,11 @@ function features_menu_link_load($identifier) {
       // Links with a stored identifier must only be matched on that identifier,
       // to prevent cross over assumptions.
       if (isset($link->options['identifier'])) {
-        if (strcmp($link->options['identifier'], $identifier) == 0) {
+        if (0 == strcmp($link->options['identifier'], $identifier)) {
           return (array) $link;
         }
       }
-      elseif ((strcmp(features_clean_title($link->link_title), $clean_title) == 0)) {
+      elseif (0 == strcmp(features_clean_title($link->link_title), $clean_title)) {
         return (array) $link;
       }
     }
