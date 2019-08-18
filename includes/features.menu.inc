@@ -273,6 +273,8 @@ function menu_links_features_export($data, &$export, $module_name = '') {
 
 /**
  * Helper function to set UUID data for menu items.
+ *
+ * @param array $link
  */
 function _features_set_menu_link_uuid_path(&$link) {
   // UUID URL handling.
