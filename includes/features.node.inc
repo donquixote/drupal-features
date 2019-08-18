@@ -15,14 +15,28 @@ function node_features_api() {
 }
 
 /**
- * Implements hook_features_export_options().
+ * Implements hook_features_export_options() for 'node' component.
+ *
+ * @return string[]
  */
 function node_features_export_options() {
   return node_type_get_names();
 }
 
 /**
- * Implements hook_features_export.
+ * Implements hook_features_export for 'node' component.
+ *
+ * @param string[] $data
+ *   Format: $[] = $node_type
+ * @param array $export
+ *   Array with the structure of an incomplete module *.info array.
+ * @param string $module_name
+ *   Module name of the feature being exported.
+ *
+ * @return string[][]
+ *   Format: $[$component][] = $name
+ *
+ * @see \hook_features_export()
  */
 function node_features_export($data, &$export, $module_name = '') {
   $pipe = array();
@@ -53,7 +67,16 @@ function node_features_export($data, &$export, $module_name = '') {
 }
 
 /**
- * Implements hook_features_export_render().
+ * Implements hook_features_export_render() for 'node' component.
+ *
+ * @param string $module
+ * @param string[] $data
+ * @param array|null $export
+ *
+ * @return string[]
+ *   Format: $[$hook] = $function_body
+ *
+ * @see \hook_features_export_render()
  */
 function node_features_export_render($module, $data, $export = NULL) {
   $elements = array(
@@ -94,10 +117,10 @@ function node_features_export_render($module, $data, $export = NULL) {
 }
 
 /**
- * Implements hook_features_revert().
+ * Implements hook_features_revert() for 'node' component.
  *
- * @param $module
- * name of module to revert content for
+ * @param string $module
+ *   Name of module to revert node types for.
  */
 function node_features_revert($module = NULL) {
   if ($default_types = features_get_default('node', $module)) {
@@ -117,13 +140,18 @@ function node_features_revert($module = NULL) {
 }
 
 /**
- * Implements hook_features_disable_feature().
+ * Implements hook_features_disable_feature() for 'node' component.
  *
  * When a features module is disabled, modify any node types it provides so
  * they can be deleted manually through the content types UI.
  *
- * @param $module
+ * @param string $module
  *   Name of module that has been disabled.
+ *
+ * @throws \Exception
+ *   Database exception from node_type_save().
+ *
+ * @see \hook_features_disable_feature()
  */
 function node_features_disable_feature($module) {
   if ($default_types = features_get_default('node', $module)) {
@@ -140,15 +168,20 @@ function node_features_disable_feature($module) {
 }
 
 /**
- * Implements hook_features_enable_feature().
+ * Implements hook_features_enable_feature() for 'node' component.
  *
  * When a features module is enabled, modify any node types it provides so
  * they can no longer be deleted manually through the content types UI.
  *
  * Update the database cache of node types if needed.
  *
- * @param $module
+ * @param string $module
  *   Name of module that has been enabled.
+ *
+ * @throws \Exception
+ *   Database exception from node_type_save().
+ *
+ * @see \hook_features_enable_feature()
  */
 function node_features_enable_feature($module) {
   if ($default_types = features_get_default('node', $module)) {
