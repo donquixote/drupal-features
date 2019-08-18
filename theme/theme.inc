@@ -125,6 +125,10 @@ function theme_features_module_status($vars) {
 
 /**
  * Themes a lock link
+ *
+ * @param array $vars
+ *
+ * @return string
  */
 function theme_features_lock_link($vars) {
   drupal_add_library('system', 'ui');
