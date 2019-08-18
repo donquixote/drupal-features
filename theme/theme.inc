@@ -133,7 +133,7 @@ function theme_features_module_status($vars) {
 function theme_features_lock_link($vars) {
   drupal_add_library('system', 'ui');
   drupal_add_library('system', 'drupal.ajax');
-  $component = $vars['component'] ? $vars['component'] : '';
+  $component = $vars['component'] ?: '';
   if ($component && features_component_is_locked($component)) {
     return l(t('Component locked'), 'admin/structure/features/settings', array(
       'attributes' => array(
