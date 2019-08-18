@@ -366,6 +366,10 @@ function theme_features_components($vars) {
 
 /**
  * Theme individual components in a component list.
+ *
+ * @param array $vars
+ *
+ * @return string
  */
 function theme_features_component_list($vars) {
   $components = $vars['components'];
