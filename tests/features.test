@@ -336,6 +336,7 @@ class FeaturesCtoolsIntegrationTest extends DrupalWebTestCase {
 
     foreach ($try as $module) {
       if (module_exists($module)) {
+        $function = $module . '_features_api';
         $function_exists = function_exists($function);
         if ($function_exists) {
           foreach ($function() as $component_type => $component_info) {
