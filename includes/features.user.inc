@@ -273,6 +273,11 @@ function user_role_features_rebuild($module) {
 
 /**
  * Generate $rid => $role with role names untranslated.
+ *
+ * @param bool $builtin
+ *
+ * @return string[]
+ *   Format: $[$rid] = $role_name
  */
 function _user_features_get_roles($builtin = TRUE) {
   $roles = array();
