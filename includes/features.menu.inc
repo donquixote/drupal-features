@@ -502,7 +502,6 @@ function menu_links_features_rebuild_ordered($menu_links, $reset = FALSE) {
           $internal_path = $internal_uri['path'];
         }
       }
-      $link_paths = array($link['link_path']);
       if (!empty($internal_path)) {
         $link['link_path'] = $internal_path;
       }
