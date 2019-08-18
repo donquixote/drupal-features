@@ -537,7 +537,7 @@ function menu_links_features_rebuild_ordered($menu_links, $reset = FALSE) {
  */
 function features_menu_link_load($identifier) {
   // This gets variables for menu_name_cleantitle:link_path format.
-  if (strstr($identifier, "_")) {
+  if (FALSE !== strpos($identifier, "_")) {
     $link_path = substr($identifier, strpos($identifier, ":") + 1);
     list($menu_name) = explode('_', $identifier, 2);
     $clean_title = substr($identifier, strpos($identifier, "_") + 1, strpos($identifier, ":") - strpos($identifier, "_") - 1);
