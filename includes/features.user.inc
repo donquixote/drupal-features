@@ -183,7 +183,13 @@ function user_permission_features_rebuild($module) {
 }
 
 /**
- * Implements hook_features_export().
+ * Implements hook_features_export() for 'user_role' component.
+ *
+ * @param string[] $data
+ * @param array $export
+ * @param string $module_name
+ *
+ * @return array
  */
 function user_role_features_export($data, &$export, $module_name = '') {
   $export['dependencies']['features'] = 'features';
@@ -202,14 +208,21 @@ function user_role_features_export($data, &$export, $module_name = '') {
 }
 
 /**
- * Implements hook_features_export_options().
+ * Implements hook_features_export_options() for 'user_role' component.
+ *
+ * @return string[]
  */
 function user_role_features_export_options() {
   return drupal_map_assoc(_user_features_get_roles(FALSE));
 }
 
 /**
- * Implements hook_features_export_render().
+ * Implements hook_features_export_render() for 'user_role' component.
+ *
+ * @param string $module
+ * @param string[] $data
+ *
+ * @return mixed[]
  */
 function user_role_features_export_render($module, $data) {
   $code = array();
@@ -233,14 +246,18 @@ function user_role_features_export_render($module, $data) {
 }
 
 /**
- * Implements hook_features_revert().
+ * Implements hook_features_revert() for 'user_role' component.
+ *
+ * @param string $module
  */
 function user_role_features_revert($module) {
   user_role_features_rebuild($module);
 }
 
 /**
- * Implements hook_features_rebuild().
+ * Implements hook_features_rebuild() for 'user_role' component.
+ *
+ * @param string $module
  */
 function user_role_features_rebuild($module) {
   if ($defaults = features_get_default('user_role', $module)) {
