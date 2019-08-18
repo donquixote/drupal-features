@@ -159,6 +159,10 @@ function theme_features_lock_link($vars) {
 
 /**
  * Themes a module status display.
+ *
+ * @param array $vars
+ *
+ * @return string
  */
 function theme_features_storage_link($vars) {
   $classes = array(
