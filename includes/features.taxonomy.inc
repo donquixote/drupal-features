@@ -15,7 +15,9 @@ function taxonomy_features_api() {
 }
 
 /**
- * Implements hook_features_export_options().
+ * Implements hook_features_export_options() for 'taxonomy' component.
+ *
+ * @return string[]
  */
 function taxonomy_features_export_options() {
   $vocabularies = array();
@@ -26,7 +28,13 @@ function taxonomy_features_export_options() {
 }
 
 /**
- * Implements hook_features_export().
+ * Implements hook_features_export() for 'taxonomy' component.
+ *
+ * @param string[] $data
+ * @param array $export
+ * @param string $module_name
+ *
+ * @return array
  *
  * @todo Test adding existing dependencies.
  */
@@ -57,7 +65,12 @@ function taxonomy_features_export($data, &$export, $module_name = '') {
 }
 
 /**
- * Implements hook_features_export_render().
+ * Implements hook_features_export_render() for 'taxonomy' component.
+ *
+ * @param string $module
+ * @param string[] $data
+ *
+ * @return array
  */
 function taxonomy_features_export_render($module, $data) {
   $vocabularies = taxonomy_get_vocabularies();
@@ -78,16 +91,20 @@ function taxonomy_features_export_render($module, $data) {
 }
 
 /**
- * Implements hook_features_revert().
+ * Implements hook_features_revert() for 'taxonomy' component.
+ *
+ * @param string $module
  */
 function taxonomy_features_revert($module) {
   taxonomy_features_rebuild($module);
 }
 
 /**
- * Implements hook_features_rebuild().
+ * Implements hook_features_rebuild() for 'taxonomy' component.
  *
  * Rebuilds Taxonomy vocabularies from code defaults.
+ *
+ * @param string $module
  */
 function taxonomy_features_rebuild($module) {
   if ($vocabularies = features_get_default('taxonomy', $module)) {
