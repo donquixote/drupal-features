@@ -565,6 +565,8 @@ function features_menu_link_load($identifier) {
     $link_paths = array($internal_path);
   }
 
+  /** @noinspection PhpUndefinedMethodInspection */
+  /** @noinspection NullPointerExceptionInspection */
   $links = db_select('menu_links')
     ->fields('menu_links', array(
       'menu_name',
