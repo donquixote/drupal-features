@@ -244,7 +244,6 @@ function theme_features_form_package(&$vars) {
     unset($vars['form']['status'][$element]['#title']);
     unset($vars['form']['status'][$element]['#description']);
 
-
     // Determine row & cell classes
     $class = $vars['form']['status'][$element]['#default_value'] ? 'enabled' : 'disabled';
 
