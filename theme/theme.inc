@@ -197,6 +197,10 @@ function theme_features_storage_link($vars) {
 
 /**
  * Theme function for displaying form buttons
+ *
+ * @param array $vars
+ *
+ * @return string
  */
 function theme_features_form_buttons(&$vars) {
   drupal_add_css(drupal_get_path('module', 'features') . '/features.css');
