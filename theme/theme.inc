@@ -2,6 +2,11 @@
 
 /**
  * Display feature component info
+ *
+ * @param array $vars
+ *
+ * @throws \Exception
+ *   Exceptions can be thrown in theme().
  */
 function template_preprocess_features_admin_components(&$vars) {
   drupal_add_css(drupal_get_path('module', 'features') . '/features.css');
