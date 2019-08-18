@@ -221,7 +221,13 @@ function menu_links_features_identifier($link, $old = FALSE) {
 }
 
 /**
- * Implements hook_features_export().
+ * Implements hook_features_export() for 'menu_links' component.
+ *
+ * @param string[] $data
+ * @param $export
+ * @param string $module_name
+ *
+ * @return array
  */
 function menu_links_features_export($data, &$export, $module_name = '') {
   // Default hooks are provided by the feature module so we need to add
@@ -327,7 +333,13 @@ function _features_set_menu_link_uuid_path(&$link) {
 }
 
 /**
- * Implements hook_features_export_render().
+ * Implements hook_features_export_render() for 'menu_links' component.
+ *
+ * @param string $module
+ * @param string[] $data
+ * @param array|null $export
+ *
+ * @return array
  */
 function menu_links_features_export_render($module, $data, $export = NULL) {
   $code = array();
@@ -406,14 +418,18 @@ function menu_links_features_export_render($module, $data, $export = NULL) {
 }
 
 /**
- * Implements hook_features_revert().
+ * Implements hook_features_revert() for 'menu_links' component.
+ *
+ * @param string $module
  */
 function menu_links_features_revert($module) {
   menu_links_features_rebuild($module);
 }
 
 /**
- * Implements hook_features_rebuild().
+ * Implements hook_features_rebuild() for 'menu_links' component.
+ *
+ * @param string $module
  */
 function menu_links_features_rebuild($module) {
   if ($menu_links = features_get_default('menu_links', $module)) {
