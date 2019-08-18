@@ -91,6 +91,10 @@ function template_preprocess_features_admin_components(&$vars) {
 
 /**
  * Themes a module status display.
+ *
+ * @param array $vars
+ *
+ * @return string
  */
 function theme_features_module_status($vars) {
   switch ($vars['status']) {
