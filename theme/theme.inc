@@ -359,7 +359,7 @@ function theme_features_components($vars) {
       }
     }
     $output .= theme('table', array('header' => array(), 'rows' => $rows));
-    $output .= theme('features_component_key', array());
+    $output .= theme('features_component_key');
   }
   return $output;
 }
