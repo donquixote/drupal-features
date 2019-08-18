@@ -185,6 +185,11 @@ function menu_links_features_export_options() {
 
 /**
  * Callback for generating the menu link exportable identifier.
+ *
+ * @param array $link
+ * @param bool $old
+ *
+ * @return string|false
  */
 function menu_links_features_identifier($link, $old = FALSE) {
   // Add some uniqueness to these identifiers, allowing multiple links with the same path, but different titles.
