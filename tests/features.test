@@ -103,6 +103,14 @@ class FeaturesUserTestCase extends DrupalWebTestCase {
     }
   }
 
+  /**
+   * @param string $op
+   *
+   * @return array|null|void
+   *
+   * @throws \FieldException
+   *   in field_update_instance().
+   */
   protected function _test_field_instance($op = 'load') {
     switch ($op) {
       case 'load':
@@ -115,6 +123,11 @@ class FeaturesUserTestCase extends DrupalWebTestCase {
     }
   }
 
+  /**
+   * @param string $op
+   *
+   * @return \stdClass|false|void
+   */
   protected function _test_filter($op = 'load') {
     // So... relying on our own API functions to test is pretty lame.
     // But these modules don't have APIs either. So might as well use
@@ -131,6 +144,11 @@ class FeaturesUserTestCase extends DrupalWebTestCase {
     }
   }
 
+  /**
+   * @param string $op
+   *
+   * @return array|false|void
+   */
   protected function _test_image($op = 'load') {
     switch ($op) {
       case 'load':
@@ -146,6 +164,14 @@ class FeaturesUserTestCase extends DrupalWebTestCase {
     }
   }
 
+  /**
+   * @param string $op
+   *
+   * @return \stdClass|false|void
+   *
+   * @throws \Exception
+   *   in node_type_save().
+   */
   protected function _test_node($op = 'load') {
     switch ($op) {
       case 'load':
@@ -159,6 +185,14 @@ class FeaturesUserTestCase extends DrupalWebTestCase {
     }
   }
 
+  /**
+   * @param string $op
+   *
+   * @return \view|null|void
+   *
+   * @throws \Exception
+   *   in $view->save().
+   */
   protected function _test_views_view($op = 'load') {
     switch ($op) {
       case 'load':
@@ -174,6 +208,11 @@ class FeaturesUserTestCase extends DrupalWebTestCase {
     }
   }
 
+  /**
+   * @param string $op
+   *
+   * @return bool|void
+   */
   protected function _test_user_permission($op = 'load') {
     switch ($op) {
       case 'load':
