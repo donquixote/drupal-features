@@ -318,6 +318,13 @@ function theme_features_form_components(&$vars) {
 
 /**
  * Theme a set of features export components.
+ *
+ * @param array $vars
+ *
+ * @return string
+ *
+ * @throws \Exception
+ *   Exceptions can be thrown in theme(), if called pre-boot.
  */
 function theme_features_components($vars) {
   $info = $vars['info'];
