@@ -114,6 +114,10 @@ function theme_features_module_status($vars) {
       $text_status = t('Enabled');
       $class = 'admin-conflict';
       break;
+    default:
+      // Invalid status.
+      // @todo Log this?
+      return '';
   }
   $text = !empty($vars['module']) ? $vars['module'] . ' (' . $text_status . ')' : $text_status;
   return "<span class=\"$class\">$text</span>";
