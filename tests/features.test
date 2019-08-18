@@ -54,11 +54,17 @@ class FeaturesUserTestCase extends DrupalWebTestCase {
     module_load_include('inc', 'features', 'features.export');
 
     $components = array_filter(array(
+      /* @see _test_field_instance() */
       'field_instance' => 'field',
+      /* @see _test_filter() */
       'filter' => 'filter',
+      /* @see _test_image() */
       'image' => 'image',
+      /* @see _test_node() */
       'node' => 'node',
+      /* @see _test_user_permission() */
       'user_permission' => 'user',
+      /* @see _test_views_view() */
       'views_view' => 'views',
     ), 'module_exists');
 
