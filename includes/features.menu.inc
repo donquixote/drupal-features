@@ -153,7 +153,9 @@ function menu_custom_features_rebuild($module) {
 }
 
 /**
- * Implements hook_features_export_options().
+ * Implements hook_features_export_options() for 'menu_links' component.
+ *
+ * @return string[]
  */
 function menu_links_features_export_options() {
   global $menu_admin;
