@@ -441,6 +441,9 @@ function menu_links_features_rebuild($module) {
 
 /**
  * Generate a depth tree of all menu links.
+ *
+ * @param array[] $menu_links
+ * @param bool $reset
  */
 function menu_links_features_rebuild_ordered($menu_links, $reset = FALSE) {
   static $ordered;
