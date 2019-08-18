@@ -301,6 +301,10 @@ function theme_features_form_export(&$vars) {
 
 /**
  * Theme a set of features export components.
+ *
+ * @param array $vars
+ *
+ * @return string
  */
 function theme_features_form_components(&$vars) {
   $output = '';
