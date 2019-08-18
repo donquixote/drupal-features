@@ -401,6 +401,10 @@ function theme_features_component_list($vars) {
 
 /**
  * Provide a themed key for a component list.
+ *
+ * @param array $vars
+ *
+ * @return string
  */
 function theme_features_component_key($vars) {
   $list = array();
