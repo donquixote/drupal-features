@@ -1,4 +1,11 @@
 <?php
+/**
+ * @var string $lock_feature
+ * @var string $name
+ * @var string $description
+ * @var string $dependencies
+ * @var string $components
+ */
 ?>
 <div class='clearfix features-components'>
   <div class='column'>
