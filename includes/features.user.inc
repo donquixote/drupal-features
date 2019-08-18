@@ -21,7 +21,13 @@ function user_features_api() {
 }
 
 /**
- * Implements hook_features_export().
+ * Implements hook_features_export() for 'user_permission' component.
+ *
+ * @param string[] $data
+ * @param array $export
+ * @param string $module_name
+ *
+ * @return array
  */
 function user_permission_features_export($data, &$export, $module_name = '') {
   $export['dependencies']['features'] = 'features';
@@ -44,7 +50,9 @@ function user_permission_features_export($data, &$export, $module_name = '') {
 }
 
 /**
- * Implements hook_features_export_options().
+ * Implements hook_features_export_options() for 'user_permission' component.
+ *
+ * @return string[]
  */
 function user_permission_features_export_options() {
   $modules = array();
@@ -69,7 +77,13 @@ function user_permission_features_export_options() {
 }
 
 /**
- * Implements hook_features_export_render().
+ * Implements hook_features_export_render() for 'user_permission' component.
+ *
+ * @param string $module
+ * @param string[] $data
+ *   Permission names.
+ *
+ * @return array
  */
 function user_permission_features_export_render($module, $data) {
   $perm_modules = &drupal_static(__FUNCTION__ . '_perm_modules');
@@ -113,17 +127,20 @@ function user_permission_features_export_render($module, $data) {
 }
 
 /**
- * Implements hook_features_revert().
+ * Implements hook_features_revert() for 'user_permission' component.
+ *
+ * @param string $module
  */
 function user_permission_features_revert($module) {
   user_permission_features_rebuild($module);
 }
 
 /**
- * Implements hook_features_rebuild().
+ * Implements hook_features_rebuild() for 'user_permission' component.
+ *
  * Iterate through default permissions and update the permissions map.
  *
- * @param $module
+ * @param string $module
  *   The module whose default user permissions should be rebuilt.
  */
 function user_permission_features_rebuild($module) {
