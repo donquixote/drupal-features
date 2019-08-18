@@ -611,6 +611,8 @@ function features_menu_link_load($identifier) {
   // If link_path was changed on an existing link, we need to find it by
   // searching for link_title.
   if (isset($clean_title)) {
+    /** @noinspection NullPointerExceptionInspection */
+    /** @noinspection PhpUndefinedMethodInspection */
     $links = db_select('menu_links')
       ->fields('menu_links', array(
         'menu_name',
