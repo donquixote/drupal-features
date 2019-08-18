@@ -95,7 +95,8 @@ class FeaturesUserTestCase extends DrupalWebTestCase {
     }
     drupal_flush_all_caches();
     foreach (array_keys($components) as $component) {
-      // Reload so things like Views can clear it's cache
+      $callback = "_test_{$component}";
+      // Reload so things like Views can clear its cache
       $this->$callback('load');
       $states = features_get_component_states(array('features_test'), FALSE, TRUE);
       $this->assertTrue($states['features_test'][$component] === FEATURES_DEFAULT, t('@component reverted.', array('@component' => $component)));
