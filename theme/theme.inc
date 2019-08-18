@@ -281,6 +281,10 @@ function theme_features_form_package(&$vars) {
 
 /**
  * Export selection / display for features export form.
+ *
+ * @param array $vars
+ *
+ * @return string
  */
 function theme_features_form_export(&$vars) {
   drupal_add_css(drupal_get_path('module', 'features') . '/features.css');
