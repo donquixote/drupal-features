@@ -191,9 +191,8 @@ function theme_features_storage_link($vars) {
     $vars['options']['attributes']['class'][] = 'features-storage';
     return l($text, $vars['path'], $vars['options']);
   }
-  else {
-    return "<span class='{$classes[$vars['storage']]} features-storage'>{$text}</span>";
-  }
+
+  return "<span class='{$classes[$vars['storage']]} features-storage'>{$text}</span>";
 }
 
 /**
