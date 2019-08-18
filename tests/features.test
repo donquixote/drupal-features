@@ -191,7 +191,7 @@ class FeaturesUserTestCase extends DrupalWebTestCase {
    * @return \view|null|void
    *
    * @throws \Exception
-   *   in $view->save().
+   *   in $view->save(), or if the view was not found.
    */
   protected function _test_views_view($op = 'load') {
     switch ($op) {
@@ -199,6 +199,9 @@ class FeaturesUserTestCase extends DrupalWebTestCase {
         return views_get_view('features_test', TRUE);
       case 'override':
         $view = views_get_view('features_test', TRUE);
+        if (NULL === $view) {
+          throw new \Exception('View "features_test" not found.');
+        }
         $view->set_display('default');
         $view->display_handler->override_option('title', 'Foo bar');
         $view->save();
