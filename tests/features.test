@@ -4,6 +4,14 @@
  * User permission component tests for Features
  */
 class FeaturesUserTestCase extends DrupalWebTestCase {
+
+  /**
+   * The profile to install as a basis for testing.
+   *
+   * This overrides the property value from the parent class.
+   *
+   * @var string
+   */
   protected $profile = 'testing';
 
   /**
