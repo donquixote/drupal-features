@@ -536,8 +536,6 @@ function menu_links_features_rebuild_ordered($menu_links, $reset = FALSE) {
  * @return array|false
  */
 function features_menu_link_load($identifier) {
-  $menu_name = '';
-  $link_path = '';
   // This gets variables for menu_name_cleantitle:link_path format.
   if (strstr($identifier, "_")) {
     $link_path = substr($identifier, strpos($identifier, ":") + 1);
