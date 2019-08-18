@@ -530,6 +530,10 @@ function menu_links_features_rebuild_ordered($menu_links, $reset = FALSE) {
  * Load a menu link by its menu_name_cleantitle:link_path identifier.
  *
  * Also matches links with unique menu_name:link_path.
+ *
+ * @param string $identifier
+ *
+ * @return array|false
  */
 function features_menu_link_load($identifier) {
   $menu_name = '';
