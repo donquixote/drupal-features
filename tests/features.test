@@ -73,7 +73,9 @@ class FeaturesUserTestCase extends DrupalWebTestCase {
 
       // Ensure that the component/default is properly available.
       $object = $this->$callback('load');
-      $this->assertTrue(!empty($object), t('@component present.', array('@component' => $component)));
+      $this->assertTrue(
+        !empty($object),
+        t('@component present.', array('@component' => $component)));
 
       // Ensure that the component is defaulted.
       $states = features_get_component_states(array('features_test'), FALSE, TRUE);
