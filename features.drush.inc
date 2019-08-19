@@ -204,7 +204,9 @@ Lastly, a pattern without a colon is interpreted as having \":%\" appended, for 
 }
 
 /**
- * Get a list of all feature modules.
+ * Drush command callback for 'features-list'.
+ *
+ * Shows a list of all feature modules.
  */
 function drush_features_list() {
   $status = drush_get_option('status') ? drush_get_option('status') : 'all';
@@ -252,7 +254,11 @@ function drush_features_list() {
 }
 
 /**
- * List components, with pattern matching.
+ * Drush command callback for 'features-components'.
+ *
+ * Shows a list of exportable items, filtered by component or by pattern.
+ * If the item is already exported to a feature, that feature name is shown
+ * along with it.
  */
 function drush_features_components() {
   $args = func_get_args();
@@ -289,7 +295,11 @@ function drush_features_components() {
 }
 
 /**
- * Returns a listing of all known components, indexed by source.
+ * Returns all component item labels, grouped by component type.
+ *
+ * @return string[][]
+ *   Format: $[$component][$name] = $title
+ *   E.g. $['node']['article'] = 'Article'.
  */
 function _drush_features_component_list() {
   $components = array();
@@ -305,6 +315,17 @@ function _drush_features_component_list() {
 
 /**
  * Filters components by patterns.
+ *
+ * @param string[][] $all_components
+ *   Format: $[$component][$name] = $title.
+ * @param string[] $patterns
+ *   Format: $[] = $pattern.
+ * @param array $options
+ *
+ * @return array[]|false
+ *   Format: Contains two sub-arrays:
+ *     $['components'][$component][$name] = $title
+ *     $['sources'][$component . ':' . $name] = implode(', ', $providing_modules)
  */
 function _drush_features_component_filter($all_components, $patterns = array(), $options = array()) {
   $options += array(
@@ -454,6 +475,10 @@ function _drush_features_component_filter($all_components, $patterns = array(), 
 
 /**
  * Prints a list of filtered components.
+ *
+ * @param $filtered_components
+ *   Format: $[$component][$name] = $value
+ * @param array $options
  */
 function _drush_features_component_print($filtered_components, $options = array()) {
   $rows = array(array(dt('Available sources')));
@@ -479,6 +504,8 @@ function _drush_features_component_print($filtered_components, $options = array(
 /**
  * Add a component to a features module, or create a new module with
  * the selected components.
+ *
+ * @return false|void
  */
 function drush_features_export() {
   if ($args = func_get_args()) {
@@ -571,6 +598,9 @@ function drush_features_update() {
 /**
  * Update all enabled features. Optionally pass in a list of features to
  * exclude from being updated.
+ *
+ * @return false|void
+ *   FALSE on error, NULL/void otherwise.
  */
 function drush_features_update_all() {
   $features_to_update = array();
@@ -599,10 +629,12 @@ function drush_features_update_all() {
 /**
  * Write a module to the site dir.
  *
- * @param $info
+ * @param array $info
  *   The feature info associative array.
- * @param $module_name
- *  Optional. The name for the exported module.
+ * @param string|null $module_name
+ *   (optional) The name for the exported module.
+ * @param string|null $directory
+ *   (optional)
  */
 function _drush_features_export($info, $module_name = NULL, $directory = NULL) {
   $root = drush_get_option(array('r', 'root'), drush_locate_root());
@@ -675,10 +707,12 @@ function _drush_features_export($info, $module_name = NULL, $directory = NULL) {
 /**
  * Helper function for _drush_feature_export.
  *
- * @param $info
+ * @param array $info
  *   The feature info associative array.
- * @param $module_name
- *  Optional. The name for the exported module.
+ * @param string $module_name
+ *   Optional. The name for the exported module.
+ *
+ * @return array
  */
 function _drush_features_generate_export(&$info, &$module_name) {
   module_load_include('inc', 'features', 'features.export');
@@ -830,6 +864,8 @@ function drush_features_revert() {
  *
  * @param ...
  *   (Optional) A list of features to exclude from being reverted.
+ *
+ * @return void|false
  */
 function drush_features_revert_all() {
   module_load_include('inc', 'features', 'features.export');
@@ -871,6 +907,8 @@ function drush_features_revert_all() {
 
 /**
  * Show the diff of a feature module.
+ *
+ * @return void|false
  */
 function drush_features_diff() {
   if (!$args = func_get_args()) {
@@ -964,6 +1002,8 @@ function drush_features_diff() {
  *
  * @param ...
  *   (Optional) A list of features to exclude from being reverted.
+ *
+ * @return void|false
  */
 function drush_features_diff_all() {
   module_load_include('inc', 'features', 'features.export');
@@ -1018,12 +1058,13 @@ function drush_features_diff_all() {
 /**
  * Helper function to call drush_set_error().
  *
- * @param $feature
+ * @param string $feature
  *   The string name of the feature.
- * @param $error
+ * @param string $error
  *   A text string identifying the type of error.
- * @return
- *   FALSE.  See drush_set_error().
+ *
+ * @return false
+ *   See drush_set_error().
  */
 function _features_drush_set_error($feature, $error = '') {
   $args = array('!feature' => $feature);
