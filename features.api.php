@@ -131,6 +131,7 @@ function hook_features_api() {
  *   this array.
  * @param string $module_name
  *   The name of the feature module to be generated.
+ *
  * @return array
  *   The pipe array of further processors that should be called.
  */
@@ -150,9 +151,10 @@ function hook_features_export($data, &$export, $module_name) {
  *
  * List all objects for a component that may be exported.
  *
- * @return array
+ * @return string[]
  *   A keyed array of items, suitable for use with a FormAPI select or
  *   checkboxes element.
+ *   Format: $[$value] = $label
  */
 function hook_features_export_options() {
   $options = array();
@@ -177,7 +179,11 @@ function hook_features_export_options() {
  *   The full export array of the current feature being exported. This is only
  *   passed when hook_features_export_render() is invoked for an actual feature
  *   update or recreate, not during state checks or other operations.
- * @return array
+ *
+ * @return string[]|mixed[]
+ *   Format: Combination of:
+ *     - $[$hook] = $function_body
+ *     - $[$hook] = ['code' => $function_body, 'args' => $params_php]
  *   An associative array of rendered PHP code where the key is the name of the
  *   hook that should wrap the PHP code. The hook should not include the name
  *   of the module, e.g. the key for `hook_example` should simply be `example`
@@ -206,7 +212,8 @@ function hook_features_export_render($module_name, $data, $export = NULL) {
  *
  * @param string $module_name
  *   The name of the feature module whose components should be reverted.
- * @return boolean
+ *
+ * @return bool|void
  *   TRUE or FALSE for whether the components were successfully reverted.
  *   NOTE: This return value is no longer used in the latest Features so
  *   modules should no longer count on this value
