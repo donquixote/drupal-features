@@ -254,13 +254,13 @@ function hook_features_rebuild($module_name) {
 }
 
 /**
- * Invoked before a restore operation is run.
+ * Module hook. Invoked before a restore operation is run.
  *
  * This hook is called before any of the restore operations on the components is
  * run.
  *
  * @param string $op
- *   The operation that is triggered: revert, rebuild, disable, enable
+ *   The operation that is triggered: revert, rebuild, disable, enable.
  * @param array $items
  *   The items handled by the operation.
  */
@@ -272,13 +272,13 @@ function hook_features_pre_restore($op, $items) {
 }
 
 /**
- * Invoked after a restore operation is run.
+ * Module hook. Invoked after a restore operation is run.
  *
  * This hook is called after any of the restore operations on the components is
  * run.
  *
  * @param string $op
- *   The operation that is triggered: revert, rebuild, disable, enable
+ *   The operation that is triggered: revert, rebuild, disable, enable.
  * @param array $items
  *   The items handled by the operation.
  */
@@ -290,10 +290,11 @@ function hook_features_post_restore($op, $items) {
 }
 
 /**
- * Alter the final array of Component names to be exported, just prior to
- * the rendering of defaults. Allows modules a final say in whether or not
- * certain Components are exported (the Components' actual data, however,
- * cannot be altered by this hook).
+ * Module hook. Alter the final array of component names to be exported.
+ *
+ * Invoked just prior to the rendering of defaults. Allows modules a final say
+ * in whether or not certain Components are exported (the Components' actual
+ * data, however, cannot be altered by this hook).
  *
  * @param array &$export
  *   By reference. An array of all component names to be exported with a given
@@ -309,18 +310,24 @@ function hook_features_export_alter(&$export, $module_name) {
 }
 
 /**
- * Alter the pipe array for a given component. This hook should be implemented
- * with the name of the component type in place of `component` in the function
- * name, e.g. `features_pipe_views_alter()` will alter the pipe for the Views
- * component.
+ * Module hook. Alter the pipe array for a given component.
  *
- * @param array &$pipe
+ * This hook should be implemented with the name of the component type in place
+ * of `component` in the function name, e.g. `features_pipe_views_alter()` will
+ * alter the pipe for the Views component.
+ *
+ * @param array $pipe
  *   By reference. The pipe array of further processors that should be called.
- * @param array $data
+ * @param string[] $data
  *   An array of machine names for the component in question to be exported.
- * @param array &$export
- *   By reference. An array of all components to be exported with a given
- *   feature.
+ * @param array $export
+ *   An array of all components to be exported with a given feature.
+ *   Some contrib implementations declare this parameter as by-reference, which
+ *   allows them to modify it directly. Most implementations only modify the
+ *   $pipe array.
+ *   Special keys added to $export only during this alter hook:
+ *   - $export['component'] (string), the component being exported.
+ *   - $export['module_name'] (string), the module being exported to
  */
 function hook_features_pipe_COMPONENT_alter(&$pipe, $data, $export) {
   if (in_array($data, 'my-node-type')) {
@@ -329,18 +336,20 @@ function hook_features_pipe_COMPONENT_alter(&$pipe, $data, $export) {
 }
 
 /**
- * Alter the pipe array for a given component.
+ * Module hook. Alter the pipe array for a given component.
  *
  * @param array &$pipe
  *   By reference. The pipe array of further processors that should be called.
- * @param array $data
+ * @param string[] $data
  *   An array of machine names for the component in question to be exported.
- * @param array &$export
- *   By reference. An array of all components to be exported with a given
- *   feature.
- *
- * The component being exported is contained in $export['component'].
- * The module being exported contained in $export['module_name'].
+ * @param array $export
+ *   An array of all components to be exported with a given feature.
+ *   Some contrib implementations declare this parameter as by-reference, which
+ *   allows them to modify it directly. Most implementations only modify the
+ *   $pipe array.
+ *   Special keys added to $export only during this alter hook:
+ *   - $export['component'] (string), the component being exported.
+ *   - $export['module_name'] (string), the module being exported to.
  */
 function hook_features_pipe_alter(&$pipe, $data, $export) {
   if ($export['component'] == 'node' && in_array('my-node-type', $data)) {
@@ -348,21 +357,35 @@ function hook_features_pipe_alter(&$pipe, $data, $export) {
   }
 }
 
-
 /**
- * Add extra files to the exported file.
+ * Module hook. Add extra files to the exported file.
  *
- * @return array
+ * @param string $module_name
+ *   Module being processed.
+ * @param array $export
+ *   Array of exported components.
+ *
+ * @return string[][]
  *   An array of files, keyed by file name that will appear in feature and
  *   with either file_path key to indicate where to copy the file from or
  *   file_content key to indicate the contents of the file.
+ *   Format: A mix of:
+ *   - $[$path]['file_content'] = $file_content
+ *   - $[$path]['file_path'] = $source_file_to_copy
  */
 function hook_features_export_files($module_name, $export) {
   return array('css/main.css' => array('file_content' => 'body {background-color:blue;}'));
 }
 
 /**
- * Alter the extra files added to the export.
+ * Module hook. Alter the extra files added to the export.
+ *
+ * @param array[] $files
+ *   Format: A mix of:
+ *   - $[$path]['file_content'] = $file_content
+ *   - $[$path]['file_path'] = $source_file_to_copy.
+ * @param string $module_name
+ * @param array $export
  */
 function hook_features_export_files_alter(&$files, $module_name, $export) {
   $files['css/main.css']['file_content'] = 'body {background-color:black;}';
