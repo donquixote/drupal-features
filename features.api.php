@@ -1,10 +1,36 @@
 <?php
 
 /**
- * Main info hook that features uses to determine what components are provided
- * by the implementing module.
+ * @file
+ * Hooks provided by the features module.
  *
- * @return array
+ * Features provides three kinds of hooks:
+ *
+ * - Regular module hooks.
+ *   These are implemented by modules, like elsewhere in Drupal, and typically
+ *   called via module_invoke_all().
+ *   Most of these are to be implemented by contrib modules that define features
+ *   components. Some implementations are provided by features itself, on behalf
+ *   of other core or contrib modules.
+ *
+ * - Special "component hooks".
+ *   These are implemented by features components, and usually invoked for one
+ *   specific component only.
+ *   For functions that implement these hooks, the "hook_" prefix is replaced
+ *   with "{$component}_", where $component can be the name of the component, or
+ *   its base component.
+ *
+ * - Feature module hooks.
+ *   These are implemented by feature modules, and typically called one at a
+ *   time via module_invoke(), for the one feature module targeted by the
+ *   current operation.
+ */
+
+/**
+ * Module hook. Allows a module to declare features components.
+ *
+ * @return array[]
+ *   Format: $[$component] = $component_info
  *   An array of components, keyed by the component name. Each component can
  *   define several keys:
  *
@@ -105,6 +131,7 @@ function hook_features_api() {
  *   this array.
  * @param string $module_name
  *   The name of the feature module to be generated.
+ *
  * @return array
  *   The pipe array of further processors that should be called.
  */
@@ -124,9 +151,10 @@ function hook_features_export($data, &$export, $module_name) {
  *
  * List all objects for a component that may be exported.
  *
- * @return array
+ * @return string[]
  *   A keyed array of items, suitable for use with a FormAPI select or
  *   checkboxes element.
+ *   Format: $[$value] = $label
  */
 function hook_features_export_options() {
   $options = array();
@@ -151,7 +179,11 @@ function hook_features_export_options() {
  *   The full export array of the current feature being exported. This is only
  *   passed when hook_features_export_render() is invoked for an actual feature
  *   update or recreate, not during state checks or other operations.
- * @return array
+ *
+ * @return string[]|mixed[]
+ *   Format: Combination of:
+ *     - $[$hook] = $function_body
+ *     - $[$hook] = ['code' => $function_body, 'args' => $params_php]
  *   An associative array of rendered PHP code where the key is the name of the
  *   hook that should wrap the PHP code. The hook should not include the name
  *   of the module, e.g. the key for `hook_example` should simply be `example`
@@ -180,7 +212,8 @@ function hook_features_export_render($module_name, $data, $export = NULL) {
  *
  * @param string $module_name
  *   The name of the feature module whose components should be reverted.
- * @return boolean
+ *
+ * @return bool|void
  *   TRUE or FALSE for whether the components were successfully reverted.
  *   NOTE: This return value is no longer used in the latest Features so
  *   modules should no longer count on this value
@@ -221,13 +254,13 @@ function hook_features_rebuild($module_name) {
 }
 
 /**
- * Invoked before a restore operation is run.
+ * Module hook. Invoked before a restore operation is run.
  *
  * This hook is called before any of the restore operations on the components is
  * run.
  *
  * @param string $op
- *   The operation that is triggered: revert, rebuild, disable, enable
+ *   The operation that is triggered: revert, rebuild, disable, enable.
  * @param array $items
  *   The items handled by the operation.
  */
@@ -239,13 +272,13 @@ function hook_features_pre_restore($op, $items) {
 }
 
 /**
- * Invoked after a restore operation is run.
+ * Module hook. Invoked after a restore operation is run.
  *
  * This hook is called after any of the restore operations on the components is
  * run.
  *
  * @param string $op
- *   The operation that is triggered: revert, rebuild, disable, enable
+ *   The operation that is triggered: revert, rebuild, disable, enable.
  * @param array $items
  *   The items handled by the operation.
  */
@@ -257,10 +290,11 @@ function hook_features_post_restore($op, $items) {
 }
 
 /**
- * Alter the final array of Component names to be exported, just prior to
- * the rendering of defaults. Allows modules a final say in whether or not
- * certain Components are exported (the Components' actual data, however,
- * cannot be altered by this hook).
+ * Module hook. Alter the final array of component names to be exported.
+ *
+ * Invoked just prior to the rendering of defaults. Allows modules a final say
+ * in whether or not certain Components are exported (the Components' actual
+ * data, however, cannot be altered by this hook).
  *
  * @param array &$export
  *   By reference. An array of all component names to be exported with a given
@@ -276,18 +310,24 @@ function hook_features_export_alter(&$export, $module_name) {
 }
 
 /**
- * Alter the pipe array for a given component. This hook should be implemented
- * with the name of the component type in place of `component` in the function
- * name, e.g. `features_pipe_views_alter()` will alter the pipe for the Views
- * component.
+ * Module hook. Alter the pipe array for a given component.
  *
- * @param array &$pipe
+ * This hook should be implemented with the name of the component type in place
+ * of `component` in the function name, e.g. `features_pipe_views_alter()` will
+ * alter the pipe for the Views component.
+ *
+ * @param array $pipe
  *   By reference. The pipe array of further processors that should be called.
- * @param array $data
+ * @param string[] $data
  *   An array of machine names for the component in question to be exported.
- * @param array &$export
- *   By reference. An array of all components to be exported with a given
- *   feature.
+ * @param array $export
+ *   An array of all components to be exported with a given feature.
+ *   Some contrib implementations declare this parameter as by-reference, which
+ *   allows them to modify it directly. Most implementations only modify the
+ *   $pipe array.
+ *   Special keys added to $export only during this alter hook:
+ *   - $export['component'] (string), the component being exported.
+ *   - $export['module_name'] (string), the module being exported to
  */
 function hook_features_pipe_COMPONENT_alter(&$pipe, $data, $export) {
   if (in_array($data, 'my-node-type')) {
@@ -296,18 +336,20 @@ function hook_features_pipe_COMPONENT_alter(&$pipe, $data, $export) {
 }
 
 /**
- * Alter the pipe array for a given component.
+ * Module hook. Alter the pipe array for a given component.
  *
  * @param array &$pipe
  *   By reference. The pipe array of further processors that should be called.
- * @param array $data
+ * @param string[] $data
  *   An array of machine names for the component in question to be exported.
- * @param array &$export
- *   By reference. An array of all components to be exported with a given
- *   feature.
- *
- * The component being exported is contained in $export['component'].
- * The module being exported contained in $export['module_name'].
+ * @param array $export
+ *   An array of all components to be exported with a given feature.
+ *   Some contrib implementations declare this parameter as by-reference, which
+ *   allows them to modify it directly. Most implementations only modify the
+ *   $pipe array.
+ *   Special keys added to $export only during this alter hook:
+ *   - $export['component'] (string), the component being exported.
+ *   - $export['module_name'] (string), the module being exported to.
  */
 function hook_features_pipe_alter(&$pipe, $data, $export) {
   if ($export['component'] == 'node' && in_array('my-node-type', $data)) {
@@ -315,21 +357,35 @@ function hook_features_pipe_alter(&$pipe, $data, $export) {
   }
 }
 
-
 /**
- * Add extra files to the exported file.
+ * Module hook. Add extra files to the exported file.
  *
- * @return array
+ * @param string $module_name
+ *   Module being processed.
+ * @param array $export
+ *   Array of exported components.
+ *
+ * @return string[][]
  *   An array of files, keyed by file name that will appear in feature and
  *   with either file_path key to indicate where to copy the file from or
  *   file_content key to indicate the contents of the file.
+ *   Format: A mix of:
+ *   - $[$path]['file_content'] = $file_content
+ *   - $[$path]['file_path'] = $source_file_to_copy
  */
 function hook_features_export_files($module_name, $export) {
   return array('css/main.css' => array('file_content' => 'body {background-color:blue;}'));
 }
 
 /**
- * Alter the extra files added to the export.
+ * Module hook. Alter the extra files added to the export.
+ *
+ * @param array[] $files
+ *   Format: A mix of:
+ *   - $[$path]['file_content'] = $file_content
+ *   - $[$path]['file_path'] = $source_file_to_copy.
+ * @param string $module_name
+ * @param array $export
  */
 function hook_features_export_files_alter(&$files, $module_name, $export) {
   $files['css/main.css']['file_content'] = 'body {background-color:black;}';
