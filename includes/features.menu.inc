@@ -148,6 +148,7 @@ function menu_links_features_export_options() {
         _features_set_menu_link_uuid_path($link);
       }
 
+      // @todo Explain why TRUE is passed as second parameter. See #3075693.
       $identifier = menu_links_features_identifier($link, TRUE);
       $options[$identifier] = "{$menu_name}: {$name}";
     }
@@ -229,6 +230,8 @@ function menu_links_features_export($data, &$export, $module_name = '') {
         _features_set_menu_link_uuid_path($link);
       }
       // If this link is provided by a different module, add it as a dependency.
+      // @todo Explain why empty($export) is passed as second parameter. See #3075693.
+      // @todo $export is never empty, see initialization above. See #3075693.
       $new_identifier = menu_links_features_identifier($link, empty($export));
       if (isset($map[$identifier]) && $map[$identifier] != $module_name) {
         $export['dependencies'][$map[$identifier]] = $map[$identifier];
@@ -335,6 +338,7 @@ function menu_links_features_export_render($module, $data, $export = NULL) {
         _features_set_menu_link_uuid_path($link);
       }
 
+      // @todo Explain why empty($export) is passed as second parameter. See #3075693.
       $new_identifier = menu_links_features_identifier($link, empty($export));
 
       // Replace plid with a parent path.
@@ -575,6 +579,7 @@ function features_menu_link_load($identifier) {
 
     // Title or previous identifier matches.
     if ((isset($link->options['identifier']) && strcmp($link->options['identifier'], $identifier) == 0)
+      // @todo $clean_title is never NULL. See #3075693.
       || (isset($clean_title) && strcmp(features_clean_title($link->link_title), $clean_title) == 0)) {
       return (array) $link;
     }
@@ -590,6 +595,7 @@ function features_menu_link_load($identifier) {
   }
   // If link_path was changed on an existing link, we need to find it by
   // searching for link_title.
+  // @todo $clean_title is never NULL. See #3075693.
   elseif (isset($clean_title)) {
     $links = db_select('menu_links')
       ->fields('menu_links', array(
