@@ -1,6 +1,32 @@
 <?php
 
 /**
+ * @file
+ * Hooks provided by the features module.
+ *
+ * Features provides three kinds of hooks:
+ *
+ * - Regular module hooks.
+ *   These are implemented by modules, like elsewhere in Drupal, and typically
+ *   called via module_invoke_all().
+ *   Most of these are to be implemented by contrib modules that define features
+ *   components. Some implementations are provided by features itself, on behalf
+ *   of other core or contrib modules.
+ *
+ * - Special "component hooks".
+ *   These are implemented by features components, and usually invoked for one
+ *   specific component only.
+ *   For functions that implement these hooks, the "hook_" prefix is replaced
+ *   with "{$component}_", where $component can be the name of the component, or
+ *   its base component.
+ *
+ * - Feature module hooks.
+ *   These are implemented by feature modules, and typically called one at a
+ *   time via module_invoke(), for the one feature module targeted by the
+ *   current operation.
+ */
+
+/**
  * Main info hook that features uses to determine what components are provided
  * by the implementing module.
  *
