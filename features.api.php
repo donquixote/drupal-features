@@ -27,10 +27,10 @@
  */
 
 /**
- * Main info hook that features uses to determine what components are provided
- * by the implementing module.
+ * Module hook. Allows a module to declare features components.
  *
- * @return array
+ * @return array[]
+ *   Format: $[$component] = $component_info
  *   An array of components, keyed by the component name. Each component can
  *   define several keys:
  *
