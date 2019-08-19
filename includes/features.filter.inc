@@ -97,6 +97,10 @@ function filter_features_rebuild($module) {
 
 /**
  * Load a filter format by its name.
+ *
+ * @param string $name
+ *
+ * @return \stdClass|false
  */
 function features_filter_format_load($name) {
   // Use machine name for retrieving the format if available.

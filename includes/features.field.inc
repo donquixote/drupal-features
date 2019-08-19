@@ -225,7 +225,12 @@ function field_instance_features_export_render($module, $data, $export = NULL) {
   return array('field_default_field_instances' => $code);
 }
 
-// Helper to enforce consistency in field export arrays.
+/**
+ * Helper to normalize and sort field export arrays.
+ *
+ * @param array $field
+ * @param bool $sort
+ */
 function _field_instance_features_export_sort(&$field, $sort = TRUE) {
 
   // Some arrays are not sorted to preserve order (for example allowed_values).
@@ -347,6 +352,10 @@ function field_instance_features_rebuild($module) {
 
 /**
  * Load a field base configuration by a field_name identifier.
+ *
+ * @param string $field_name
+ *
+ * @return array|false
  */
 function features_field_base_load($field_name) {
   if ($field_info = field_info_field($field_name)) {
@@ -358,8 +367,15 @@ function features_field_base_load($field_name) {
 }
 
 /**
- * Load a field's instance configuration by an entity_type-bundle-field_name
- * identifier.
+ * Loads a field instance definition array suitable for export.
+ *
+ * @param string $identifier
+ *   Format: "$entity_type-$bundle-$field_name".
+ *
+ * @return array|false
+ *   Field instance definition array as from field_info_instance().
+ *   The auto-increment keys 'id' and 'field_id' are removed, to reduce noise
+ *   in the export.
  */
 function features_field_instance_load($identifier) {
   list($entity_type, $bundle, $field_name) = explode('-', $identifier);
@@ -450,7 +466,12 @@ function field_features_export_render($module, $data, $export = NULL) {
   return array('field_default_fields' => $code);
 }
 
-// Helper to enforce consistency in field export arrays.
+/**
+ * Helper to enforce consistency in field export arrays.
+ *
+ * @param array $field
+ * @param bool $sort
+ */
 function _field_features_export_sort(&$field, $sort = TRUE) {
 
   // Some arrays are not sorted to preserve order (for example allowed_values).
@@ -537,6 +558,10 @@ function field_features_rebuild($module) {
 /**
  * Load a field's configuration and instance configuration by an
  * entity_type-bundle-field_name identifier.
+ *
+ * @param string $identifier
+ *
+ * @return array|bool
  */
 function features_field_load($identifier) {
   list($entity_type, $bundle, $field_name) = explode('-', $identifier);
@@ -566,7 +591,7 @@ function features_field_load($identifier) {
  * @param string $identifier
  *   The field identifier.
  *
- * @return BOOL
+ * @return bool
  *   TRUE if the line should be wrapped after the prefix, else FALSE.
  *
  * @see https://www.drupal.org/node/1354

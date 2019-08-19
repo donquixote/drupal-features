@@ -239,6 +239,11 @@ function user_role_features_rebuild($module) {
 
 /**
  * Generate $rid => $role with role names untranslated.
+ *
+ * @param bool $builtin
+ *
+ * @return string[]
+ *   Format: $[$rid] = $role_name
  */
 function _user_features_get_roles($builtin = TRUE) {
   $roles = array();
@@ -264,6 +269,15 @@ function _user_features_get_roles($builtin = TRUE) {
 
 /**
  * Represent the current state of permissions as a perm to role name array map.
+ *
+ * @param bool $by_role
+ *
+ * @return string[][]|bool[][]
+ *   Format:
+ *   - If $by_role is TRUE: $[$permission_name][] = $role_name
+ *   - Otherwise: $[$role_name][$permission_name] = $status
+ *
+ * @todo The $by_role parameter name is misleading, it suggests the opposite of what it does.
  */
 function _user_features_get_permissions($by_role = TRUE) {
   $map = user_permission_get_modules();

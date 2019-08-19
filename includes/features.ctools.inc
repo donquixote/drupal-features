@@ -1,10 +1,11 @@
 <?php
 
-function ctools_features_declare_functions($reset = FALSE) {
 /**
- * This is called by Features to ensure ctools component functions are defined
- * Dynamically declare functions under a ctools component's namespace if they are not already declared.
+ * Dynamically declares functions for components based on ctools.
+ *
+ * @param bool $reset
  */
+function ctools_features_declare_functions($reset = FALSE) {
   if (function_exists('_ctools_features_get_info')) {
    foreach (_ctools_features_get_info(NULL, $reset) as $component => $info) {
       $code = '';
@@ -112,8 +113,18 @@ function ctools_features_export_render($module, $data) {
 /**
  * Master implementation of hook_features_api() for all ctools components.
  *
+ * This is not registered as a hook implementation by itself. Instead, it gets
+ * called from other implementations, especially those dynamically declared in
+ * ctools_features_declare_functions().
+ *
  * Note that this master hook does not use $component like the others, but uses the
  * component module's namespace instead.
+ *
+ * @param string $module_name
+ *
+ * @return array[]
+ *
+ * @see \ctools_features_declare_functions()
  */
 function ctools_component_features_api($module_name) {
   $api = array();
@@ -128,6 +139,14 @@ function ctools_component_features_api($module_name) {
 
 /**
  * Master implementation of hook_features_export_options() for all ctools components.
+ *
+ * This is not registered as a hook implementation by itself. Instead, it gets
+ * called from other implementations, especially those dynamically declared in
+ * ctools_features_declare_functions().
+ *
+ * @param string $component
+ *
+ * @return string[]
  */
 function ctools_component_features_export_options($component) {
   $options = array();
@@ -148,6 +167,17 @@ function ctools_component_features_export_options($component) {
 
 /**
  * Master implementation of hook_features_export() for all ctools components.
+ *
+ * This is not registered as a hook implementation by itself. Instead, it gets
+ * called from other implementations, especially those dynamically declared in
+ * ctools_features_declare_functions().
+ *
+ * @param string $component
+ * @param string[] $data
+ * @param array $export
+ * @param string $module_name
+ *
+ * @return array
  */
 function ctools_component_features_export($component, $data, &$export, $module_name = '') {
   // Add the actual implementing module as a dependency
@@ -180,6 +210,16 @@ function ctools_component_features_export($component, $data, &$export, $module_n
 
 /**
  * Master implementation of hook_features_export_render() for all ctools components.
+ *
+ * This is not registered as a hook implementation by itself. Instead, it gets
+ * called from other implementations, especially those dynamically declared in
+ * ctools_features_declare_functions().
+ *
+ * @param string $component
+ * @param string $module
+ * @param string[] $data
+ *
+ * @return array
  */
 function ctools_component_features_export_render($component, $module, $data) {
   // Reset the export display static to prevent clashes.
@@ -213,6 +253,13 @@ function ctools_component_features_export_render($component, $module, $data) {
 
 /**
  * Master implementation of hook_features_revert() for all ctools components.
+ *
+ * This is not registered as a hook implementation by itself. Instead, it gets
+ * called from other implementations, especially those dynamically declared in
+ * ctools_features_declare_functions().
+ *
+ * @param string $component
+ * @param string $module
  */
 function ctools_component_features_revert($component, $module) {
   if ($objects = features_get_default($component, $module)) {
@@ -229,6 +276,11 @@ function ctools_component_features_revert($component, $module) {
 
 /**
  * Helper function to return various ctools information for components.
+ *
+ * @param string|null $identifier
+ * @param bool $reset
+ *
+ * @return array|mixed|false
  */
 function _ctools_features_get_info($identifier = NULL, $reset = FALSE) {
   static $components;
@@ -289,6 +341,12 @@ function _ctools_features_get_info($identifier = NULL, $reset = FALSE) {
 
 /**
  * Wrapper around ctools_export_crud_export() for < 1.7 compatibility.
+ *
+ * @param string $table
+ * @param object $object
+ * @param string $indent
+ *
+ * @return string
  */
 function _ctools_features_export_crud_export($table, $object, $indent = '') {
   return ctools_api_version('1.7') ? ctools_export_crud_export($table, $object, $indent) : ctools_export_object($table, $object, $indent);
@@ -296,6 +354,11 @@ function _ctools_features_export_crud_export($table, $object, $indent = '') {
 
 /**
  * Wrapper around ctools_export_crud_load() for < 1.7 compatibility.
+ *
+ * @param string $table
+ * @param string $name
+ *
+ * @return bool|mixed|null
  */
 function _ctools_features_export_crud_load($table, $name) {
   if (ctools_api_version('1.7')) {
@@ -309,6 +372,11 @@ function _ctools_features_export_crud_load($table, $name) {
 
 /**
  * Wrapper around ctools_export_default_list() for < 1.7 compatibility.
+ *
+ * @param string $table
+ * @param array $schema
+ *
+ * @return string[]
  */
 function _ctools_features_export_default_list($table, $schema) {
   if (ctools_api_version('1.7')) {
@@ -322,6 +390,9 @@ function _ctools_features_export_default_list($table, $schema) {
 
 /**
  * Wrapper around ctools_export_crud_delete() for < 1.7 compatibility.
+ *
+ * @param string $table
+ * @param object $object
  */
 function _ctools_features_export_crud_delete($table, $object) {
   if (ctools_api_version('1.7')) {

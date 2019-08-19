@@ -91,6 +91,8 @@ function image_features_revert($module) {
 
 /**
  * Remove unnecessary keys for export.
+ *
+ * @param array $style
  */
 function _image_features_style_sanitize(array &$style) {
   // Sanitize style: Don't export numeric IDs and things which get overwritten

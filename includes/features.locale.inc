@@ -106,6 +106,8 @@ function language_features_rebuild($module) {
 /**
  * Helper function to save the language to database.
  *
+ * @param \stdClass $language
+ *
  * @see locale_languages_edit_form_submit()
  */
 function _features_language_save($language) {
