@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Features integration on behalf of 'filter' module.
+ */
+
+/**
  * Implements hook_features_api().
  */
 function filter_features_api() {
@@ -96,7 +101,13 @@ function filter_features_rebuild($module) {
 }
 
 /**
- * Load a filter format by its name.
+ * Loads a filter format by its name.
+ *
+ * @param string $name
+ *   Filter format name.
+ *
+ * @return \stdClass|false
+ *   The filter format, or FALSE if not found.
  */
 function features_filter_format_load($name) {
   // Use machine name for retrieving the format if available.

@@ -1,7 +1,22 @@
 <?php
 
 /**
- * Display feature component info
+ * @file
+ * Theme functions and (pre)processors for 'features' module.
+ *
+ * Most of these are for admin pages.
+ *
+ * @see \features_theme()
+ */
+
+/**
+ * Display feature component info.
+ *
+ * @param array $vars
+ *   Variables for this theme hook.
+ *
+ * @throws \Exception
+ *   Exceptions can be thrown in theme().
  */
 function template_preprocess_features_admin_components(&$vars) {
   drupal_add_css(drupal_get_path('module', 'features') . '/features.css');
@@ -86,6 +101,12 @@ function template_preprocess_features_admin_components(&$vars) {
 
 /**
  * Themes a module status display.
+ *
+ * @param array $vars
+ *   Variables for this theme hook.
+ *
+ * @return string
+ *   Rendered HTML.
  */
 function theme_features_module_status($vars) {
   switch ($vars['status']) {
@@ -111,7 +132,13 @@ function theme_features_module_status($vars) {
 }
 
 /**
- * Themes a lock link
+ * Themes a lock link.
+ *
+ * @param array $vars
+ *   Variables for this theme hook.
+ *
+ * @return string
+ *   Rendered HTML.
  */
 function theme_features_lock_link($vars) {
   drupal_add_library('system', 'ui');
@@ -142,6 +169,12 @@ function theme_features_lock_link($vars) {
 
 /**
  * Themes a module status display.
+ *
+ * @param array $vars
+ *   Variables for this theme hook.
+ *
+ * @return string
+ *   Rendered HTML.
  */
 function theme_features_storage_link($vars) {
   $classes = array(
@@ -176,7 +209,13 @@ function theme_features_storage_link($vars) {
 }
 
 /**
- * Theme function for displaying form buttons
+ * Theme function for displaying form buttons.
+ *
+ * @param array $vars
+ *   Variables for this theme hook.
+ *
+ * @return string
+ *   Rendered HTML.
  */
 function theme_features_form_buttons(&$vars) {
   drupal_add_css(drupal_get_path('module', 'features') . '/features.css');
@@ -187,6 +226,15 @@ function theme_features_form_buttons(&$vars) {
 
 /**
  * Theme for features management form.
+ *
+ * @param array $vars
+ *   Variables for this theme hook.
+ *
+ * @return string
+ *   Rendered HTML.
+ *
+ * @throws \Exception
+ *   Exceptions can be thrown in theme(), if called pre-boot.
  */
 function theme_features_form_package(&$vars) {
   drupal_add_css(drupal_get_path('module', 'features') . '/features.css');
@@ -246,11 +294,13 @@ function theme_features_form_package(&$vars) {
 }
 
 /**
- * Theme functions ====================================================
- */
-
-/**
  * Export selection / display for features export form.
+ *
+ * @param array $vars
+ *   Variables for this theme hook.
+ *
+ * @return string
+ *   Rendered HTML.
  */
 function theme_features_form_export(&$vars) {
   drupal_add_css(drupal_get_path('module', 'features') . '/features.css');
@@ -267,6 +317,12 @@ function theme_features_form_export(&$vars) {
 
 /**
  * Theme a set of features export components.
+ *
+ * @param array $vars
+ *   Variables for this theme hook.
+ *
+ * @return string
+ *   Rendered HTML.
  */
 function theme_features_form_components(&$vars) {
   $output = '';
@@ -280,6 +336,15 @@ function theme_features_form_components(&$vars) {
 
 /**
  * Theme a set of features export components.
+ *
+ * @param array $vars
+ *   Variables for this theme hook.
+ *
+ * @return string
+ *   Rendered HTML.
+ *
+ * @throws \Exception
+ *   Exceptions can be thrown in theme(), if called pre-boot.
  */
 function theme_features_components($vars) {
   $info = $vars['info'];
@@ -321,6 +386,12 @@ function theme_features_components($vars) {
 
 /**
  * Theme individual components in a component list.
+ *
+ * @param array $vars
+ *   Variables for this theme hook.
+ *
+ * @return string
+ *   Rendered HTML.
  */
 function theme_features_component_list($vars) {
   $components = $vars['components'];
@@ -352,6 +423,12 @@ function theme_features_component_list($vars) {
 
 /**
  * Provide a themed key for a component list.
+ *
+ * @param array $vars
+ *   Variables for this theme hook.
+ *
+ * @return string
+ *   Rendered HTML.
  */
 function theme_features_component_key($vars) {
   $list = array();

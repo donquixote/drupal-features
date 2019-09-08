@@ -2,7 +2,7 @@
 
 /**
  * @file
- *  Features hooks for language.
+ * Features integration for 'locale' module.
  */
 
 /**
@@ -106,7 +106,10 @@ function language_features_rebuild($module) {
 /**
  * Helper function to save the language to database.
  *
- * @see locale_languages_edit_form_submit()
+ * @param \stdClass $language
+ *   Language object to save.
+ *
+ * @see \locale_languages_edit_form_submit()
  */
 function _features_language_save($language) {
 

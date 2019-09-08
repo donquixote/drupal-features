@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Features integration for 'node' module.
+ */
+
+/**
  * Implements hook_features_api().
  */
 function node_features_api() {

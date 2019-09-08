@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Features integration for 'taxonomy' module.
+ */
+
+/**
  * Implements hook_features_api().
  */
 function taxonomy_features_api() {

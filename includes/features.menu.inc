@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Features integration for 'menu' module.
+ */
+
+/**
  * Implements hook_features_api().
  */
 function menu_features_api() {
@@ -148,6 +153,7 @@ function menu_links_features_export_options() {
         _features_set_menu_link_uuid_path($link);
       }
 
+      // @todo Explain why TRUE is passed as second parameter. See #3075693.
       $identifier = menu_links_features_identifier($link, TRUE);
       $options[$identifier] = "{$menu_name}: {$name}";
     }
@@ -158,6 +164,32 @@ function menu_links_features_export_options() {
 
 /**
  * Callback for generating the menu link exportable identifier.
+ *
+ * Long ago, the identifier used to be "{$menu_name}:{$link_path}".
+ * Nowadays, it is "{$menu_name}_{$clean_title}:{$link_path}", reducing the
+ * chance that two menu links would have the same identifier.
+ *
+ * @param array $link
+ *   A menu link, e.g. from menu_link_load().
+ * @param bool $old
+ *   See below in "return" section.
+ *
+ * @return string|false
+ *   The identifier, or FALSE if an identifier cannot be built for the link.
+ *   If $old is TRUE:
+ *     - If $link['options']['identifier'] already contains a value (that was
+ *       added there in the past), this stored identifier is returned.
+ *     - If the old-style identifier "{$menu_name}:{$link_path}" does not clash
+ *       with other menu links, this old-style identifier will be returned.
+ *     - Otherwise, a new-style identifier
+ *       "{$menu_name}_{$clean_title}:{$link_path}" will be returned.
+ *   If $old is FALSE:
+ *     - A new-style identifier "{$menu_name}_{$clean_title}:{$link_path}" will
+ *       be returned.
+ *
+ * @see \features_menu_link_load()
+ *
+ * @todo Verify this exact behavior. See #3075693.
  */
 function menu_links_features_identifier($link, $old = FALSE) {
   // Add some uniqueness to these identifiers, allowing multiple links with the same path, but different titles.
@@ -203,6 +235,8 @@ function menu_links_features_export($data, &$export, $module_name = '') {
         _features_set_menu_link_uuid_path($link);
       }
       // If this link is provided by a different module, add it as a dependency.
+      // @todo Explain why empty($export) is passed as second parameter. See #3075693.
+      // @todo $export is never empty, see initialization above. See #3075693.
       $new_identifier = menu_links_features_identifier($link, empty($export));
       if (isset($map[$identifier]) && $map[$identifier] != $module_name) {
         $export['dependencies'][$map[$identifier]] = $map[$identifier];
@@ -230,6 +264,9 @@ function menu_links_features_export($data, &$export, $module_name = '') {
 
 /**
  * Helper function to set UUID data for menu items.
+ *
+ * @param array $link
+ *   Configuration of a specific menu link.
  */
 function _features_set_menu_link_uuid_path(&$link) {
   // UUID URL handling.
@@ -307,6 +344,7 @@ function menu_links_features_export_render($module, $data, $export = NULL) {
         _features_set_menu_link_uuid_path($link);
       }
 
+      // @todo Explain why empty($export) is passed as second parameter. See #3075693.
       $new_identifier = menu_links_features_identifier($link, empty($export));
 
       // Replace plid with a parent path.
@@ -386,6 +424,11 @@ function menu_links_features_rebuild($module) {
 
 /**
  * Generate a depth tree of all menu links.
+ *
+ * @param array[] $menu_links
+ *   Array of menu links.
+ * @param bool $reset
+ *   If TRUE, the static cache will be reset.
  */
 function menu_links_features_rebuild_ordered($menu_links, $reset = FALSE) {
   static $ordered;
@@ -470,9 +513,19 @@ function menu_links_features_rebuild_ordered($menu_links, $reset = FALSE) {
 }
 
 /**
- * Load a menu link by its menu_name_cleantitle:link_path identifier.
+ * Loads a menu link by its (features-specific) identifier.
  *
- * Also matches links with unique menu_name:link_path.
+ * @param string $identifier
+ *   Format: One of:
+ *   - "{$menu_name}_{$clean_title}:{$link_path}" (new format)
+ *   - "{$menu_name}:{$link_path}" (old format)
+ *
+ * @return array|false
+ *   The menu link, or FALSE if not found.
+ *
+ * @see \menu_links_features_identifier()
+ *
+ * @todo Describe behavior for old vs new identifier format. See #3075693.
  */
 function features_menu_link_load($identifier) {
   $menu_name = '';
@@ -534,6 +587,7 @@ function features_menu_link_load($identifier) {
 
     // Title or previous identifier matches.
     if ((isset($link->options['identifier']) && strcmp($link->options['identifier'], $identifier) == 0)
+      // @todo $clean_title is never NULL. See #3075693.
       || (isset($clean_title) && strcmp(features_clean_title($link->link_title), $clean_title) == 0)) {
       return (array) $link;
     }
@@ -549,6 +603,7 @@ function features_menu_link_load($identifier) {
   }
   // If link_path was changed on an existing link, we need to find it by
   // searching for link_title.
+  // @todo $clean_title is never NULL. See #3075693.
   elseif (isset($clean_title)) {
     $links = db_select('menu_links')
       ->fields('menu_links', array(
@@ -589,6 +644,12 @@ function features_menu_link_load($identifier) {
 
 /**
  * Returns a lowercase clean string with only letters, numbers and dashes.
+ *
+ * @param string $str
+ *   Menu link title to be cleaned.
+ *
+ * @return string
+ *   Sanitized menu link title.
  */
 function features_clean_title($str) {
   return strtolower(preg_replace_callback('/(\s)|([^a-zA-Z\-0-9])/i', '_features_clean_title', $str));
@@ -596,6 +657,12 @@ function features_clean_title($str) {
 
 /**
  * Callback function for preg_replace_callback() to clean a string.
+ *
+ * @param string[] $matches
+ *   Matches array from preg_replace_callback().
+ *
+ * @return string
+ *   Replacement for the given matches.
  */
 function _features_clean_title($matches) {
   return $matches[1] ? '-' : '';

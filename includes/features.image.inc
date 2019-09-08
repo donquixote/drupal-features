@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Features integration for 'image' module.
+ */
+
+/**
  * Implements hook_features_api().
  */
 function image_features_api() {
@@ -90,7 +95,10 @@ function image_features_revert($module) {
 }
 
 /**
- * Remove unnecessary keys for export.
+ * Removes unnecessary keys from an image style for export.
+ *
+ * @param array $style
+ *   Image style definition.
  */
 function _image_features_style_sanitize(array &$style) {
   // Sanitize style: Don't export numeric IDs and things which get overwritten

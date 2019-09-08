@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Features integration for 'features' module itself.
+ */
+
+/**
  * Implements hook_features_api().
  */
 function features_features_api() {

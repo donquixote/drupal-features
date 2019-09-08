@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Features integration for 'user' module.
+ */
+
+/**
  * Implements hook_features_api().
  */
 function user_features_api() {
@@ -239,6 +244,13 @@ function user_role_features_rebuild($module) {
 
 /**
  * Generate $rid => $role with role names untranslated.
+ *
+ * @param bool $builtin
+ *   If TRUE, built-in roles like 'anonymous user' and 'authenticated user' will
+ *   be included.
+ *
+ * @return string[]
+ *   Format: $[$rid] = $role_name
  */
 function _user_features_get_roles($builtin = TRUE) {
   $roles = array();
@@ -264,6 +276,16 @@ function _user_features_get_roles($builtin = TRUE) {
 
 /**
  * Represent the current state of permissions as a perm to role name array map.
+ *
+ * @param bool $by_role
+ *   Parameter to control the return value. See below.
+ *
+ * @return string[][]|bool[][]
+ *   Format:
+ *   - If $by_role is TRUE: $[$permission_name][] = $role_name
+ *   - Otherwise: $[$role_name][$permission_name] = $status
+ *
+ * @todo The $by_role parameter name is misleading. See #3077296.
  */
 function _user_features_get_permissions($by_role = TRUE) {
   $map = user_permission_get_modules();
