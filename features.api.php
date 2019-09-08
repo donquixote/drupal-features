@@ -271,6 +271,30 @@ function hook_features_rebuild($module_name) {
 }
 
 /**
+ * Component hook. Called when a feature gets disabled.
+ *
+ * @param string $module_name
+ *   Name of the feature that was disabled.
+ *
+ * @see \_features_restore()
+ */
+function hook_features_disable_feature($module_name) {
+  // React to the feature being disabled.
+}
+
+/**
+ * Component hook. Called when a feature gets enabled.
+ *
+ * @param string $module_name
+ *   Name of the feature that was enabled.
+ *
+ * @see \_features_restore()
+ */
+function hook_features_enable_feature($module_name) {
+  // React to the feature being enabled.
+}
+
+/**
  * Module hook. Invoked before a restore operation is run.
  *
  * This hook is called before any of the restore operations on the components is
