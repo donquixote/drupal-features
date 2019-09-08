@@ -13,6 +13,7 @@ function node_features_api() {
     'node' => array(
       'name' => t('Content types'),
       'feature_source' => TRUE,
+      /* @see \hook_node_info() */
       'default_hook' => 'node_info',
       'alter_type' => FEATURES_ALTER_TYPE_INLINE,
     ),

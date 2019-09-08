@@ -12,12 +12,16 @@ function menu_features_api() {
   return array(
     'menu_custom' => array(
       'name' => t('Menus'),
+      /* @see \hook_menu_default_menu_custom() */
+      /* @see \hook_menu_default_menu_custom_alter() */
       'default_hook' => 'menu_default_menu_custom',
       'feature_source' => TRUE,
       'default_file' => FEATURES_DEFAULTS_INCLUDED,
     ),
     'menu_links' => array(
       'name' => t('Menu links'),
+      /* @see \hook_menu_default_menu_links() */
+      /* @see \hook_menu_default_menu_links_alter() */
       'default_hook' => 'menu_default_menu_links',
       'feature_source' => TRUE,
       'default_file' => FEATURES_DEFAULTS_INCLUDED,
@@ -25,6 +29,8 @@ function menu_features_api() {
     // DEPRECATED.
     'menu' => array(
       'name' => t('Menu items'),
+      /* @see \hook_menu_default_items() */
+      /* @see \hook_menu_default_items_alter() */
       'default_hook' => 'menu_default_items',
       'default_file' => FEATURES_DEFAULTS_INCLUDED,
       'feature_source' => FALSE,
@@ -111,6 +117,7 @@ function menu_custom_features_export_render($module, $data) {
 
   $code[] = '  return $menus;';
   $code = implode("\n", $code);
+  /* @see \hook_menu_default_menu_custom() */
   return array('menu_default_menu_custom' => $code);
 }
 
@@ -403,6 +410,7 @@ function menu_links_features_export_render($module, $data, $export = NULL) {
 
   $code[] = '  return $menu_links;';
   $code = implode("\n", $code);
+  /* @see \hook_menu_default_menu_links() */
   return array('menu_default_menu_links' => $code);
 }
 

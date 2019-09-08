@@ -13,7 +13,9 @@ function image_features_api() {
     'image' => array(
       'name' => t('Image styles'),
       'feature_source' => TRUE,
+      /* @see \hook_image_default_styles() */
       'default_hook' => 'image_default_styles',
+      /* @see \hook_image_styles_alter() */
       'alter_hook' => 'image_styles',
     )
   );

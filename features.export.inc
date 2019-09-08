@@ -38,6 +38,7 @@ function features_populate($info, $module_name) {
   // will be treated as a Feature and included in the admin/build/features UI.
   $export['features']['features_api']['api:' . FEATURES_API] = TRUE;
   // Allow other modules to alter the export.
+  /* @see \hook_features_export_alter() */
   drupal_alter('features_export', $export, $module_name);
 
   // Clean up and standardize order
@@ -357,6 +358,7 @@ function features_export_render_hooks($export, $module_name, $reset = FALSE) {
     if (!empty($data)) {
       // Sort the items so that we don't generate different exports based on order
       asort($data);
+      /* @see \hook_features_export_render() */
       if (features_hook($component, 'features_export_render')) {
         $hooks = features_invoke($component, 'features_export_render', $module_name, $data, $export);
         $code[$component] = $hooks;

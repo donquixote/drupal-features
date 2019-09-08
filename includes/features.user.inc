@@ -13,12 +13,16 @@ function user_features_api() {
     'user_role' => array(
       'name' => t('Roles'),
       'feature_source' => TRUE,
+      /* @see \hook_user_default_roles() */
+      /* @see \hook_user_default_roles_alter() */
       'default_hook' => 'user_default_roles',
       'default_file' => FEATURES_DEFAULTS_INCLUDED,
     ),
     'user_permission' => array(
       'name' => t('Permissions'),
       'feature_source' => TRUE,
+      /* @see \hook_user_default_permissions() */
+      /* @see \hook_user_default_permissions_alter() */
       'default_hook' => 'user_default_permissions',
       'default_file' => FEATURES_DEFAULTS_INCLUDED,
     ),

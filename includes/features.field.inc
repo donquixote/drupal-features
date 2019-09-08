@@ -14,12 +14,16 @@ function field_features_api() {
       // this is deprecated by field_base and field_instance
       // but retained for compatibility with older exports
       'name' => t('Fields'),
+      /* @see \hook_field_default_fields() */
+      /* @see \hook_field_default_fields_alter() */
       'default_hook' => 'field_default_fields',
       'default_file' => FEATURES_DEFAULTS_INCLUDED,
       'feature_source' => FALSE,
     ),
     'field_base' => array(
       'name' => t('Field Bases'),
+      /* @see \hook_field_default_field_bases() */
+      /* @see \hook_field_default_field_bases_alter() */
       'default_hook' => 'field_default_field_bases',
       'default_file' => FEATURES_DEFAULTS_INCLUDED,
       'feature_source' => TRUE,
@@ -27,6 +31,8 @@ function field_features_api() {
     ),
     'field_instance' => array(
       'name' => t('Field Instances'),
+      /* @see \hook_field_default_field_instances() */
+      /* @see \hook_field_default_field_instances_alter() */
       'default_hook' => 'field_default_field_instances',
       'default_file' => FEATURES_DEFAULTS_INCLUDED,
       'feature_source' => TRUE,

@@ -12,6 +12,8 @@ function locale_features_api() {
   return array(
     'language' => array(
       'name' => t('Languages'),
+      /* @see \hook_locale_default_languages() */
+      /* @see \hook_locale_default_languages_alter() */
       'default_hook' => 'locale_default_languages',
       'feature_source' => TRUE,
       'default_file' => FEATURES_DEFAULTS_INCLUDED,

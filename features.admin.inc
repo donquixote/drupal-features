@@ -51,6 +51,8 @@ function features_settings_form($form, $form_state) {
       '#type' => 'checkbox',
       '#default_value' => variable_get('features_admin_show_component_' . $component, TRUE),
     );
+    /* @see \hook_features_revert() */
+    /* @see \hook_features_rebuild() */
     if (features_hook($component, 'features_revert') || features_hook($component, 'features_rebuild')) {
       $form['lock_components']['features_component_locked_' . $component] = array(
         '#title' => t('@name (@machine)', array('@name' => $info['name'], '@machine' => $component)),
@@ -160,6 +162,7 @@ function features_export_form($form, $form_state, $feature = NULL) {
     '#required' => TRUE,
     '#default_value' => $feature_name,
     '#machine_name' => array(
+      /* @see \features_export_form_module_name_exists() */
       'exists' => 'features_export_form_module_name_exists',
       'source' => array('info', 'name'),
     ),
@@ -191,6 +194,7 @@ function features_export_form($form, $form_state, $feature = NULL) {
     '#required' => FALSE,
     '#default_value' => !empty($feature->info['version']) ? $feature->info['version'] : '',
     '#size' => 30,
+    /* @see \features_export_form_validate_field() */
     '#element_validate' => array('features_export_form_validate_field'),
   );
   $form['advanced'] = array(
@@ -209,6 +213,7 @@ function features_export_form($form, $form_state, $feature = NULL) {
     '#type' => 'textfield',
     '#required' => FALSE,
     '#default_value' => !empty($feature->info['project status url']) ? $feature->info['project status url'] : '',
+    /* @see \features_export_form_validate_field() */
     '#element_validate' => array('features_export_form_validate_field'),
   );
   $directory = (!empty($feature->filename)) ? dirname($feature->filename) : variable_get('features_default_export_path', FEATURES_DEFAULT_EXPORT_PATH);
@@ -228,6 +233,8 @@ function features_export_form($form, $form_state, $feature = NULL) {
     $form['advanced']['generate'] = array(
       '#type' => 'submit',
       '#value' => t('Generate feature'),
+      /* @see \features_export_build_form_submit() */
+      /* @see \features_form_rebuild() */
       '#submit' => array('features_export_build_form_submit', 'features_form_rebuild'),
     );
   }
@@ -238,6 +245,7 @@ function features_export_form($form, $form_state, $feature = NULL) {
     '#type' => 'button',
     '#value' => t('Preview .info file'),
     '#ajax' => array(
+      /* @see \features_info_file_preview() */
       'callback' => 'features_info_file_preview',
       'wrapper' => 'features-export-wrapper',
     ),
@@ -254,6 +262,7 @@ function features_export_form($form, $form_state, $feature = NULL) {
   );
 
   $form['buttons'] = array(
+    /* @see \theme_features_form_buttons() */
     '#theme' => 'features_form_buttons',
     '#tree' => FALSE,
     '#weight' => 99,
@@ -264,6 +273,8 @@ function features_export_form($form, $form_state, $feature = NULL) {
     '#type' => 'submit',
     '#value' => t('Download feature'),
     '#weight' => 10,
+    /* @see \features_export_build_form_submit() */
+    /* @see \features_form_rebuild() */
     '#submit' => array('features_export_build_form_submit', 'features_form_rebuild'),
   );
 
@@ -371,10 +382,12 @@ function _features_export_form_components(&$form, &$form_state) {
       'title' => t("Refresh the list of auto-detected items."),
       'class' => array('features-refresh-button'),
     ),
+    /* @see \features_export_form_rebuild() */
     '#submit' => array('features_export_form_rebuild'),
     '#prefix' => "<div class='features-refresh-wrapper'>",
     '#suffix' => "</div>",
     '#ajax' => array(
+      /* @see \features_export_form_ajax() */
       'callback' => 'features_export_form_ajax',
       'wrapper' => 'features-export-wrapper',
     ),
@@ -388,6 +401,7 @@ function _features_export_form_components(&$form, &$form_state) {
     '#type' => 'checkbox',
     '#default_value' => $features_ignore_conflicts,
     '#ajax' => array(
+      /* @see \features_export_form_ajax() */
       'callback' => 'features_export_form_ajax',
       'wrapper' => 'features-export-wrapper',
     ),
@@ -635,7 +649,9 @@ function _features_export_build($feature, &$form_state) {
       $component_export['options'][$section] = array();
       $component_export['selected'][$section] = array();
     }
+    /* @see \hook_features_export_options() */
     $options = features_invoke($component, 'features_export_options');
+    /* @see \hook_features_export_options_alter() */
     drupal_alter('features_export_options', $options, $component);
     if (!empty($options)) {
       $exported_components = !empty($exported_features_info[$component]) ? $exported_features_info[$component] : array();
@@ -1259,7 +1275,9 @@ function features_admin_form($form, $form_state) {
   $form['buttons']['submit'] = array(
     '#type' => 'submit',
     '#value' => t('Save settings'),
+    /* @see \features_form_submit() */
     '#submit' => array('features_form_submit'),
+    /* @see \features_form_validate() */
     '#validate' => array('features_form_validate'),
   );
   return $form;
@@ -1373,6 +1391,7 @@ function features_admin_components($form, $form_state, $feature) {
       $form['buttons']['revert'] = array(
         '#type' => 'submit',
         '#value' => t('Revert components'),
+        /* @see \features_admin_components_revert() */
         '#submit' => array('features_admin_components_revert'),
       );
     }
@@ -1380,6 +1399,7 @@ function features_admin_components($form, $form_state, $feature) {
       $form['buttons']['review'] = array(
         '#type' => 'submit',
         '#value' => t('Mark as reviewed'),
+        /* @see \features_admin_components_review() */
         '#submit' => array('features_admin_components_review'),
       );
     }
@@ -1619,6 +1639,7 @@ function features_admin_lock($feature, $type = 'ajax', $component = NULL) {
     ajax_deliver($page);
   }
   else {
+    /* @see \features_feature_lock_confirm_form() */
     return drupal_get_form('features_feature_lock_confirm_form', $feature, $component);
   }
 }

@@ -13,6 +13,8 @@ function taxonomy_features_api() {
     'taxonomy' => array(
       'name' => t('Taxonomy'),
       'feature_source' => TRUE,
+      /* @see \hook_taxonomy_default_vocabularies() */
+      /* @see \hook_taxonomy_default_vocabularies_alter() */
       'default_hook' => 'taxonomy_default_vocabularies',
       'default_file' => FEATURES_DEFAULTS_INCLUDED,
     ),

@@ -76,7 +76,9 @@ function features_menu() {
   $items['admin/structure/features'] = array(
     'title' => 'Features',
     'description' => 'Manage features.',
+    /* @see \drupal_get_form() */
     'page callback' => 'drupal_get_form',
+    /* @see \features_admin_form() */
     'page arguments' => array('features_admin_form'),
     'type' => MENU_NORMAL_ITEM,
     'file' => 'features.admin.inc',
@@ -84,6 +86,7 @@ function features_menu() {
   $items['admin/structure/features/cleanup'] = array(
     'title' => 'Cleanup',
     'description' => 'Clear cache after enabling/disabling a feature.',
+    /* @see \features_cleanup() */
     'page callback' => 'features_cleanup',
     'type' => MENU_CALLBACK,
     'file' => 'features.admin.inc',
@@ -92,7 +95,9 @@ function features_menu() {
   $items['admin/structure/features/manage'] = array(
     'title' => 'Manage',
     'description' => 'Enable and disable features.',
+    /* @see \drupal_get_form() */
     'page callback' => 'drupal_get_form',
+    /* @see \features_admin_form() */
     'page arguments' => array('features_admin_form'),
     'type' => MENU_DEFAULT_LOCAL_TASK,
     'file' => 'features.admin.inc',
@@ -100,8 +105,11 @@ function features_menu() {
   $items['admin/structure/features/create'] = array(
     'title' => 'Create feature',
     'description' => 'Create a new feature.',
+    /* @see \drupal_get_form() */
     'page callback' => 'drupal_get_form',
+    /* @see \features_export_form() */
     'page arguments' => array('features_export_form'),
+    /* @see \user_access() */
     'access callback' => 'user_access',
     'access arguments' => array('administer features'),
     'type' => MENU_LOCAL_TASK,
@@ -111,8 +119,11 @@ function features_menu() {
   $items['admin/structure/features/settings'] = array(
     'title' => 'Settings',
     'description' => 'Adjust settings for using features module.',
+    /* @see \drupal_get_form() */
     'page callback' => 'drupal_get_form',
+    /* @see \features_settings_form() */
     'page arguments' => array('features_settings_form'),
+    /* @see \user_access() */
     'access callback' => 'user_access',
     'access arguments' => array('administer features'),
     'type' => MENU_LOCAL_TASK,
@@ -120,14 +131,18 @@ function features_menu() {
     'weight' => 11,
   );
 
-
+  /* @see \feature_load() - the wildcard loader callback. */
   $items['admin/structure/features/%feature'] = array(
+    /* @see \features_get_feature_title() */
     'title callback' => 'features_get_feature_title',
     'title arguments' => array(3),
     'description' => 'Display components of a feature.',
+    /* @see \drupal_get_form() */
     'page callback' => 'drupal_get_form',
+    /* @see \features_admin_components() */
     'page arguments' => array('features_admin_components', 3),
     'load arguments' => array(TRUE),
+    /* @see \user_access() */
     'access callback' => 'user_access',
     'access arguments' => array('administer features'),
     'type' => MENU_CALLBACK,
@@ -136,6 +151,7 @@ function features_menu() {
   $items['admin/structure/features/%feature/view'] = array(
     'title' => 'View',
     'description' => 'Display components of a feature.',
+    /* @see \user_access() */
     'access callback' => 'user_access',
     'access arguments' => array('administer features'),
     'type' => MENU_DEFAULT_LOCAL_TASK,
@@ -144,9 +160,12 @@ function features_menu() {
   $items['admin/structure/features/%feature/recreate'] = array(
     'title' => 'Recreate',
     'description' => 'Recreate an existing feature.',
+    /* @see \drupal_get_form() */
     'page callback' => 'drupal_get_form',
+    /* @see \features_export_form() */
     'page arguments' => array('features_export_form', 3),
     'load arguments' => array(TRUE),
+    /* @see \user_access() */
     'access callback' => 'user_access',
     'access arguments' => array('administer features'),
     'type' => MENU_LOCAL_TASK,
@@ -157,9 +176,11 @@ function features_menu() {
     $items['admin/structure/features/%feature/diff'] = array(
       'title' => 'Review overrides',
       'description' => 'Compare default and current feature.',
+      /* @see \features_feature_diff() */
       'page callback' => 'features_feature_diff',
       'page arguments' => array(3, 5),
       'load arguments' => array(TRUE),
+      /* @see \features_access_override_actions() */
       'access callback' => 'features_access_override_actions',
       'access arguments' => array(3),
       'type' => MENU_LOCAL_TASK,
@@ -170,6 +191,7 @@ function features_menu() {
   $items['admin/structure/features/%feature/lock'] = array(
     'title' => 'Lock',
     'description' => 'Lock a feature or components.',
+    /* @see \features_admin_lock() */
     'page callback' => 'features_admin_lock',
     'page arguments' => array(3, 5, 6),
     'load arguments' => array(TRUE),
@@ -180,25 +202,31 @@ function features_menu() {
   $items['admin/structure/features/%feature/status'] = array(
     'title' => 'Status',
     'description' => 'Javascript status call back.',
+    /* @see \features_feature_status() */
     'page callback' => 'features_feature_status',
     'page arguments' => array(3),
     'load arguments' => array(TRUE),
+    /* @see \user_access() */
     'access callback' => 'user_access',
     'access arguments' => array('administer features'),
     'type' => MENU_CALLBACK,
     'file' => 'features.admin.inc',
   );
   $items['features/autocomplete/packages'] = array(
+    /* @see \features_autocomplete_packages() */
     'page callback' => 'features_autocomplete_packages',
     'access arguments' => array('administer features'),
     'type' => MENU_CALLBACK,
     'file' => 'features.admin.inc',
   );
   $items['features/ajaxcallback/%'] = array(
+    /* @see \features_get_feature_components() */
     'title callback' => 'features_get_feature_components',
     'description' => 'Return components of a feature.',
+    /* @see \features_export_components_json() */
     'page callback' => 'features_export_components_json',
     'page arguments' => array(2),
+    /* @see \user_access() */
     'access callback' => 'user_access',
     'access arguments' => array('administer features'),
     'type' => MENU_CALLBACK,
@@ -206,6 +234,7 @@ function features_menu() {
   );
   foreach ($items as $path => $item) {
     if (!isset($item['access callback'])) {
+      /* @see \user_access() */
       $items[$path]['access callback'] = 'user_access';
       $items[$path]['access arguments'] = array('manage features');
     }
@@ -223,38 +252,50 @@ function features_theme() {
   );
 
   $items = array();
+  /* @see \theme_features_module_status() */
   $items['features_module_status'] = array(
     'variables' => array('module' => NULL, 'status' => NULL)
   ) + $base;
 
+  /* @see \theme_features_components() */
   $items['features_components'] = array(
     'variables' => array('info' => NULL, 'sources' => NULL),
   ) + $base;
 
+  /* @see \theme_features_component_key() */
   $items['features_component_key'] = $base;
+  /* @see \theme_features_component_list() */
   $items['features_component_list'] = array(
     'variables' => array('components' => array(), 'source' => array(), 'conflicts' => array()),
   ) + $base;
 
+  /* @see \theme_features_storage_link() */
   $items['features_storage_link'] = array(
     'variables' => array('storage' => NULL, 'text' => NULL, 'path' => NULL, 'options' => array()),
   ) + $base;
 
+  /* @see \theme_features_lock_link() */
   $items['features_lock_link'] = array(
     'variables' => array('feature' => NULL, 'component' => NULL, 'locked' => FALSE),
   ) + $base;
 
+  /* @see \theme_features_form_components() */
   $items['features_form_components'] =
+  /* @see \theme_features_form_export() */
   $items['features_form_export'] =
+  /* @see \theme_features_form_package() */
   $items['features_form_package'] = array(
     'render element' => 'form',
   ) + $base;
 
+  /* @see \theme_features_form_buttons() */
   $items['features_form_buttons'] = array(
     'render element' => 'element',
   ) + $base;
 
-
+  // Theme hook for 'features_admin_components' form.
+  /* @see \template_preprocess_features_admin_components() */
+  /* @see \features_admin_components() */
   $items['features_admin_components'] = array(
     'render element' => 'form',
     'template' => 'features-admin-components',
@@ -1101,21 +1142,33 @@ function _features_restore($op, $items = array()) {
   switch ($op) {
     case 'revert':
       $restore_states = array(FEATURES_OVERRIDDEN, FEATURES_REBUILDABLE, FEATURES_NEEDS_REVIEW);
+      /* @see \hook_pre_features_revert() - module hook. */
+      /* @see \hook_features_revert() - component hook. */
+      /* @see \hook_post_features_revert() - module hook. */
       $restore_hook = 'features_revert';
       $log_action = 'Revert';
       $lockable = TRUE;
       break;
     case 'rebuild':
       $restore_states = array(FEATURES_REBUILDABLE);
+      /* @see \hook_pre_features_rebuild() - module hook. */
+      /* @see \hook_features_rebuild() - component hook. */
+      /* @see \hook_post_features_rebuild() - module hook. */
       $restore_hook = 'features_rebuild';
       $log_action = 'Rebuild';
       $lockable = variable_get('features_lock_mode', 'all') == 'all';
       break;
     case 'disable':
+      /* @see \hook_pre_features_disable_feature() - module hook. */
+      /* @see \hook_features_disable_feature() - component hook. */
+      /* @see \hook_post_features_disable_feature() - module hook. */
       $restore_hook = 'features_disable_feature';
       $log_action = 'Disable';
       break;
     case 'enable':
+      /* @see \hook_pre_features_enable_feature() - module hook. */
+      /* @see \hook_features_enable_feature() - component hook. */
+      /* @see \hook_post_features_enable_feature() - module hook. */
       $restore_hook = 'features_enable_feature';
       $log_action = 'Enable';
       break;

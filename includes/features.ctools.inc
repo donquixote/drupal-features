@@ -16,24 +16,35 @@ function ctools_features_declare_functions($reset = FALSE) {
    foreach (_ctools_features_get_info(NULL, $reset) as $component => $info) {
       $code = '';
       if (!function_exists("{$info['module']}_features_api")) {
+        /* @see \ctools_component_features_api() */
         $code .= 'function '. $info['module'] .'_features_api() { return ctools_component_features_api("'. $info['module'] .'"); }';
       }
 
       // ctools component with owner defined as "ctools"
+      /* @see \hook_features_api() */
       if (!function_exists("{$component}_features_api") && $info['module'] === 'ctools') {
+        /* @see \ctools_component_features_api() */
         $code .= 'function '. $component .'_features_api() { return ctools_component_features_api("'. $component .'"); }';
       }
 
+      /* @see \hook_features_export() */
       if (!function_exists("{$component}_features_export")) {
+        /* @see \ctools_component_features_export() */
         $code .= 'function '. $component .'_features_export($data, &$export, $module_name = "") { return ctools_component_features_export("'. $component .'", $data, $export, $module_name); }';
       }
+      /* @see \hook_features_export_options() */
       if (!function_exists("{$component}_features_export_options")) {
+        /* @see \ctools_component_features_export_options() */
         $code .= 'function '. $component .'_features_export_options() { return ctools_component_features_export_options("'. $component .'"); }';
       }
+      /* @see \hook_features_export_render() */
       if (!function_exists("{$component}_features_export_render")) {
+        /* @see \ctools_component_features_export_render() */
         $code .= 'function '. $component .'_features_export_render($module, $data, $export = NULL) { return ctools_component_features_export_render("'. $component .'", $module, $data, $export); }';
       }
+      /* @see \hook_features_revert() */
       if (!function_exists("{$component}_features_revert")) {
+        /* @see \ctools_component_features_revert() */
         $code .= 'function '. $component .'_features_revert($module) { return ctools_component_features_revert("'. $component .'", $module); }';
       }
       eval($code);
