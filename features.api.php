@@ -331,6 +331,31 @@ function hook_features_post_restore($op, $items) {
 }
 
 /**
+ * Module hook. Allows to alter the export options.
+ *
+ * The hook was first introduced in #1999254, to allow hiding specific items
+ * that should never be exported to a feature.
+ *
+ * Known issues:
+ * - This is currently ONLY invoked in the admin UI, NOT in drush commands.
+ * - There are no implementations within features itself. In fact there might be
+ *   no implementations of this hook in any contrib module.
+ * - Use at your own risk! See #3079939.
+ *
+ * @param string[] $options
+ *   Format: $[$name] = $label
+ *   Machine names and labels of exportable items for the component.
+ * @param string $component
+ *   The component name, e.g. 'field_instance'.
+ *
+ * @see \hook_features_export_options()
+ * @see \_features_export_build()
+ */
+function hook_features_export_options_alter(array &$options, $component) {
+  // Alter the $options array.
+}
+
+/**
  * Module hook. Alter the final array of component names to be exported.
  *
  * Invoked just prior to the rendering of defaults. Allows modules a final say
