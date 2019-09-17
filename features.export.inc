@@ -289,7 +289,7 @@ function features_export_prepare($export, $module_name, $reset = FALSE, $add_dep
   // copy certain exports directly into info
   $copy_list = array('scripts', 'stylesheets');
   foreach ($copy_list as $item) {
-    if(isset($export[$item])) {
+    if (isset($export[$item])) {
       $existing->info[$item] = $export[$item];
     }
   }
@@ -402,6 +402,7 @@ function features_export_render($export, $module_name, $reset = FALSE) {
         case FEATURES_DEFAULTS_INCLUDED:
           $file['name'] = "features.$component";
           break;
+
         case FEATURES_DEFAULTS_CUSTOM:
           $file['name'] = $components[$component]['default_filename'];
           break;
@@ -429,12 +430,12 @@ function features_export_render($export, $module_name, $reset = FALSE) {
   $code = array_filter($code);
   foreach ($code as $filename => $contents) {
     if ($filename != '_files') {
-      $code[$filename] = "<?php\n\n/**\n * @file\n * {$module_name}.{$filename}.inc\n */\n\n". implode("\n\n", $contents) ."\n";
+      $code[$filename] = "<?php\n\n/**\n * @file\n * {$module_name}.{$filename}.inc\n */\n\n" . implode("\n\n", $contents) . "\n";
     }
   }
 
   // Allow extra files be added to feature.
-  if ($files =  module_invoke_all('features_export_files', $module_name, $export)) {
+  if ($files = module_invoke_all('features_export_files', $module_name, $export)) {
     $code['_files'] = !empty($code['_files']) ? $code['_files'] + $files : $files;
   }
   if (!empty($code['_files'])) {
@@ -650,7 +651,7 @@ function features_export_info($info, $parents = array()) {
     foreach ($parents as $key) {
       $line .= is_numeric($key) ? "[]" : "[{$key}]";
     }
-    $line .=  " = {$info}\n";
+    $line .= " = {$info}\n";
     return $line;
   }
   return $output;
@@ -685,9 +686,9 @@ function features_tar_create($name, $contents) {
     for ($i = 0; $i < 512; $i++) {
       $checksum += ord(substr($bigheader, $i, 1));
     }
-    $bigheader = substr_replace($bigheader, sprintf("%06o", $checksum)."\0 ", 148, 8);
+    $bigheader = substr_replace($bigheader, sprintf("%06o", $checksum) . "\0 ", 148, 8);
   }
- $header = pack("a100a8a8a8a12a12a8a1a100a6a2a32a32a8a8a155a12", // book the memorie area
+  $header = pack("a100a8a8a8a12a12a8a1a100a6a2a32a32a8a8a155a12", // book the memorie area
     substr($name,0,100),  //  0     100     File name
     '100644 ',            // File permissions
     '   765 ',            // UID,
@@ -710,8 +711,8 @@ function features_tar_create($name, $contents) {
   for ($i = 0; $i < 512; $i++) {
     $checksum += ord(substr($header, $i, 1));
   }
-  $header = substr_replace($header, sprintf("%06o", $checksum)."\0 ", 148, 8);
-  $tar = $bigheader.$header;
+  $header = substr_replace($header, sprintf("%06o", $checksum) . "\0 ", 148, 8);
+  $tar = $bigheader . $header;
 
   $buffer = str_split($contents, 512);
   foreach ($buffer as $item) {
@@ -750,7 +751,7 @@ function features_var_export($var, $prefix = '', $init = TRUE, $count = 0) {
   }
 
   if (is_object($var)) {
-    $output = method_exists($var, 'export') ? $var->export() : features_var_export((array) $var, '', FALSE, $count+1);
+    $output = method_exists($var, 'export') ? $var->export() : features_var_export((array) $var, '', FALSE, $count + 1);
   }
   else if (is_array($var)) {
     if (empty($var)) {
@@ -760,7 +761,7 @@ function features_var_export($var, $prefix = '', $init = TRUE, $count = 0) {
       $output = "array(\n";
       foreach ($var as $key => $value) {
         // Using normal var_export on the key to ensure correct quoting.
-        $output .= "  " . var_export($key, TRUE) . " => " . features_var_export($value, '  ', FALSE, $count+1) . ",\n";
+        $output .= "  " . var_export($key, TRUE) . " => " . features_var_export($value, '  ', FALSE, $count + 1) . ",\n";
       }
       $output .= ')';
     }
@@ -891,9 +892,11 @@ function features_get_signature($state = 'default', $module_name, $component, $r
         $codecache = $cache->data;
       }
       return isset($codecache[$module_name][$component]) ? $codecache[$module_name][$component] : FALSE;
+
     case 'default':
       $objects = features_get_default($component, $module_name, TRUE, $reset);
       break;
+
     case 'normal':
       $objects = features_get_normal($component, $module_name, $reset);
       break;
@@ -947,10 +950,12 @@ function features_semaphore($op, $component) {
   switch ($op) {
     case 'get':
       return isset($semaphore[$component]) ? $semaphore[$component] : FALSE;
+
     case 'set':
       $semaphore[$component] = REQUEST_TIME;
       variable_set('features_semaphore', $semaphore);
       break;
+
     case 'del':
       if (isset($semaphore[$component])) {
         unset($semaphore[$component]);
@@ -1420,7 +1425,7 @@ function _features_sanitize(&$array, $remove_empty = TRUE) {
  * @todo Needs unit tests.
  */
 function _features_is_assoc($array) {
-  return (is_array($array) && (0 !== count(array_diff_key($array, array_keys(array_keys($array)))) || count($array)==0));
+  return (is_array($array) && (0 !== count(array_diff_key($array, array_keys(array_keys($array)))) || count($array) == 0));
 }
 
 /**
@@ -1526,7 +1531,7 @@ function _features_remove_ignores(&$item, $ignore_keys, $level = -1) {
       }
     }
     elseif (($level < 2) && (is_array($value) || is_object($value))) {
-      _features_remove_ignores($value, $ignore_keys, $level+1);
+      _features_remove_ignores($value, $ignore_keys, $level + 1);
     }
   }
   unset($value);

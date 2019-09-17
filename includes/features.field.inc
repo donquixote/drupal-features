@@ -252,8 +252,8 @@ function _field_instance_features_export_sort(&$field, $sort = TRUE) {
 
   // Some arrays are not sorted to preserve order (for example allowed_values).
   static $sort_blacklist = array(
-      'allowed_values',
-      'format_handlers',
+    'allowed_values',
+    'format_handlers',
   );
 
   if ($sort) {

@@ -186,7 +186,7 @@ function user_role_features_export($data, &$export, $module_name = '') {
       $export['dependencies'][$map[$role]] = $map[$role];
     }
     // Export.
-    elseif(user_role_load_by_name($role)) {
+    elseif (user_role_load_by_name($role)) {
       $export['features']['user_role'][$role] = $role;
     }
   }
@@ -212,7 +212,7 @@ function user_role_features_export_render($module, $data) {
     if ($role = user_role_load_by_name($name)) {
       unset($role->rid);
       $role_identifier = features_var_export($name);
-      $role_export = features_var_export($role , '  ');
+      $role_export = features_var_export($role, '  ');
       $code[] = "  // Exported role: {$name}.";
       $code[] = "  \$roles[{$role_identifier}] = {$role_export};";
       $code[] = "";
@@ -265,11 +265,13 @@ function _user_features_get_roles($builtin = TRUE) {
           $roles[$rid] = 'anonymous user';
         }
         break;
+
       case DRUPAL_AUTHENTICATED_RID:
         if ($builtin) {
           $roles[$rid] = 'authenticated user';
         }
         break;
+
       default:
         $roles[$rid] = $name;
         break;

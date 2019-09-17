@@ -114,14 +114,17 @@ function theme_features_module_status($vars) {
       $text_status = t('Enabled');
       $class = 'admin-enabled';
       break;
+
     case FEATURES_MODULE_DISABLED:
       $text_status = t('Disabled');
       $class = 'admin-disabled';
       break;
+
     case FEATURES_MODULE_MISSING:
       $text_status = t('Missing');
       $class = 'admin-missing';
       break;
+
     case FEATURES_MODULE_CONFLICT:
       $text_status = t('Enabled');
       $class = 'admin-conflict';
@@ -163,7 +166,7 @@ function theme_features_lock_link($vars) {
     ),
     'query' => array('token' => drupal_get_token('features/' . $feature . '/' . $component)),
   );
-  $path =  "admin/structure/features/" . $feature . "/lock/nojs" . ($component ? '/' . $component: '');
+  $path = "admin/structure/features/" . $feature . "/lock/nojs" . ($component ? '/' . $component : '');
   return l($is_locked ? t('UnLock') : t('Lock'), $path, $options);
 }
 
@@ -260,7 +263,6 @@ function theme_features_form_package(&$vars) {
     $name .= "</div>";
     unset($vars['form']['status'][$element]['#title']);
     unset($vars['form']['status'][$element]['#description']);
-
 
     // Determine row & cell classes
     $class = $vars['form']['status'][$element]['#default_value'] ? 'enabled' : 'disabled';
@@ -402,23 +404,23 @@ function theme_features_component_list($vars) {
   foreach ($components as $component) {
     // If component is not in source list, it was autodetected
     if (!in_array($component, $source)) {
-      $list[] = "<span class='features-detected'>". check_plain($component) ."</span>";
+      $list[] = "<span class='features-detected'>" . check_plain($component) . "</span>";
     }
     elseif (is_array($conflicts) && in_array($component, $conflicts)) {
-      $list[] = "<span class='features-conflict'>". check_plain($component) ."</span>";
+      $list[] = "<span class='features-conflict'>" . check_plain($component) . "</span>";
     }
     else {
-      $list[] = "<span class='features-source'>". check_plain($component) ."</span>";
+      $list[] = "<span class='features-source'>" . check_plain($component) . "</span>";
     }
   }
   foreach ($source as $component) {
     // If a source component is no longer in the items, it was removed because
     // it is provided by a dependency.
     if (!in_array($component, $components)) {
-      $list[] = "<span class='features-dependency'>". check_plain($component) ."</span>";
+      $list[] = "<span class='features-dependency'>" . check_plain($component) . "</span>";
     }
   }
-  return "<span class='features-component-list'>". implode(' ', $list) ."</span>";
+  return "<span class='features-component-list'>" . implode(' ', $list) . "</span>";
 }
 
 /**

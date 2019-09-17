@@ -368,6 +368,7 @@ function features_help($path, $arg) {
     case 'admin/help#features':
       $output = file_get_contents(drupal_get_path('module', 'features') . '/README.txt');
       return module_exists('markdown') ? filter_xss_admin(module_invoke('markdown', 'filter', 'process', 0, -1, $output)) : '<pre>' . check_plain($output) . '</pre>';
+
     case 'admin/build/features':
       return '<p>' . t('A "Feature" is a certain type of Drupal module which contains a package of configuration that, when enabled, provides a new set of functionality for your Drupal site. Enable features by selecting the checkboxes below and clicking the Save configuration button. If the configuration of the feature has been changed its "State" will be either "overridden" or "needs review", otherwise it will be "default", indicating that the configuration has not been changed. Click on the state to see more details about the feature and its components.') . '</p>';
   }
@@ -1149,6 +1150,7 @@ function _features_restore($op, $items = array()) {
       $log_action = 'Revert';
       $lockable = TRUE;
       break;
+
     case 'rebuild':
       $restore_states = array(FEATURES_REBUILDABLE);
       /* @see \hook_pre_features_rebuild() - module hook. */
@@ -1158,6 +1160,7 @@ function _features_restore($op, $items = array()) {
       $log_action = 'Rebuild';
       $lockable = variable_get('features_lock_mode', 'all') == 'all';
       break;
+
     case 'disable':
       /* @see \hook_pre_features_disable_feature() - module hook. */
       /* @see \hook_features_disable_feature() - component hook. */
@@ -1165,6 +1168,7 @@ function _features_restore($op, $items = array()) {
       $restore_hook = 'features_disable_feature';
       $log_action = 'Disable';
       break;
+
     case 'enable':
       /* @see \hook_pre_features_enable_feature() - module hook. */
       /* @see \hook_features_enable_feature() - component hook. */
@@ -1551,6 +1555,7 @@ function features_features_ignore($component) {
       $ignores['api_version'] = 0;
       $ignores['disabled'] = 0;
       break;
+
     case 'image':
       $ignores['module'] = 0;
       $ignores['name'] = 0;
@@ -1564,12 +1569,15 @@ function features_features_ignore($component) {
       $ignores['effect callback'] = 2;
       $ignores['dimensions callback'] = 2;
       break;
+
     case 'field':
       $ignores['locked'] = 1;
       break;
+
     case 'field_base':
       $ignores['indexes'] = 0;
       break;
+
     case 'taxonomy':
       $ignores['hierarchy'] = 0;
   }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Template for the 'features_admin_components' form.

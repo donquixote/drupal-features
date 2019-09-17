@@ -22,7 +22,7 @@ function features_schema() {
 function features_install() {
   _features_install_menu();
   db_update('system')
-    ->fields(array('weight' =>  20))
+    ->fields(array('weight' => 20))
     ->condition('name', 'features')
     ->condition('type', 'module')
     ->execute();

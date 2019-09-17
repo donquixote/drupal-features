@@ -212,7 +212,7 @@ function hook_features_export_render($module_name, $data, $export = NULL) {
   $code = array();
   $code[] = '$mycomponents = array();';
   foreach ($data as $name) {
-    $code[] = "  \$mycomponents['{$name}'] = " . features_var_export(mycomponent_load($name)) .";";
+    $code[] = "  \$mycomponents['{$name}'] = " . features_var_export(mycomponent_load($name)) . ";";
   }
   $code[] = "return \$mycomponents;";
   $code = implode("\n", $code);

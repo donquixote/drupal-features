@@ -75,7 +75,7 @@ function features_settings_form($form, $form_state) {
       $form['show_components']['features_admin_menu_links']['features_admin_menu_links_menus'] = array(
         '#title' => t('Allowed menus for menu links'),
         '#type' => 'checkboxes',
-        '#options' =>  array_map('check_plain', $menus),
+        '#options' => array_map('check_plain', $menus),
         '#default_value' => variable_get('features_admin_menu_links_menus', array_keys(menu_get_menus())),
       );
     }
@@ -217,7 +217,7 @@ function features_export_form($form, $form_state, $feature = NULL) {
     '#element_validate' => array('features_export_form_validate_field'),
   );
   $directory = (!empty($feature->filename)) ? dirname($feature->filename) : variable_get('features_default_export_path', FEATURES_DEFAULT_EXPORT_PATH);
-  if (!empty($feature_name) && substr_compare($directory, $feature_name, strlen($directory)-strlen($feature_name), strlen($feature_name)) === 0) {
+  if (!empty($feature_name) && substr_compare($directory, $feature_name, strlen($directory) - strlen($feature_name), strlen($feature_name)) === 0) {
     // if path ends with module_name, strip it
     $directory = dirname($directory);
   }
@@ -345,7 +345,7 @@ function _features_export_form_components(&$form, &$form_state) {
     '#title' => t('Search'),
     '#hidden' => TRUE,
     '#default_value' => '',
-    '#suffix' => "<span class='features-filter-clear'>". t('Clear') ."</span>",
+    '#suffix' => "<span class='features-filter-clear'>" . t('Clear') . "</span>",
   );
   $form['export']['features_filter_wrapper']['checkall'] = array(
     '#type' => 'checkbox',
@@ -427,13 +427,13 @@ function _features_export_form_components(&$form, &$form_state) {
       continue;
     }
 
-      $component_items_count = count($component_info['options']['sources']);
-      $count_label = ' (<span class = "component-count">' . $component_items_count . '</span>)';
-      $label = (isset($component_info['name']) ?
-          $component_info['name'] . $count_label . " <span>(" . check_plain($component) . ")</span>"
-          : check_plain($component) . $count_label);
+    $component_items_count = count($component_info['options']['sources']);
+    $count_label = ' (<span class = "component-count">' . $component_items_count . '</span>)';
+    $label = (isset($component_info['name']) ?
+      $component_info['name'] . $count_label . " <span>(" . check_plain($component) . ")</span>"
+      : check_plain($component) . $count_label);
 
-      $count = 0;
+    $count = 0;
     foreach ($sections as $section) {
       $count += count($component_info['options'][$section]);
     }
@@ -448,7 +448,7 @@ function _features_export_form_components(&$form, &$form_state) {
           $form['export'][$component] = array(
             '#markup' => '',
             '#tree' => TRUE,
-            );
+          );
 
           $form['export'][$component]['deprecated'] = array(
             '#type' => 'fieldset',
@@ -473,7 +473,7 @@ function _features_export_form_components(&$form, &$form_state) {
         $form['export'][$component] = array(
           '#markup' => '',
           '#tree' => TRUE,
-          );
+        );
 
         $form['export'][$component]['sources'] = array(
           '#type' => 'fieldset',
@@ -506,7 +506,7 @@ function _features_export_form_components(&$form, &$form_state) {
         }
         $form['export'][$component][$sections[0]]['#prefix'] =
           "<div class='component-list features-export-list $extra_class'>";
-        $form['export'][$component][$sections[count($sections)-1]]['#suffix'] = '</div></div>';
+        $form['export'][$component][$sections[count($sections) - 1]]['#suffix'] = '</div></div>';
       }
     }
   }
@@ -618,7 +618,7 @@ function _features_export_build($feature, &$form_state) {
     // count any detected items
     if (!empty($form_state['values'][$component]['detected'])) {
       $stub_count[$component]++;
-      }
+    }
     // Only fallback to an existing feature's values if there are no export options for the component.
     if ($component == 'dependencies') {
       if (($stub_count[$component] == 0) && !empty($feature->info['dependencies'])) {
@@ -790,7 +790,7 @@ function _features_export_build($feature, &$form_state) {
   drupal_add_js(array('features' => array(
     'excluded' => $excluded,
     'conflicts' => $conflicts,
-    )), 'setting');
+  )), 'setting');
 
   return $export;
 }
@@ -883,7 +883,7 @@ function features_export_components_json($feature_name) {
  * @return array
  *   Part of the form to be delivered with AJAX.
  */
-function features_info_file_preview($form, &$form_state){
+function features_info_file_preview($form, &$form_state) {
   return $form['export'];
 }
 
@@ -905,6 +905,7 @@ function features_export_form_validate_field($element, &$form_state) {
         form_error($element, t('The URL %url is invalid. Please enter a fully-qualified URL, such as http://www.example.com/feed.xml.', array('%url' => $element['#value'])));
       }
       break;
+
     case 'version':
       preg_match('/^(?P<core>\d+\.x)-(?P<major>\d+)\.(?P<patch>\d+)-?(?P<extra>\w+)?$/', $element['#value'], $matches);
       if (!empty($element['#value']) && !isset($matches['core'], $matches['major'])) {
@@ -1001,7 +1002,7 @@ function features_export_build_form_submit($form, &$form_state) {
       }
 
       drupal_add_http_header('Content-type', 'application/x-tar');
-      drupal_add_http_header('Content-Disposition', 'attachment; filename="'. $filename .'"');
+      drupal_add_http_header('Content-Disposition', 'attachment; filename="' . $filename . '"');
       drupal_send_headers();
     }
 
@@ -1084,7 +1085,7 @@ function features_export_build_form_submit($form, &$form_state) {
       if ($success) {
         drupal_set_message(t("Module @name written to @directory",
           array('@name' => $export['name'], '@directory' => $directory)));
-        }
+      }
       else {
         drupal_set_message(
           t("Could not write module to @path. ", array('@path' => $directory)) .
@@ -1092,7 +1093,7 @@ function features_export_build_form_submit($form, &$form_state) {
       }
     }
     else {
-      print pack("a1024","");
+      print pack("a1024", "");
       exit;
     }
   }
@@ -1134,13 +1135,13 @@ function features_admin_form($form, $form_state) {
   // Load export functions to use in comparison.
   module_load_include('inc', 'features', 'features.export');
 
-  if (empty($features) ) {
+  if (empty($features)) {
     $form['no_features'] = array(
       '#markup' => t('No Features were found. Please use the !create_link link to create
       a new Feature module, or upload an existing Feature to your modules directory.',
       array('!create_link' => l(t('Create Feature'), 'admin/structure/features/create'))),
     );
-    return $form ;
+    return $form;
   }
 
   $form = array('#features' => $features);
@@ -1187,7 +1188,7 @@ function features_admin_form($form, $form_state) {
 
     if (!empty($module->dependents)) {
       $disabled = TRUE;
-      $description .= "<div class='requirements'>". t('Required by: !dependents', array('!dependents' => implode(', ', $module->dependents))) ."</div>";
+      $description .= "<div class='requirements'>" . t('Required by: !dependents', array('!dependents' => implode(', ', $module->dependents))) . "</div>";
     }
 
     // Detect potential conflicts
@@ -1209,7 +1210,7 @@ function features_admin_form($form, $form_state) {
           $disabled = TRUE;
         }
       }
-      $description .= "<div class='conflicts'>". t('Conflicts with: !conflicts', array('!conflicts' => implode(', ', $module_conflicts))) ."</div>";
+      $description .= "<div class='conflicts'>" . t('Conflicts with: !conflicts', array('!conflicts' => implode(', ', $module_conflicts))) . "</div>";
     }
 
     $href = "admin/structure/features/{$name}";
@@ -1242,9 +1243,9 @@ function features_admin_form($form, $form_state) {
         $state = theme('features_storage_link', array('storage' => FEATURES_CHECKING, 'path' => $href));
         $state .= l(t('Check'), "admin/structure/features/{$name}/status", array('attributes' => array('class' => array('admin-check'))));
         $state .= theme('features_storage_link', array('storage' => FEATURES_REBUILDING, 'path' => $href));
-        $state .= theme('features_storage_link', array('storage' => FEATURES_NEEDS_REVIEW, 'path' =>  $href));
-        $state .= theme('features_storage_link', array('storage' => FEATURES_OVERRIDDEN, 'path' =>  $href_overridden));
-        $state .= theme('features_storage_link', array('storage' => FEATURES_DEFAULT, 'path' =>  $href));
+        $state .= theme('features_storage_link', array('storage' => FEATURES_NEEDS_REVIEW, 'path' => $href));
+        $state .= theme('features_storage_link', array('storage' => FEATURES_OVERRIDDEN, 'path' => $href_overridden));
+        $state .= theme('features_storage_link', array('storage' => FEATURES_DEFAULT, 'path' => $href));
       }
       elseif (!empty($conflicts[$name])) {
         $state = theme('features_storage_link', array('storage' => FEATURES_CONFLICT, 'path' => $href));
@@ -1349,6 +1350,7 @@ function features_admin_components($form, $form_state, $feature) {
         case FEATURES_OVERRIDDEN:
           $revert = TRUE;
           break;
+
         case FEATURES_NEEDS_REVIEW:
           $review = TRUE;
           break;
@@ -1381,7 +1383,7 @@ function features_admin_components($form, $form_state, $feature) {
       $lock_link = ' ' . theme('features_lock_link', array('feature' => $feature->name, 'component' => $component));
     }
     $form['components'][$component] = array(
-      '#markup' => $lock_link . theme('features_storage_link', array('storage' => $storage, 'path' =>  $path)),
+      '#markup' => $lock_link . theme('features_storage_link', array('storage' => $storage, 'path' => $path)),
     );
   }
 
@@ -1634,7 +1636,7 @@ function features_admin_lock($feature, $type = 'ajax', $component = NULL) {
     }
     $commands = array();
     $new_link = theme('features_lock_link', array('feature' => $feature->name, 'component' => $component));
-    $commands[] = ajax_command_replace('#features-lock-link-' . $feature->name . ($component ? '-' . $component : ''),  $new_link);
+    $commands[] = ajax_command_replace('#features-lock-link-' . $feature->name . ($component ? '-' . $component : ''), $new_link);
     $page = array('#type' => 'ajax', '#commands' => $commands);
     ajax_deliver($page);
   }

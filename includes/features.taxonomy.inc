@@ -80,7 +80,7 @@ function taxonomy_features_export_render($module, $data) {
       }
     }
   }
-  $code = "  return ". features_var_export($code, '  ') .";";
+  $code = "  return " . features_var_export($code, '  ') . ";";
   return array('taxonomy_default_vocabularies' => $code);
 }
 

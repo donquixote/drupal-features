@@ -193,8 +193,10 @@ function features_drush_help($section) {
   switch ($section) {
     case 'drush:features':
       return dt("List all the available features for your site.");
+
     case 'drush:features-export':
       return dt("Export a feature from your site into a module. If called with no arguments, display a list of available components. If called with a single argument, attempt to create a feature including the given component with the same name. The option '--destination=foo' may be used to specify the path (from Drupal root) where the feature should be created. The default destination is '@path'. The option '--version-set=foo' may be used to specify a version number for the feature or the option '--version-increment' may also to increment the feature's version number.", array('@path' => $path));
+
     case 'drush:features-components':
       return dt("List feature components matching patterns. The listing may be limited to exported/not-exported components.
 
@@ -206,16 +208,22 @@ Patterns uses * or % for matching multiple sources/components. Unlike shorthands
 
 Lastly, a pattern without a colon is interpreted as having \":%\" appended, for easy listing of all components of a source.
 ");
+
     case 'drush:features-update':
       return dt("Update a feature module on your site. The option '--version-set=foo' may be used to specify a version number for the feature or the option '--version-increment' may also to increment the feature's version number.");
+
     case 'drush:features-update-all':
       return dt("Update all feature modules on your site.");
+
     case 'drush:features-revert':
       return dt("Revert a feature module on your site.");
+
     case 'drush:features-revert-all':
       return dt("Revert all enabled feature module on your site.");
+
     case 'drush:features-diff':
       return dt("Show a diff of a feature module.");
+
     case 'drush:features-add':
       return dt("Add a component to a feature module. The option '--version-set=foo' may be used to specify a version number for the feature or the option '--version-increment' may also to increment the feature's version number.");
   }
@@ -254,9 +262,11 @@ function drush_features_list() {
       case FEATURES_REBUILDABLE:
         $storage = '';
         break;
+
       case FEATURES_OVERRIDDEN:
         $storage = dt('Overridden');
         break;
+
       case FEATURES_NEEDS_REVIEW:
         $storage = dt('Needs review');
         break;
@@ -316,7 +326,7 @@ function drush_features_components() {
   }
 
   $filtered_components = _drush_features_component_filter($components, $args, $options);
-  if ($filtered_components){
+  if ($filtered_components) {
     _drush_features_component_print($filtered_components, $options);
   }
 }
@@ -452,7 +462,6 @@ function _drush_features_component_filter($all_components, $patterns = array(), 
       return drush_set_error('', dt('No !state sources match "!source"', array('!state' => $state_string, '!source' => $source_pattern)));
     }
 
-
     // Now find the components.
     foreach ($sources as $source) {
       // Find the components.
@@ -489,7 +498,7 @@ function _drush_features_component_filter($all_components, $patterns = array(), 
   // Lastly, provide feature module information on the selected components, if
   // requested.
   $provided_by = array();
-  if ($options['provided by'] && $options['exported'] ) {
+  if ($options['provided by'] && $options['exported']) {
     foreach ($selected as $source => $components) {
       foreach ($components as $name => $title) {
         $exported = !empty($components_map[$source][$name]);
@@ -530,10 +539,10 @@ function _drush_features_component_print($filtered_components, $options = array(
         $row = array('features[' . $source . '][] = "' . $name . '"');
       }
       else {
-        $row = array($source .':'. $name);
+        $row = array($source . ':' . $name);
       }
-      if (isset($filtered_components['sources'][$source .':'. $name])) {
-        $row[] = dt('Provided by') . ': ' . $filtered_components['sources'][$source .':'. $name];
+      if (isset($filtered_components['sources'][$source . ':' . $name])) {
+        $row[] = dt('Provided by') . ': ' . $filtered_components['sources'][$source . ':' . $name];
       }
       $rows[] = $row;
     }
@@ -615,7 +624,6 @@ function drush_features_add() {
   // @todo This won't work, because the parameters are not passed along.
   drush_features_export();
 }
-
 
 /**
  * Drush command callback for 'features-update'.
@@ -1031,7 +1039,7 @@ function drush_features_diff() {
 
   // Print key for colors
   drush_print(dt('Legend: '));
-  drush_print(sprintf($red,   dt('Code:       drush features-revert will remove the overrides.')));
+  drush_print(sprintf($red, dt('Code:       drush features-revert will remove the overrides.')));
   drush_print(sprintf($green, dt('Overrides:  drush features-update will update the exported feature with the displayed overrides')));
   drush_print();
 
@@ -1088,7 +1096,7 @@ function drush_features_diff_all() {
     // Check if the user wants to apply the force option.
     $force = drush_get_option('force');
 
-    if($force) {
+    if ($force) {
       foreach ($features_to_diff as $module) {
 
         drush_print(dt('Diff for !module:', array('!module' => $module)));
@@ -1134,9 +1142,11 @@ function _features_drush_set_error($feature, $error = '') {
     case 'FEATURES_FEATURE_NOT_ENABLED':
       $message = 'The feature !feature is not enabled.';
       break;
+
     case 'FEATURES_COMPONENT_NOT_FOUND':
       $message = 'The given component !feature could not be found.';
       break;
+
     default:
       $error = 'FEATURES_FEATURE_NOT_FOUND';
       $message = 'The feature !feature could not be found.';
