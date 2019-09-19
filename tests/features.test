@@ -42,7 +42,7 @@ class FeaturesUserTestCase extends DrupalWebTestCase {
       'taxonomy',
       'views',
       'features',
-      'features_test'
+      'features_test',
     ));
 
     // Run a features rebuild to ensure our feature is fully installed.

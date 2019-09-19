@@ -36,7 +36,7 @@ function template_preprocess_features_admin_components(&$vars) {
     $rows[] = array(
       array(
         'data' => isset($modules[$dependency]->info['name']) ? $modules[$dependency]->info['name'] : $dependency,
-        'class' => 'component'
+        'class' => 'component',
       ),
       theme('features_module_status', array('status' => $status)),
     );
@@ -66,16 +66,16 @@ function template_preprocess_features_admin_components(&$vars) {
         if (element_children($form['revert'])) {
           $header[] = array(
             'data' => isset($form['revert'][$component]) ? drupal_render($form['revert'][$component]) : '',
-            'header' => TRUE
+            'header' => TRUE,
           );
         }
         $header[] = array(
           'data' => isset($components[$component]['name']) ? $components[$component]['name'] : $component,
-          'header' => TRUE
+          'header' => TRUE,
         );
         $header[] = array(
           'data' => drupal_render($form['components'][$component]),
-          'header' => TRUE
+          'header' => TRUE,
         );
         $rows[] = $header;
 
@@ -85,7 +85,7 @@ function template_preprocess_features_admin_components(&$vars) {
         $data[] = array(
           'data' => theme('features_component_list', array('components' => $items, 'source' => $items, 'conflicts' => $conflicts)),
           'colspan' => 2,
-          'class' => 'component'
+          'class' => 'component',
         );
         $rows[] = $data;
       }
@@ -372,11 +372,11 @@ function theme_features_components($vars) {
       if (!empty($feature_items) || !empty($source_items)) {
         $rows[] = array(array(
           'data' => isset($components[$component]['name']) ? $components[$component]['name'] : $component,
-          'header' => TRUE
+          'header' => TRUE,
         ));
         $rows[] = array(array(
           'data' => theme('features_component_list', array('components' => $feature_items, 'source' => $source_items)),
-          'class' => 'component'
+          'class' => 'component',
         ));
       }
     }

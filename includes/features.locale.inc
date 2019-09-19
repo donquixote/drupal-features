@@ -126,14 +126,15 @@ function _features_language_save($language) {
 
   // Insert new language via api function.
   if (empty($current_language)) {
-    locale_add_language($language->language,
-                        $language->name,
-                        $language->native,
-                        $language->direction,
-                        $language->domain,
-                        $language->prefix,
-                        $language->enabled,
-                        ($language->language == $default->language));
+    locale_add_language(
+      $language->language,
+      $language->name,
+      $language->native,
+      $language->direction,
+      $language->domain,
+      $language->prefix,
+      $language->enabled,
+      $language->language == $default->language);
     // Additional params, locale_add_language does not implement.
     db_update('languages')
       ->fields(array(

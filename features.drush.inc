@@ -46,7 +46,7 @@ function features_drush_command() {
     'description' => "Export a feature from your site into a module.",
     'arguments' => array(
       'feature' => 'Feature name to export.',
-      'components' => 'Patterns of components to include, see features-components for the format of patterns.'
+      'components' => 'Patterns of components to include, see features-components for the format of patterns.',
     ),
     'options' => array(
       'destination' => "Destination path (from Drupal root) of the exported feature. Defaults to '" . $path . "'.",
@@ -280,7 +280,7 @@ function drush_features_list() {
         'feature' => $m->name,
         'status' => $m->status ? dt('Enabled') : dt('Disabled'),
         'version' => $m->info['version'],
-        'state' => $storage
+        'state' => $storage,
       );
     }
   }

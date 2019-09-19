@@ -124,7 +124,6 @@ function ctools_features_export_render($module, $data) {
   }
 
   return $component_exports;
-
 }
 
 /**
@@ -371,7 +370,7 @@ function _ctools_features_get_info($identifier = NULL, $reset = FALSE) {
     }
     // New API identifier. Allows non-exportables related CTools APIs to be
     // supported by an explicit `module:api:current_version` key.
-    else if (substr_count($identifier, ':') === 2) {
+    elseif (substr_count($identifier, ':') === 2) {
       list($module, $api, $current_version) = explode(':', $identifier);
       // If a schema component matches the provided identifier, provide that
       // information. This also ensures that the version number is up to date.

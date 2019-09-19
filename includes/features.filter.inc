@@ -16,7 +16,7 @@ function filter_features_api() {
       /* @see \hook_filter_default_formats_alter() */
       'default_hook' => 'filter_default_formats',
       'default_file' => FEATURES_DEFAULTS_INCLUDED,
-      'feature_source' => TRUE
+      'feature_source' => TRUE,
     ),
   );
 }

@@ -254,7 +254,7 @@ function features_theme() {
   $items = array();
   /* @see \theme_features_module_status() */
   $items['features_module_status'] = array(
-    'variables' => array('module' => NULL, 'status' => NULL)
+    'variables' => array('module' => NULL, 'status' => NULL),
   ) + $base;
 
   /* @see \theme_features_components() */
@@ -577,7 +577,7 @@ function features_load_feature($name, $reset = FALSE) {
       $features[$name] = FALSE;
       if (!empty($info['features']) && empty($info['hidden'])) {
         // Build a fake file object with the data needed during installation.
-        $features[$name] = new stdClass;
+        $features[$name] = new stdClass();
         $features[$name]->name = $name;
         $features[$name]->filename = drupal_get_path('module', $name) . '/' . $name . '.module';
         $features[$name]->type = 'module';
@@ -1278,9 +1278,6 @@ function features_revert_module($module) {
     features_revert(array($module => $components));
   }
 }
-
-//                                                             Utility functions
-// =============================================================================
 
 /**
  * Log a message, environment agnostic.

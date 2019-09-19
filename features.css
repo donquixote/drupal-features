@@ -19,12 +19,12 @@ div.features-form-links ul#features-form-links li,
 div.features-form-links ul#features-form-links li a {
   display: block;
   float: none;
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
 }
 
 div.features-form-links ul#features-form-links {
-  margin: 0px 0px 10px;
+  margin: 0 0 10px;
 }
 
 div.features-form-links ul#features-form-links li a {
@@ -40,7 +40,7 @@ div.features-form-links ul#features-form-links li a.features-package-active {
   padding: 4px 5px 4px 4px;
   background: #fff;
   border: 1px solid #ccc;
-  border-right: 0px;
+  border-right: 0;
   color: #000;
   margin-right: -1px;
 }
@@ -51,7 +51,7 @@ div.features-form-package {
   background: #fff;
   color: #000;
   padding: 10px;
-  margin: 0px 0px 20px;
+  margin: 0 0 20px;
   display: none;
 }
 
@@ -63,7 +63,7 @@ div.features-package-active {
  * Features management form (admin/build/features).
  */
 div.features-empty {
-  margin: 15px 0px;
+  margin: 15px 0;
   font-size: 1.5em;
   text-align: center;
   color: #999;
@@ -83,13 +83,15 @@ table.features a.configure {
   font-style: italic;
 }
 table.features div.feature {
-  float: left; width: 85%;
+  float: left;
+  width: 85%;
 }
 table.features div.feature strong {
   font-size: 13px;
 }
 table.features div.feature div.description {
-  font-size: 11px; margin: 0px;
+  font-size: 11px;
+  margin: 0;
 }
 
 table.features-manage td.name {
@@ -119,7 +121,7 @@ table.features td.sign {
 }
 
 table.features td.sign * {
-  margin: 0px;
+  margin: 0;
 }
 
 table.features .admin-check,
@@ -191,7 +193,7 @@ div.features-components h3 {
   font-size: 2em;
   font-weight: bold;
   letter-spacing: -1px;
-  margin: 15px 0px;
+  margin: 15px 0;
 }
 
 h3.features-download {
@@ -200,7 +202,7 @@ h3.features-download {
 
 div.features-components div.description {
   font-size: 11px;
-  margin: 15px 0px;
+  margin: 15px 0;
 }
 
 div.features-components table td {
@@ -297,7 +299,7 @@ table.features-diff {
 }
 
 table.features-diff td {
-  padding: 0px 5px;
+  padding: 0 5px;
 }
 
 table.features-diff td.diff-deletedline,
@@ -323,14 +325,14 @@ html.js #features-export-form fieldset.collapsed {
   padding: 0 0 0 0;
 }
 fieldset.features-export-component {
-  background: #F3F8FB;
+  background: #f3f8fb;
   margin: 0.5em 0;
   font-weight: normal;
   font-size: 12px;
   top: 0;
 }
 fieldset.features-export-component.collapsed {
-  background: #F3F8FB;
+  background: #f3f8fb;
 }
 fieldset.features-export-component legend {
   top: 0;
@@ -353,7 +355,7 @@ fieldset.features-export-component .fieldset-title span {
 div.features-export-list {
   font-weight: normal;
   font-size: 12px;
-  border: 1px solid #CCC;
+  border: 1px solid #ccc;
   border-top-width: 0;
   overflow: hidden;
 }
@@ -389,7 +391,7 @@ fieldset.features-export-component .fieldset-wrapper .form-checkboxes {
 
 #features-export-wrapper .component-added .form-type-checkbox {
   font-weight: bold;
-  background: #EEE;
+  background: #eee;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
 }
@@ -497,7 +499,7 @@ input.form-submit.features-refresh-button {
   margin: 5px 5px;
   padding: 0 5px;
   background: transparent;
-  background: #EEE;
+  background: #eee;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   cursor: pointer;
@@ -541,7 +543,7 @@ input.form-submit.features-refresh-button {
   color: black;
   display: inline-block;
   background: transparent;
-  border: 1px solid #DDD;
+  border: 1px solid #ddd;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   white-space: nowrap;
@@ -556,7 +558,7 @@ input.form-submit.features-refresh-button {
 }
 #features-legend .fieldset-wrapper .component-added {
   font-weight: bold;
-  background: #EEE;
+  background: #eee;
   border-width: 0;
 }
 

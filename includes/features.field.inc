@@ -37,7 +37,7 @@ function field_features_api() {
       'default_file' => FEATURES_DEFAULTS_INCLUDED,
       'feature_source' => TRUE,
       'supersedes' => 'field',
-    )
+    ),
   );
 }
 

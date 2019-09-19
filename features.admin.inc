@@ -24,13 +24,13 @@ function features_settings_form($form, $form_state) {
   $form['show_components'] = array(
     '#type' => 'fieldset',
     '#title' => t('Show components on create/edit feature form.'),
-    '#description' => t('Components with no options will not be shown no matter the setting below. Disabled components cannot be used with admin form.')
+    '#description' => t('Components with no options will not be shown no matter the setting below. Disabled components cannot be used with admin form.'),
   );
 
   $form['lock_components'] = array(
     '#type' => 'fieldset',
     '#title' => t('Lock components'),
-    '#description' => t('Locked components will be prevented from ever being reverted. For example, if site builder updates a feature with new settings for a field instance, but field instance is locked, it will not update that field. If the item is purely in code, like a view, the view changed when the code is updated no matter these settings.')
+    '#description' => t('Locked components will be prevented from ever being reverted. For example, if site builder updates a feature with new settings for a field instance, but field instance is locked, it will not update that field. If the item is purely in code, like a view, the view changed when the code is updated no matter these settings.'),
   );
   $form['features_lock_mode'] = array(
     '#type' => 'radios',
@@ -354,7 +354,7 @@ function _features_export_form_components(&$form, &$form_state) {
     '#title' => t('Select all'),
     '#attributes' => array(
       'class' => array('features-checkall'),
-    )
+    ),
   );
 
   $form['advanced']['features_autodetect_wrapper'] = array(
@@ -929,7 +929,8 @@ function features_export_form_validate_field($element, &$form_state) {
  *   Export array.
  */
 function _features_export_generate($export, $form_state, $feature = NULL) {
-  unset($export['components']); // remove the UI data that we are not saving to disk
+  // Remove the UI data that we are not saving to disk.
+  unset($export['components']);
 
   $module_name = $form_state['values']['module_name'];
   // Directly copy the following attributes from form_state
@@ -990,7 +991,7 @@ function features_export_build_form_submit($form, &$form_state) {
       $directory = (!empty($export['project path'])) ? $export['project path'] . '/' . $module_name :
         (isset($feature->filename) ? dirname($feature->filename) : $destination . '/' . $module_name);
       if (!is_dir($directory)) {
-        if (mkdir($directory, 0777, true) === FALSE) {
+        if (mkdir($directory, 0777, TRUE) === FALSE) {
           $success = FALSE;
         }
       }
@@ -1227,7 +1228,7 @@ function features_admin_form($form, $form_state) {
     if (!empty($module->info['project status url'])) {
       $uri = l(truncate_utf8($module->info['project status url'], 35, TRUE, TRUE), $module->info['project status url']);
     }
-    else if (isset($module->info['project'], $module->info['version'], $module->info['datestamp'])) {
+    elseif (isset($module->info['project'], $module->info['version'], $module->info['datestamp'])) {
       $uri = l('http://drupal.org', 'http://drupal.org/project/' . $module->info['project']);
     }
     else {
@@ -1373,7 +1374,7 @@ function features_admin_components($form, $form_state, $feature) {
     if (array_key_exists($component, $states[$feature->name])) {
       $storage = $states[$feature->name][$component];
     }
-    else if (array_key_exists($component, $conflicts)) {
+    elseif (array_key_exists($component, $conflicts)) {
       $storage = FEATURES_CONFLICT;
     }
     // This can be removed if the css is fixed so link doesn't move when

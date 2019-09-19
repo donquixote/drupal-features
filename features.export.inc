@@ -477,7 +477,7 @@ function features_export_render($export, $module_name, $reset = FALSE) {
       $deprecated_files = array(
         "{$module_name}.defaults",
         "{$module_name}.features.views",
-        "{$module_name}.features.node"
+        "{$module_name}.features.node",
       );
       // add deprecated components
       foreach ($deprecated as $component) {
@@ -506,7 +506,7 @@ function features_export_render($export, $module_name, $reset = FALSE) {
     }
   }
   // Add a stub module to include the defaults
-  else if (!empty($code['features'])) {
+  elseif (!empty($code['features'])) {
     $code['module'] = $modulefile_features_inc;
   }
   else {
@@ -646,7 +646,7 @@ function features_export_info($info, $parents = array()) {
       $output .= features_export_info($v, $child);
     }
   }
-  else if (!empty($info) && count($parents)) {
+  elseif (!empty($info) && count($parents)) {
     $line = array_shift($parents);
     foreach ($parents as $key) {
       $line .= is_numeric($key) ? "[]" : "[{$key}]";
@@ -753,7 +753,7 @@ function features_var_export($var, $prefix = '', $init = TRUE, $count = 0) {
   if (is_object($var)) {
     $output = method_exists($var, 'export') ? $var->export() : features_var_export((array) $var, '', FALSE, $count + 1);
   }
-  else if (is_array($var)) {
+  elseif (is_array($var)) {
     if (empty($var)) {
       $output = 'array()';
     }
@@ -766,13 +766,13 @@ function features_var_export($var, $prefix = '', $init = TRUE, $count = 0) {
       $output .= ')';
     }
   }
-  else if (is_bool($var)) {
+  elseif (is_bool($var)) {
     $output = $var ? 'TRUE' : 'FALSE';
   }
-  else if (is_int($var)) {
+  elseif (is_int($var)) {
     $output = intval($var);
   }
-  else if (is_numeric($var)) {
+  elseif (is_numeric($var)) {
     $floatval = floatval($var);
     if (is_string($var) && ((string) $floatval !== $var)) {
       // Do not convert a string to a number if the string
@@ -784,7 +784,7 @@ function features_var_export($var, $prefix = '', $init = TRUE, $count = 0) {
       $output = $floatval;
     }
   }
-  else if (is_string($var) && strpos($var, "\n") !== FALSE) {
+  elseif (is_string($var) && strpos($var, "\n") !== FALSE) {
     // Replace line breaks in strings with a token for replacement
     // at the very end. This protects whitespace in strings from
     // unintentional indentation.
@@ -1044,7 +1044,8 @@ function _features_module_exists($module) {
  */
 function features_get_default($component, $module_name = NULL, $alter = TRUE, $reset = FALSE) {
   $cache = &drupal_static(__FUNCTION__, array());
-  $alter = !empty($alter); // ensure $alter is a true/false boolean
+  // Ensure $alter is a true/false boolean.
+  $alter = !empty($alter);
   features_include();
   features_include_defaults($component);
   $default_hook = features_get_default_hooks($component);
@@ -1248,7 +1249,7 @@ function features_get_component_states($features = array(), $rebuild_only = TRUE
             }
           }
           // Component properly implements exportables.
-          else if (!features_hook($component, 'features_rebuild')) {
+          elseif (!features_hook($component, 'features_rebuild')) {
             $cache[$feature][$component] = FEATURES_OVERRIDDEN;
           }
           // Component does not implement exportables.
@@ -1265,11 +1266,11 @@ function features_get_component_states($features = array(), $rebuild_only = TRUE
                   $cache[$feature][$component] = FEATURES_OVERRIDDEN;
                 }
                 // DB has no modifications to prior code state (or this is initial install).
-                else if (empty($codecache) || $codecache == $normal) {
+                elseif (empty($codecache) || $codecache == $normal) {
                   $cache[$feature][$component] = FEATURES_REBUILDABLE;
                 }
                 // None of the states match. Requires user intervention.
-                else if ($codecache != $default) {
+                elseif ($codecache != $default) {
                   $cache[$feature][$component] = FEATURES_NEEDS_REVIEW;
                 }
               }
@@ -1454,7 +1455,7 @@ function features_remove_recursion($o) {
     $serialize = serialize($o);
     if (preg_match($re, $serialize)) {
       $last = $pos = 0;
-      while (false !== ($pos = strpos($serialize, 's:', $pos))) {
+      while (FALSE !== ($pos = strpos($serialize, 's:', $pos))) {
         $chunk = substr($serialize, $last, $pos - $last);
         if (preg_match($re, $chunk)) {
           $length = strlen($chunk);

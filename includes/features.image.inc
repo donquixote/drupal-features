@@ -17,7 +17,7 @@ function image_features_api() {
       'default_hook' => 'image_default_styles',
       /* @see \hook_image_styles_alter() */
       'alter_hook' => 'image_styles',
-    )
+    ),
   );
 }
 

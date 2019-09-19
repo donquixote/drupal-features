@@ -149,7 +149,7 @@ function user_permission_features_rebuild($module) {
       $perm = $permission['name'];
       _user_features_change_term_permission($perm, 'machine_name');
       if (empty($modules[$perm])) {
-        $args = array('!name' => $perm, '!module' => $module,);
+        $args = array('!name' => $perm, '!module' => $module);
         $msg = t('Warning in features rebuild of !module. No module defines permission "!name".', $args);
         drupal_set_message($msg, 'warning');
         continue;
