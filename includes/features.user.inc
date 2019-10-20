@@ -35,7 +35,8 @@ function user_features_api() {
 function user_permission_features_export($data, &$export, $module_name = '') {
   $export['dependencies']['features'] = 'features';
 
-  // Ensure the modules that provide the given permissions are included as dependencies.
+  // Ensure the modules that provide the given permissions are included as
+  // dependencies.
   $map = user_permission_get_modules();
   foreach ($data as $perm) {
     $perm_name = $perm;

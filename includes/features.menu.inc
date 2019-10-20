@@ -199,7 +199,8 @@ function menu_links_features_export_options() {
  * @todo Verify this exact behavior. See #3075693.
  */
 function menu_links_features_identifier($link, $old = FALSE) {
-  // Add some uniqueness to these identifiers, allowing multiple links with the same path, but different titles.
+  // Add some uniqueness to these identifiers, allowing multiple links with the
+  // same path, but different titles.
   $clean_title = features_clean_title(isset($link['title']) ? $link['title'] : $link['link_title']);
 
   // The old identifier is requested.
@@ -208,7 +209,8 @@ function menu_links_features_identifier($link, $old = FALSE) {
     if (isset($link['options']['identifier'])) {
       return $link['options']['identifier'];
     }
-    // Providing backward compatibility and allowing/enabling multiple links with same paths.
+    // Providing backward compatibility and allowing/enabling multiple links
+    // with same paths.
     else {
       $identifier = isset($link['menu_name'], $link['link_path']) ? "{$link['menu_name']}:{$link['link_path']}" : FALSE;
       // Checking if there are multiples of this identifier.

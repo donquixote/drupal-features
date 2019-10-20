@@ -43,10 +43,10 @@ function filter_features_export($data, &$export, $module_name = '') {
   $filter_info = filter_get_filters();
   foreach ($data as $name) {
     if ($format = features_filter_format_load($name)) {
-      // Add format to exports
+      // Add format to exports.
       $export['features']['filter'][$format->format] = $format->format;
 
-      // Iterate through filters and ensure each filter's module is included as a dependency
+      // Ensure that each filter's module is included as a dependency.
       foreach (array_keys($format->filters) as $name) {
         if (isset($filter_info[$name], $filter_info[$name]['module'])) {
           $module = $filter_info[$name]['module'];

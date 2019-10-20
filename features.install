@@ -89,8 +89,8 @@ function features_update_6100() {
     if (module_exists($feature->name) && $types = module_invoke($feature->name, 'node_info')) {
       foreach ($types as $type => $type_data) {
         $sql = "SELECT COUNT(*) FROM {node_type} WHERE module = 'node' AND type = '%s'";
-        // Only update if the hook_node_info type's module is 'features' and the db type's
-        // module is 'node'.
+        // Only update if the hook_node_info() type's module is 'features' and
+        // the db type's module is 'node'.
         if (($type_data['module'] == 'features') && db_query($sql, $type)->fetchField()) {
           $ret[] = update_sql("UPDATE {node_type} SET module = 'features' WHERE type = '$type'");
         }
@@ -109,7 +109,7 @@ function features_update_6100() {
  * that have been overridden.
  */
 function features_update_6101() {
-  // Ensure all of our own API functions still exist in in this version
+  // Ensure all of our own API functions still exist in this version
   // of Features. It's possible that the "future me" will not have these
   // functions, so I should check.
   module_load_include('inc', 'features', "features.export");

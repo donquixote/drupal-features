@@ -26,7 +26,7 @@ function context_features_export($data, &$export, $module_name = '') {
       foreach (array('node', 'views') as $key) {
         if (!empty($context->conditions{$key}['values'])) {
           foreach ($context->conditions{$key}['values'] as $item) {
-            // Special pipe for views
+            // Special pipe for views.
             if ($key === 'views') {
               $split = explode(':', $item);
               $view_name = array_shift($split);

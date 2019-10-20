@@ -11,8 +11,8 @@
 function field_features_api() {
   return array(
     'field' => array(
-      // this is deprecated by field_base and field_instance
-      // but retained for compatibility with older exports
+      // This is deprecated by field_base and field_instance
+      // but retained for compatibility with older exports.
       'name' => t('Fields'),
       /* @see \hook_field_default_fields() */
       /* @see \hook_field_default_fields_alter() */
@@ -92,14 +92,14 @@ function field_base_features_export($data, &$export, $module_name = '') {
         $module = $map[$identifier];
         $export['dependencies'][$module] = $module;
       }
-      // If the field has not yet been exported, add it
+      // If the field has not yet been exported, add it.
       else {
         $export['features']['field_base'][$identifier] = $identifier;
         $export['dependencies'][$base['module']] = $base['module'];
         if ($base['storage']['type'] != variable_get('field_storage_default', 'field_sql_storage')) {
           $export['dependencies'][$base['storage']['module']] = $base['storage']['module'];
         }
-        // If taxonomy field, add in the vocabulary
+        // If taxonomy field, add in the vocabulary.
         if ($base['type'] == 'taxonomy_term_reference' && !empty($base['settings']['allowed_values'])) {
           foreach ($base['settings']['allowed_values'] as $allowed_values) {
             if (!empty($allowed_values['vocabulary'])) {
@@ -135,7 +135,7 @@ function field_instance_features_export($data, &$export, $module_name = '') {
         $module = $map[$identifier];
         $export['dependencies'][$module] = $module;
       }
-      // If the field has not yet been exported, add it
+      // If the field has not yet been exported, add it.
       else {
         $export['features']['field_instance'][$identifier] = $identifier;
         $export['dependencies'][$instance['widget']['module']] = $instance['widget']['module'];

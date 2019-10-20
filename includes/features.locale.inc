@@ -64,7 +64,7 @@ function language_features_export_render($module, $data, $export = NULL) {
     if (!empty($language_list[$name])) {
 
       $var = (array) $language_list[$name];
-      // Unset javascript hash
+      // Unset javascript hash.
       unset($var['javascript']);
 
       $lang_export = features_var_export($var, '  ');
@@ -149,7 +149,7 @@ function _features_language_save($language) {
   else {
     // Get field list from table schema.
     $properties = drupal_schema_fields_sql('languages');
-    // The javascript hash is not in the imported data but should be empty
+    // The javascript hash is not in the imported data but should be empty.
     if (!isset($language->javascript)) {
       $language->javascript = '';
     }

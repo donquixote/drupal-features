@@ -20,7 +20,7 @@ function ctools_features_declare_functions($reset = FALSE) {
         $code .= 'function ' . $info['module'] . '_features_api() { return ctools_component_features_api("' . $info['module'] . '"); }';
       }
 
-      // ctools component with owner defined as "ctools"
+      // Ctools component with owner defined as "ctools".
       /* @see \hook_features_api() */
       if (!function_exists("{$component}_features_api") && $info['module'] === 'ctools') {
         /* @see \ctools_component_features_api() */
@@ -63,7 +63,7 @@ function ctools_features_api() {
       'duplicates' => FEATURES_DUPLICATES_ALLOWED,
       // CTools API integration does not include a default hook declaration as
       // it is not a proper default hook.
-      // 'default_hook' => 'ctools_plugin_api',
+      // 'default_hook' => 'ctools_plugin_api',.
     ),
   );
 }
@@ -73,12 +73,12 @@ function ctools_features_api() {
  * Adds references to the ctools mothership hook, ctools_plugin_api().
  */
 function ctools_features_export($data, &$export, $module_name = '') {
-  // Add ctools dependency
+  // Add ctools dependency.
   $export['dependencies']['ctools'] = 'ctools';
 
   // Add the actual ctools components which will need to be accounted for in
   // hook_ctools_plugin_api(). The components are actually identified by a
-  // delimited list of values: `module_name:api:current_version`
+  // delimited list of values: `module_name:api:current_version`.
   foreach ($data as $component) {
     if ($info = _ctools_features_get_info($component)) {
       $identifier = "{$info['module']}:{$info['api']}:{$info['current_version']}";
@@ -148,7 +148,7 @@ function ctools_features_export_render($module, $data) {
 function ctools_component_features_api($module_name) {
   $api = array();
   foreach (_ctools_features_get_info() as $component => $info) {
-    // if module owner is set to "ctools" we need to compare the component
+    // If module owner is set to "ctools" we need to compare the component.
     if ($info['module'] == $module_name || ($info['module'] === 'ctools' && $component == $module_name)) {
       $api[$component] = $info;
     }
@@ -210,13 +210,13 @@ function ctools_component_features_export_options($component) {
  * @see \hook_features_export()
  */
 function ctools_component_features_export($component, $data, &$export, $module_name = '') {
-  // Add the actual implementing module as a dependency
+  // Add the actual implementing module as a dependency.
   $info = _ctools_features_get_info();
   if ($module_name !== $info[$component]['module']) {
     $export['dependencies'][$info[$component]['module']] = $info[$component]['module'];
   }
 
-  // Add the components
+  // Add the components.
   foreach ($data as $object_name) {
     if ($object = _ctools_features_export_crud_load($component, $object_name)) {
       // If this object is provided as a default by a different module, don't

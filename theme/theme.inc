@@ -22,14 +22,14 @@ function template_preprocess_features_admin_components(&$vars) {
   drupal_add_css(drupal_get_path('module', 'features') . '/features.css');
   $form = $vars['form'];
 
-  // Basic info
+  // Basic info.
   $vars['name'] = $form['#info']['name'];
   $vars['description'] = isset($form['#info']['description']) ? $form['#info']['description'] : '';
 
-  // Legend/key
+  // Legend/key.
   $vars['key'] = array();
 
-  // Dependencies
+  // Dependencies.
   $rows = array();
   $modules = features_get_info();
   foreach ($form['#dependencies'] as $dependency => $status) {
@@ -43,7 +43,7 @@ function template_preprocess_features_admin_components(&$vars) {
   }
   $vars['dependencies'] = theme('table', array('header' => array(t('Dependency'), t('Status')), 'rows' => $rows));
 
-  // Components
+  // Components.
   $rows = array();
   $components = features_get_components();
 
@@ -93,7 +93,7 @@ function template_preprocess_features_admin_components(&$vars) {
   }
   $vars['components'] = theme('table', array('header' => array(), 'rows' => $rows));
 
-  // Other elements
+  // Other elements.
   $vars['buttons'] = drupal_render($form['buttons']);
   $vars['form'] = $form;
   $vars['lock_feature'] = theme('features_lock_link', array('feature' => $form['#feature']->name));
@@ -264,7 +264,7 @@ function theme_features_form_package(&$vars) {
     unset($vars['form']['status'][$element]['#title']);
     unset($vars['form']['status'][$element]['#description']);
 
-    // Determine row & cell classes
+    // Determine row & cell classes.
     $class = $vars['form']['status'][$element]['#default_value'] ? 'enabled' : 'disabled';
 
     $row = array();
@@ -289,7 +289,6 @@ function theme_features_form_package(&$vars) {
   $output .= theme('table', array('header' => $header, 'rows' => $rows, 'attributes' => array('id' => 'features-form-table', 'class' => array($class))));
 
   // Prevent section from being rendered by drupal_render().
-
   $output .= drupal_render($vars['form']['buttons']);
   $output .= drupal_render_children($vars['form']);
   return $output;
@@ -402,7 +401,7 @@ function theme_features_component_list($vars) {
 
   $list = array();
   foreach ($components as $component) {
-    // If component is not in source list, it was autodetected
+    // If component is not in source list, it was autodetected.
     if (!in_array($component, $source)) {
       $list[] = "<span class='features-detected'>" . check_plain($component) . "</span>";
     }

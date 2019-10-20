@@ -40,12 +40,12 @@ function image_features_export($data, &$export, $module_name = '') {
   $map = features_get_default_map('image');
   foreach ($data as $style) {
     $export['dependencies']['image'] = 'image';
-    // If another module provides this style, add it as a dependency
+    // If another module provides this style, add it as a dependency.
     if (isset($map[$style]) && $map[$style] != $module_name) {
       $module = $map[$style];
       $export['dependencies'][$module] = $module;
     }
-    // Otherwise, export the style
+    // Otherwise, export the style.
     elseif (image_style_load($style)) {
       $export['features']['image'][$style] = $style;
     }

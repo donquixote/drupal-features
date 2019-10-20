@@ -427,11 +427,9 @@ function _drush_features_component_filter($all_components, $patterns = array(), 
 
     $preg_source_pattern = strtr(preg_quote($source_pattern, '/'), array('%' => '.*'));
     $preg_component_pattern = strtr(preg_quote($component_pattern, '/'), array('%' => '.*'));
-    /*
-     * If it isn't a pattern, but a simple string, we don't anchor the
-     * pattern, this allows for abbreviating. Else, we do, as this seems more
-     * natural for patterns.
-     */
+    // If it isn't a pattern, but a simple string, we don't anchor the pattern,
+    // this allows for abbreviating. Else, we do, as this seems more natural for
+    // patterns.
     if (strpos($source_pattern, '%') !== FALSE) {
       $preg_source_pattern = '^' . $preg_source_pattern . '$';
     }
@@ -487,7 +485,7 @@ function _drush_features_component_filter($all_components, $patterns = array(), 
       }
       else {
         // No matches. If the source was a pattern, just carry on, else
-        // error out. Allows for patterns like :*field*
+        // error out. Allows for patterns like :*field*.
         if ($preg_source_pattern[0] != '^') {
           return drush_set_error('', dt('No !state !source components match "!component"', array('!state' => $state_string, '!component' => $component_pattern, '!source' => $source)));
         }
@@ -723,7 +721,7 @@ function _drush_features_export($info, $module_name = NULL, $directory = NULL) {
       $export = _drush_features_generate_export($info, $module_name);
       $files = features_export_render($export, $module_name, TRUE);
 
-      // Restore the language
+      // Restore the language.
       _features_export_language($language);
 
       // Copy any files if _files key is there.
@@ -782,7 +780,8 @@ function _drush_features_generate_export(&$info, &$module_name) {
   if (!features_load_feature($module_name)) {
     $export['name'] = $module_name;
   }
-  // Set the feature version if the --version-set or --version-increment option is passed.
+  // Set the feature version, if the --version-set or --version-increment option
+  // is passed.
   if ($version = drush_get_option(array('version-set'))) {
     preg_match('/^(?P<core>\d+\.x)-(?P<major>\d+)\.(?P<patch>\d+)-?(?P<extra>\w+)?$/', $version, $matches);
     if (!isset($matches['core'], $matches['major'])) {
@@ -847,7 +846,8 @@ function drush_features_revert() {
 
       if (isset($module)) {
         if (empty($component)) {
-          // If we received just a feature name, this means that we need all of its components.
+          // If we received just a feature name, this means that we need all of
+          // its components.
           $modules[$module] = TRUE;
         }
         elseif ($modules[$module] !== TRUE) {
@@ -865,16 +865,17 @@ function drush_features_revert() {
       if (($feature = features_load_feature($module, TRUE)) && module_exists($module)) {
 
         $components = array();
-        // Forcefully revert all components of a feature.
         if ($force) {
+          // Forcefully revert all components of a feature.
           foreach (array_keys($feature->info['features']) as $component) {
             if (features_hook($component, 'features_revert')) {
               $components[] = $component;
             }
           }
         }
-        // Only revert components that are detected to be Overridden/Needs review/rebuildable.
         else {
+          // Only revert components where the status is detected to be one of
+          // "Overridden", "Needs review" or "rebuildable".
           $states = features_get_component_states(array($feature->name), FALSE);
           foreach ($states[$feature->name] as $component => $state) {
             $revertable_states = array(FEATURES_OVERRIDDEN, FEATURES_NEEDS_REVIEW, FEATURES_REBUILDABLE);
@@ -942,7 +943,7 @@ function drush_features_revert_all() {
   $features_to_revert = array();
   foreach (features_get_features(NULL, TRUE) as $module) {
     if ($module->status && !in_array($module->name, $features_to_exclude)) {
-      // If forced, add module regardless of status.
+      // If forced, add the module regardless of its status.
       if ($force) {
         $features_to_revert[] = $module->name;
       }
@@ -1037,7 +1038,7 @@ function drush_features_diff() {
     $green = "\033[0;32;40m\033[1m%s\033[0m";
   }
 
-  // Print key for colors
+  // Print key for colors.
   drush_print(dt('Legend: '));
   drush_print(sprintf($red, dt('Code:       drush features-revert will remove the overrides.')));
   drush_print(sprintf($green, dt('Overrides:  drush features-update will update the exported feature with the displayed overrides')));

@@ -313,7 +313,8 @@ function features_flush_caches() {
       variable_set('features_modules_changed', FALSE);
     }
     features_rebuild();
-    // Don't flush the modules cache during installation, for performance reasons.
+    // Don't flush the modules cache during installation, for performance
+    // reasons.
     if (variable_get('install_task') == 'done') {
       features_get_modules(NULL, TRUE);
     }
@@ -403,7 +404,7 @@ function features_modules_enabled($modules) {
     return;
   }
 
-  // mark modules as being changed for test in features_flush_caches
+  // Mark modules as being changed for test in features_flush_caches.
   variable_set('features_modules_changed', TRUE);
 
   // Go through all modules and gather features that can be enabled.
@@ -452,7 +453,8 @@ function features_include($reset = FALSE) {
 
     // Features provides integration on behalf of these modules.
     // The features include provides handling for the feature dependencies.
-    // Note that ctools is placed last because it implements hooks "dynamically" for other modules.
+    // Note that ctools is placed last because it implements hooks "dynamically"
+    // for other modules.
     $modules = array('features', 'block', 'contact', 'context', 'field', 'filter', 'image', 'locale', 'menu', 'node', 'taxonomy', 'user', 'views', 'ctools');
 
     foreach (array_filter($modules, 'module_exists') as $module) {
@@ -833,18 +835,20 @@ function features_get_info($type = 'module', $name = NULL, $reset = FALSE) {
       if (isset($row->info['mtime'])) {
         unset($row->info['mtime']);
       }
-      // Avoid false-reported feature overrides for php = 5.2.4 line in .info file.
+      // Avoid false-reported feature overrides for php = 5.2.4 line in .info
+      // file.
       if (isset($row->info['php'])) {
         unset($row->info['php']);
       }
-      // If module is no longer enabled, remove it from the ignored orphans list.
+      // If module is no longer enabled, remove it from the ignored orphans
+      // list.
       if (in_array($row->name, $ignored, TRUE) && !$row->status) {
         $key = array_search($row->name, $ignored, TRUE);
         unset($ignored[$key]);
       }
 
       if (!empty($row->info['features'])) {
-        // Fix css/js paths
+        // Fix css/js paths.
         if (!empty($row->info['stylesheets'])) {
           foreach ($row->info['stylesheets'] as $media => $css) {
             $row->info['stylesheets'][$media] = array_keys($css);
@@ -1098,7 +1102,8 @@ function features_access_override_actions($feature) {
   if (user_access('administer features')) {
     static $access = array();
     if (!isset($access[$feature->name])) {
-      // Set a value first. We may get called again from within features_detect_overrides().
+      // Set a value first. We may get called again from within
+      // features_detect_overrides().
       $access[$feature->name] = FALSE;
 
       features_include();
@@ -1209,23 +1214,25 @@ function _features_restore($op, $items = array()) {
         watchdog('features', 'Tried @actioning a locked @module_name / @component, aborted.', array('@action' => $log_action, '@component' => $component, '@module_name' => $module_name));
         continue;
       }
-      // Invoke pre hook
+      // Invoke pre hook.
       $pre_hook = 'pre_' . $restore_hook;
       module_invoke($module_name, $pre_hook, $component);
 
       if (features_hook($component, $restore_hook)) {
-        // Set a semaphore to prevent other instances of the same script from running concurrently.
+        // Set a semaphore to prevent other instances of the same script from
+        // running concurrently.
         watchdog('features', '@actioning @module_name / @component.', array('@action' => $log_action, '@component' => $component, '@module_name' => $module_name));
         features_semaphore('set', $component);
         features_invoke($component, $restore_hook, $module_name);
 
-        // If the script completes, remove the semaphore and set the code signature.
+        // If the script completes, remove the semaphore and set the code
+        // signature.
         features_semaphore('del', $component);
         features_set_signature($module_name, $component);
         watchdog('features', '@action completed for @module_name / @component.', array('@action' => $log_action, '@component' => $component, '@module_name' => $module_name));
       }
 
-      // Invoke post hook
+      // Invoke post hook.
       $post_hook = 'post_' . $restore_hook;
       module_invoke($module_name, $post_hook, $component);
     }
@@ -1538,7 +1545,8 @@ function _features_export_language($language = NULL) {
  * Implements hook_features_ignore().
  */
 function features_features_ignore($component) {
-  // Determine which keys need to be ignored for override diff for various components.
+  // Determine which keys need to be ignored for override diff for various
+  // components.
   // Value is how many levels deep the key is.
   $ignores = array();
   switch ($component) {
